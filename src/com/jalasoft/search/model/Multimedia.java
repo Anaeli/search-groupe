@@ -1,4 +1,4 @@
 package com.jalasoft.search.model;
 
-public class Multimedia {
+public class Multimedia extends Assset {
 }

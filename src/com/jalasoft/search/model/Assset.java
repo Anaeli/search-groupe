@@ -1,4 +1,6 @@
 package com.jalasoft.search.model;
 
-public class Assset {
+public abstract class Assset {
+    private String name;
+    private int size;
 }

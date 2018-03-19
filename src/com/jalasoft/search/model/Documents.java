@@ -1,4 +1,4 @@
 package com.jalasoft.search.model;
 
-public class Documents {
+public class Documents extends Assset {
 }
