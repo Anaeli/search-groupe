@@ -7,14 +7,21 @@ public class Search {
 
     private static String path = "C:\\testfile";
     private static String namefile = "\\hola.txt";
+    private File file;
 
     public Search(String fileName) {
         this.path=fileName;
+        file = new File(path);
     }
 
     public boolean ExistPath(){
-        File files = new File(path);
-        return files.exists();
+        return file.exists();
+    }
+    public boolean isFile(){
+        return file.isFile();
+    }
+    public boolean isDirectory(){
+        return file.isDirectory();
     }
 
     public static void main(String[]arg) throws IOException {
