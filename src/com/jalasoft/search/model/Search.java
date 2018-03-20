@@ -8,17 +8,28 @@ public class Search {
     private static String path = "C:\\testfile";
     private static String namefile = "\\hola.txt";
 
+    public Search(String fileName) {
+        this.path=fileName;
+    }
+
+    public boolean ExistPath(){
+        File files = new File(path);
+        return files.exists();
+    }
+
     public static void main(String[]arg) throws IOException {
         File files = new File(path);
-        File[] fileList = files.listFiles();
+        System.out.println("exist this path "+files.exists());
+        //File[] fileList = files.listFiles();
 
-        for (File file: fileList ) {
-            System.out.println(file.getName());
-            System.out.println("is file "+file.isFile());
-            System.out.println("is directory "+ file.isDirectory());
-            System.out.println("fullPath " + file.getCanonicalPath());
-            System.out.println("extension "+ getExtension(file.getName()) );
-        }
+//        for (File file: fileList ) {
+//            System.out.println(file.getName());
+//            System.out.println("is file "+file.isFile());
+//            System.out.println("is directory "+ file.isDirectory());
+//            System.out.println("fullPath " + file.getCanonicalPath());
+//            System.out.println("extension "+ getExtension(file.getName()) );
+//            System.out.println(file.exists());
+//        }
 
     }
 
