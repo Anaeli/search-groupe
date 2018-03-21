@@ -24,25 +24,7 @@ public class Search {
         return file.isDirectory();
     }
 
-    public static void main(String[]arg) throws IOException {
-        File files = new File(path);
-        System.out.println("exist this path "+files.exists());
-        //File[] fileList = files.listFiles();
-
-//        for (File file: fileList ) {
-//            System.out.println(file.getName());
-//            System.out.println("is file "+file.isFile());
-//            System.out.println("is directory "+ file.isDirectory());
-//            System.out.println("fullPath " + file.getCanonicalPath());
-//            System.out.println("extension "+ getExtension(file.getName()) );
-//            System.out.println(file.exists());
-//        }
-
-    }
-
-
-
-    public static String getExtension(String fileName){
+    public String getExtension(String fileName){
         String extension = "";
 
         int i = fileName.lastIndexOf('.');
