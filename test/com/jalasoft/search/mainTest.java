@@ -1,5 +1,4 @@
 package com.jalasoft.search;
 
-public class main {
-
+public class mainTest {
 }
