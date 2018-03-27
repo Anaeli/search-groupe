@@ -24,18 +24,15 @@ import java.util.ArrayList;
 public class Search {
 
     private static String path = "C:\\testfile";
-    private static String namefile = "a";
-    private File file;
-
+    private static String nameFile = "h";
 
     public Search() {
-        file = new File(path);
     }
 
     /**
      * this method are changer to evaluate if the path exist
      * */
-    private boolean existPath(){
+    private boolean existPath(File file){
 
         return file.exists();
     }
@@ -43,22 +40,36 @@ public class Search {
     /**
      * this method are charged to evaluate if the path is file
      * */
-    private boolean isFile(){
+    private boolean isFile(File file){
+
         return file.isFile();
     }
 
     /**
      * this method are charged to evaluate if the path is a Directory
      * */
-    private boolean isDirectory(){
+    private boolean isDirectory(File file){
 
         return file.isDirectory();
+    }
+
+    /**
+     * this method are charged return the results using as parameters the attributes
+     * */
+    public ArrayList<FileJ> getResults(){
+
+        ArrayList<FileJ> res = listAllFilesInPath(this.path);
+        if(nameFile != null){
+            res = searchBasedOnNameCriteria(nameFile,res);
+        }
+        return res;
     }
 
     /**
      * this method are changer to return the file extension
      * */
     private String getExtension(String fileName){
+
         String extension = "";
 
         int i = fileName.lastIndexOf('.');
@@ -69,45 +80,54 @@ public class Search {
     }
 
     /**
-     * this method are charged to return all files content into a path
-     * this are returned into an array in strings
+     * this method are charged to return the file based into a name
      * */
-    private String[] allContentListInString(){
-        if(isDirectory())
-        return file.list();
-        return null;
+    private ArrayList<FileJ> searchBasedOnNameCriteria(String nameToSearch, ArrayList<FileJ> listToSearch){
+
+        ArrayList<FileJ> listres = new ArrayList();
+        for (FileJ f: listToSearch) {
+            if (f.getName().contains(nameToSearch) ){
+                listres.add(f);
+            }
+        }
+        return listres;
     }
 
     /**
      * this method are charged to return all files content into a path
      * this are returned into an array in file array
      * */
-    private File[] allContentInFile(){
-        if(isDirectory()){
-            return file.listFiles();
-        }
-        return null;
+    private ArrayList<FileJ> listAllFilesInPath(String path){
+
+        ArrayList <FileJ> allFilesInFolderList = new ArrayList<>();
+        File files = new File(path);
+        if(files.exists())
+        listFilesForFolder(files, allFilesInFolderList);
+        return allFilesInFolderList;
     }
 
     /**
-     * this method are charged to return the file length in bytes
+     * this method are charged fill the array using fileJ
      * */
-    private void getSizeInbytes(){
+    private static void listFilesForFolder(File folder , ArrayList<FileJ> res) {
 
-        System.out.println(file.length());
-    }
-
-    /**
-     * this method are charged to return the file based into a name
-     * */
-    public ArrayList<File> searchBasedOnNameCriteria(){
-        ArrayList listres = new ArrayList();
-        File[] allFiles = allContentInFile();
-        for (File f: allFiles) {
-            if (f.getName().contains(namefile) ){
-                listres.add(f);
+        for (File fileEntry : folder.listFiles()) {
+            if (fileEntry.isDirectory()) {
+                String tempName = fileEntry.getName();
+                String tempPath = fileEntry.getAbsolutePath();
+                FileJ fileJ = new FileJ(tempPath,tempName,0);
+                res.add(fileJ);
+                listFilesForFolder(fileEntry, res);
+            } else {
+                if (fileEntry.isFile()) {
+                    String tempName = fileEntry.getName();
+                    String tempPath = folder.getAbsolutePath();
+                    int tempSize = (int) fileEntry.length();
+                    FileJ fileJ = new FileJ(tempPath,tempName,tempSize);
+                    res.add(fileJ);
+                }
             }
         }
-        return listres;
     }
+
 }
