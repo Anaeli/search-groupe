@@ -4,9 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
-    JButton simpleSearchButton;
     SearchMenu menuPanel;
     SimpleFieldsPanel simpleFieldPanel;
+    AdvancedFieldsPanel advancedFieldPanel;
+    ResultSearchPanel resultSearchPanel;
     JPanel fieldsPanel;
 
     public MainWindow() {
@@ -15,11 +16,14 @@ public class MainWindow extends JFrame {
 
     public void displayMainWindow() {
         this.getContentPane().setLayout(new BorderLayout());
-        simpleSearchButton = new JButton("Simple");
         menuPanel = new SearchMenu();
         simpleFieldPanel = new SimpleFieldsPanel();
-        fieldsPanel = new JPanel(new GridLayout(2,1));
+        advancedFieldPanel = new AdvancedFieldsPanel();
+        resultSearchPanel = new ResultSearchPanel();
+        fieldsPanel = new JPanel(new GridLayout(3,1));
         fieldsPanel.add(simpleFieldPanel);
+        fieldsPanel.add(advancedFieldPanel);
+        fieldsPanel.add(resultSearchPanel);
         this.getContentPane().add(menuPanel, BorderLayout.WEST);
         this.getContentPane().add(fieldsPanel, BorderLayout.CENTER);
     }
@@ -29,6 +33,15 @@ public class MainWindow extends JFrame {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(800, 600);
         window.setVisible(true);
+        window.repaint();
         window.displayMainWindow();
+    }
+
+    public String getPathText(){
+        return simpleFieldPanel.getFilenameTextField();
+    }
+
+    public String getFileNameText(){
+        return simpleFieldPanel.getPathTextField();
     }
 }

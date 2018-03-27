@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SearchMenu extends JPanel{
-    JButton simpleButton;
-    JButton advancedButton;
+    private JButton simpleButton;
+    private JButton advancedButton;
 
     public SearchMenu(){
         this.setLayout(new GridLayout(4,1));
