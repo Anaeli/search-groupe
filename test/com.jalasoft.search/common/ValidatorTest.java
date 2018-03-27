@@ -14,8 +14,9 @@ package com.jalasoft.search.common;
  * @version  1.0
  * @author Eliana Navia
  */
-import com.jalasoft.search.controller.SearchCriteria;
+
 import org.junit.Test;
+
 import static junit.framework.TestCase.*;
 
 public class ValidatorTest {
@@ -24,12 +25,36 @@ public class ValidatorTest {
     @Test
     public void fileNameValid(){
         validator = new Validator();
-        assertTrue(validator.isFileNameValid("filename"));
+        assertTrue(validator.isFileNameCorrect("filename"));
     }
 
     @Test
     public void fileNameInvalid(){
         validator = new Validator();
-        assertFalse(validator.isFileNameValid("fil;ename/"));
+        assertFalse(validator.isFileNameCorrect("fil;ename/"));
+    }
+
+    @Test
+    public void pathExist(){
+        validator = new Validator();
+        assertTrue(validator.fileExist("D:/search-project/search-groupe/test/com.jalasoft.search/common/test_files/text1.txt"));
+    }
+
+    @Test
+    public void pathDoesNotExist(){
+        validator = new Validator();
+        assertFalse(validator.fileExist("notExist"));
+    }
+
+    @Test
+    public void validateFilenameValid(){
+        validator = new Validator();
+        assertTrue(validator.isFileNameValid("text1.txt"));
+    }
+
+    @Test
+    public void validateFilenameInvalid(){
+        validator = new Validator();
+        assertFalse(validator.isFileNameValid("test.T*T"));
     }
 }
