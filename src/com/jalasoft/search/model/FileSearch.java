@@ -1,5 +1,5 @@
 /*
- * Search .java
+ * FileSearch.java
  *
  * Copyright (c) 2018 Jalasoft.
  *
@@ -18,21 +18,36 @@ package com.jalasoft.search.model;
  * @author Luis Cachi
  */
 
-public class FileJ {
+public class FileSearch {
     private String path;
     private String name;
     private int size;
 
-    public FileJ(String path, String name, int size) {
+
+    /**
+     * constructor of File Search
+     * @param path of where the object found
+     * @param name what the object has assigned
+     * @param size in bites of the objet
+     * */
+    public FileSearch(String path, String name, int size) {
         this.path = path;
         this.name = name;
         this.size = size;
     }
 
+    /**
+     * this method are charged return the Path where the object found
+     * @return path into a String
+     * */
     public String getPath() {
         return path;
     }
 
+    /**
+     * this method are charged return the Name what the object had
+     * @return Name into a String
+     * */
     public String getName() {
         return name;
     }
