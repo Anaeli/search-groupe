@@ -27,7 +27,7 @@ public class MainWindow extends JFrame {
     AdvancedFieldsPanel advancedFieldPanel;
     ResultSearchPanel resultSearchPanel;
     JPanel fieldsPanel;
-
+    HeaderPanel headerPanel;
     /**
      * Constructor initializes the name of JFrame
      * */
@@ -45,19 +45,17 @@ public class MainWindow extends JFrame {
         advancedFieldPanel = new AdvancedFieldsPanel();
         resultSearchPanel = new ResultSearchPanel();
         fieldsPanel = new JPanel(new GridLayout(3,1));
+        headerPanel = new HeaderPanel();
+
         fieldsPanel.add(simpleFieldPanel);
         fieldsPanel.add(advancedFieldPanel);
         fieldsPanel.add(resultSearchPanel);
         this.getContentPane().add(menuPanel, BorderLayout.WEST);
         this.getContentPane().add(fieldsPanel, BorderLayout.CENTER);
+        this.getContentPane().add(headerPanel, BorderLayout.NORTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setExtendedState( this.getExtendedState()|JFrame.MAXIMIZED_BOTH );
         this.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        MainWindow window = new MainWindow();
-        window.displayMainWindow();
     }
 
     /**
@@ -74,5 +72,21 @@ public class MainWindow extends JFrame {
      * */
     public String getFileNameText(){
         return simpleFieldPanel.getPathTextField();
+    }
+
+    /**
+     * This method returns Search Button
+     * @return JButton Component
+     * */
+    public JButton getSearchButton(){
+        return resultSearchPanel.getSearchButton();
+    }
+
+    public void displayFieldErrorMessage(String errorMessage) {
+        headerPanel.setErrorMessage(errorMessage);
+    }
+
+    public void cleanErrorMessage() {
+        headerPanel.cleanErrorMessage();
     }
 }
