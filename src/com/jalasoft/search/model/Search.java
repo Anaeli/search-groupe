@@ -12,6 +12,8 @@
 
 package com.jalasoft.search.model;
 
+import com.jalasoft.search.controller.SearchCriteria;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -23,8 +25,9 @@ import java.util.ArrayList;
 
 public class Search {
 
-    private static String path = "C:\\testfile";
-    private static String nameFile = "h";
+    //private static String path = "C:\\testfile";
+    //private static String nameFile = "h";
+    private SearchCriteria searchCriteria;
 
     public Search() {
     }
@@ -61,9 +64,10 @@ public class Search {
      * */
     public ArrayList<FileSearch> getResults(){
 
-        ArrayList<FileSearch> res = listAllFilesInPath(this.path);
-        if(nameFile != null){
-            res = searchBasedOnNameCriteria(nameFile,res);
+
+        ArrayList<FileSearch> res = listAllFilesInPath(searchCriteria.getPath());
+        if(searchCriteria.getFileName() != null){
+            res = searchBasedOnNameCriteria(searchCriteria.getFileName(),res);
         }
         return res;
     }
@@ -84,8 +88,8 @@ public class Search {
 
     /**
      * charged to evaluate the files into the list based on the name
-     * @param name criteria To Search
-     * @param Arraylist where is lookfor the criteria
+     * @param nameToSearch criteria To Search
+     * @param listToSearch where is lookfor the criteria
      * @return ArrayList with all files what match with the criteria
      * */
     private ArrayList<FileSearch> searchBasedOnNameCriteria(String nameToSearch, ArrayList<FileSearch> listToSearch){
@@ -138,6 +142,14 @@ public class Search {
                 }
             }
         }
+    }
+
+    /**
+     * this method Set the SerchCriteria Object
+     * @param searchCriteria object
+     * */
+    public void SetSearchCritera(SearchCriteria searchCriteria){
+        this.searchCriteria = searchCriteria;
     }
 
 }

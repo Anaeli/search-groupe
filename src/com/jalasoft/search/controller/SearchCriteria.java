@@ -10,10 +10,11 @@
  */
 package com.jalasoft.search.controller;
 
-import org.apache.log4j.*;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 public class SearchCriteria {
-    private  Logger log =  Logger.getLogger(getClass());
+    private Logger log =  Logger.getLogger(getClass());
 
     private String fileName;
     private String path;
