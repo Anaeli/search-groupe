@@ -1,6 +1,7 @@
 package com.jalasoft.search.controller;
 
 import com.jalasoft.search.View.MainWindow;
+import com.jalasoft.search.model.FileSearch;
 import com.jalasoft.search.model.Search;
 
 public class Controller {
@@ -19,5 +20,13 @@ public class Controller {
 
     private void fillCriteria() {
         searchWindow.cleanErrorMessage();
+        SearchCriteria criteria = new SearchCriteria(searchWindow.getFileNameText(), searchWindow.getPathText());
+        search.SetSearchCritera(criteria);
+        int counter = 1;
+        for (FileSearch file : search.getResults()) {
+            searchWindow.addRowResult(new Object[]{counter++, file.getName(), file.getPath()});
+        }
+
+
     }
 }

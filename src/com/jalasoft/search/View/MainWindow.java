@@ -46,7 +46,6 @@ public class MainWindow extends JFrame {
         resultSearchPanel = new ResultSearchPanel();
         fieldsPanel = new JPanel(new GridLayout(3,1));
         headerPanel = new HeaderPanel();
-
         fieldsPanel.add(simpleFieldPanel);
         fieldsPanel.add(advancedFieldPanel);
         fieldsPanel.add(resultSearchPanel);
@@ -63,7 +62,7 @@ public class MainWindow extends JFrame {
      * @return string of filenameTextField Component
      * */
     public String getPathText(){
-        return simpleFieldPanel.getFilenameTextField();
+        return simpleFieldPanel.getPathTextField();
     }
 
     /**
@@ -71,7 +70,7 @@ public class MainWindow extends JFrame {
      * @return string of fileChooser Component
      * */
     public String getFileNameText(){
-        return simpleFieldPanel.getPathTextField();
+        return simpleFieldPanel.getFilenameTextField();
     }
 
     /**
@@ -88,5 +87,9 @@ public class MainWindow extends JFrame {
 
     public void cleanErrorMessage() {
         headerPanel.cleanErrorMessage();
+    }
+
+    public void addRowResult(Object[] newRow){
+        resultSearchPanel.addRowOnTable(newRow);
     }
 }
