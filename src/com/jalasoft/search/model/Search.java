@@ -50,7 +50,7 @@ public class Search {
 
     /**
      * this method are charged to evaluate if the path is a Directory
-     * @param File object created with a path
+     * @param file object created with a path
      * @return true is the file is directory or false when not match.
      * */
     private boolean isDirectory(File file){
@@ -68,6 +68,9 @@ public class Search {
         ArrayList<FileSearch> res = listAllFilesInPath(searchCriteria.getPath());
         if(searchCriteria.getFileName() != null){
             res = searchBasedOnNameCriteria(searchCriteria.getFileName(),res);
+        }
+        if(searchCriteria.getExtension() != null){
+            res = searchBasedOnExtension(searchCriteria.getExtension(),res);
         }
         return res;
     }
@@ -104,6 +107,23 @@ public class Search {
     }
 
     /**
+     * charged to evaluate the files into the list based on the extension
+     * @param extension is a criteria To Search
+     * @param listSearch where is searched the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<FileSearch> searchBasedOnExtension(String extension, ArrayList<FileSearch> listSearch){
+
+        ArrayList<FileSearch> listResult = new ArrayList();
+        for (FileSearch f: listSearch) {
+            if (f.getName().contains(extension) ){
+                listResult.add(f);
+            }
+        }
+        return listResult;
+    }
+
+    /**
      * this method are charged to return all files content into a path
      * this are returned into an array in file array
      * @param path to create the File
@@ -113,15 +133,16 @@ public class Search {
 
         ArrayList <FileSearch> allFilesInFolderList = new ArrayList<>();
         File files = new File(path);
-        if(files.exists())
+        if(files.exists() && files.isDirectory())
         listFilesForFolder(files, allFilesInFolderList);
         return allFilesInFolderList;
     }
 
     /**
-     * this method are charged fill the array using fileJ
-     * @param Filecreated with the path
-     * @param arracylist of FileSearch to fill the array
+     * this method are charged fill the array using fileJ this only is called from
+     * listAllFilesInPath method
+     * @param folder this Param is a File object with the path setup
+     * @param res is an ArrayList of FileSearch what is filled the this method
      * */
     private void listFilesForFolder(File folder , ArrayList<FileSearch> res) {
 
@@ -129,7 +150,7 @@ public class Search {
             if (fileEntry.isDirectory()) {
                 String tempName = fileEntry.getName();
                 String tempPath = fileEntry.getAbsolutePath();
-                FileSearch fileJ = new FileSearch(tempPath,tempName,0);
+                FileSearch fileJ = new FileSearch(tempPath,tempName,0,null);
                 res.add(fileJ);
                 listFilesForFolder(fileEntry, res);
             } else {
@@ -137,7 +158,8 @@ public class Search {
                     String tempName = fileEntry.getName();
                     String tempPath = folder.getAbsolutePath();
                     int tempSize = (int) fileEntry.length();
-                    FileSearch fileJ = new FileSearch(tempPath,tempName,tempSize);
+                    String temExten = getExtension(tempName);
+                    FileSearch fileJ = new FileSearch(tempPath,tempName,tempSize,temExten);
                     res.add(fileJ);
                 }
             }
@@ -145,7 +167,7 @@ public class Search {
     }
 
     /**
-     * this method Set the SerchCriteria Object
+     * this method Set the SearchCriteria Object
      * @param searchCriteria object
      * */
     public void SetSearchCritera(SearchCriteria searchCriteria){
