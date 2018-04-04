@@ -10,6 +10,8 @@
  * with Jalasoft.
  */
 package com.jalasoft.search.view;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -22,13 +24,41 @@ import java.awt.*;
  * @author Rodrigo Saul Cespedes Murillo
  */
 public class AdvancedFieldsPanel extends JPanel {
-
+    private JLabel extensionLabel;
+    private JLabel hiddenLabel;
+    private JTextField extensionTextField;
+    private JCheckBox hiddenCheckBox;
     /**
      * Constructor initializes this Panel as grid layout also add components to this JPanel
      * */
     public AdvancedFieldsPanel(){
-        this.setLayout(new GridLayout(1,2));
+        this.setLayout(new FlowLayout());
         this.setBorder(BorderFactory.createTitledBorder("Advanced Search"));
+        extensionLabel = new JLabel("Ext");
+        hiddenLabel = new JLabel("Hidden");
+        extensionTextField = new JTextField(10);
+        hiddenCheckBox = new JCheckBox();
+        this.add(extensionLabel);
+        this.add(extensionTextField);
+        this.add(hiddenLabel);
+        this.add(hiddenCheckBox);
+
+    }
+
+    /**
+     * This method returns extension string
+     * @return string of extensionTextField Component
+     * */
+    public String getExtensionText() {
+        return extensionTextField.getText();
+    }
+
+    /**
+     * This method returns extension string
+     * @return Boolean of hidden TextField Component
+     * */
+    public Boolean getHiddenFlag() {
+        return hiddenCheckBox.isSelected();
     }
 
 }
