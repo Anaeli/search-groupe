@@ -22,6 +22,7 @@ public class FileSearch {
     private String path;
     private String name;
     private int size;
+    private String extension;
 
 
     /**
@@ -29,11 +30,13 @@ public class FileSearch {
      * @param path of where the object found
      * @param name what the object has assigned
      * @param size in bites of the objet
+     * @param extension extension that file has
      * */
-    public FileSearch(String path, String name, int size) {
+    public FileSearch(String path, String name, int size, String extension) {
         this.path = path;
         this.name = name;
         this.size = size;
+        this.extension = extension;
     }
 
     /**
@@ -52,4 +55,19 @@ public class FileSearch {
         return name;
     }
 
+    /**
+     * this method are charged return the Name what the object had
+     * @return Size in bites of the file
+     * */
+    public int getSize() {
+        return size;
+    }
+
+    /**
+     * this method are charged return the Name what the object had
+     * @return Extension that has the file
+     * */
+    public String getExtension() {
+        return extension;
+    }
 }

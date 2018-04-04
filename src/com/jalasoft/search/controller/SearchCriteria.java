@@ -18,6 +18,7 @@ public class SearchCriteria {
 
     private String fileName;
     private String path;
+    private String extension;
 
     public SearchCriteria(String fileName, String path){
         PropertyConfigurator.configure("log4j.properties");
@@ -44,6 +45,15 @@ public class SearchCriteria {
     }
 
     /**
+     * Method to return the extension
+     * @return extension file
+     */
+    public String getExtension() {
+        log.info(extension);
+        return extension;
+    }
+
+    /**
      * Method to set the file name
      * @param fileName
      */
@@ -57,5 +67,13 @@ public class SearchCriteria {
      */
     public void setPath(String path) {
         this.path = path;
+    }
+
+    /**
+     * Method to set the extension file to search
+     * @param extensionFile
+     */
+    public void setExtension (String extensionFile) {
+        this.extension = extensionFile;
     }
 }
