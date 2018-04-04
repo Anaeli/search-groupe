@@ -9,7 +9,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-package com.jalasoft.search.View;
+package com.jalasoft.search.view;
 import javax.swing.*;
 import java.awt.*;
 

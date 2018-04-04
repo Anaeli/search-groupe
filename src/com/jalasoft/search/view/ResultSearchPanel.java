@@ -1,4 +1,4 @@
-package com.jalasoft.search.View;
+package com.jalasoft.search.view;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

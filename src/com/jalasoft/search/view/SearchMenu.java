@@ -9,26 +9,31 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-package com.jalasoft.search.View;
+package com.jalasoft.search.view;
 import javax.swing.*;
 import java.awt.*;
 
 /**
  *
- This class implements the GUI for advanced search panel.
+ This class implements the GUI for Search Menu Panel.
  using components from swing library
  *
  * @version  1.0
  * @author Rodrigo Saul Cespedes Murillo
  */
-public class AdvancedFieldsPanel extends JPanel {
+public class SearchMenu extends JPanel{
+    private JButton simpleButton;
+    private JButton advancedButton;
 
     /**
      * Constructor initializes this Panel as grid layout also add components to this JPanel
      * */
-    public AdvancedFieldsPanel(){
-        this.setLayout(new GridLayout(1,2));
-        this.setBorder(BorderFactory.createTitledBorder("Advanced Search"));
+    public SearchMenu(){
+        this.setLayout(new GridLayout(4,1));
+        this.setBorder(BorderFactory.createTitledBorder("Search Menu"));
+        simpleButton = new JButton("Simple");
+        advancedButton = new JButton("Advanced");
+        this.add(simpleButton);
+        this.add(advancedButton);
     }
-
 }

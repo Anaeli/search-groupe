@@ -1,6 +1,6 @@
 package com.jalasoft.search;
 
-import com.jalasoft.search.View.MainWindow;
+import com.jalasoft.search.view.MainWindow;
 import com.jalasoft.search.controller.Controller;
 import com.jalasoft.search.model.Search;
 
