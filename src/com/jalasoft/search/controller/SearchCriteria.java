@@ -19,11 +19,10 @@ public class SearchCriteria {
     private String fileName;
     private String path;
     private String extension;
+    private Boolean isHidden;
 
-    public SearchCriteria(String fileName, String path){
+    public SearchCriteria(){
         PropertyConfigurator.configure("log4j.properties");
-        this.fileName = fileName;
-        this.path = path;
     }
 
     /**
@@ -45,15 +44,6 @@ public class SearchCriteria {
     }
 
     /**
-     * Method to return the extension
-     * @return extension file
-     */
-    public String getExtension() {
-        log.info(extension);
-        return extension;
-    }
-
-    /**
      * Method to set the file name
      * @param fileName
      */
@@ -70,10 +60,34 @@ public class SearchCriteria {
     }
 
     /**
-     * Method to set the extension file to search
-     * @param extensionFile
+     * Method to get file extension
+     * @return file extension
      */
-    public void setExtension (String extensionFile) {
-        this.extension = extensionFile;
+    public String getExtension() {
+        return extension;
+    }
+
+    /**
+     * Method to get if a file is hidden or not
+     * @return true if the file is hidden otherwise false
+     */
+    public Boolean getHidden() {
+        return isHidden;
+    }
+
+    /**
+     * Method to set file extension
+     * @param extension, file extension
+     */
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
+
+    /**
+     * Method to set if a file is hidden or not
+     * @param hidden, true if the file is hidden otherwise false
+     */
+    public void setHidden(Boolean hidden) {
+        isHidden = hidden;
     }
 }
