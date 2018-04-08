@@ -124,6 +124,25 @@ public class Search {
     }
 
     /**
+     * charged to evaluate the files into the list based on size
+     * @param max, min is a criteria To Search by size
+     * @param listSearch where is searched the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<FileSearch> seachBasedOnSize(int max, int min, ArrayList<FileSearch> listSearch){
+
+        ArrayList<FileSearch> listResult = new ArrayList();
+        for (FileSearch f: listSearch) {
+            int size = f.getSize();
+            if (max >= size && min <= size ){
+                listResult.add(f);
+            }
+        }
+        return listResult;
+    }
+
+
+    /**
      * this method are charged to return all files content into a path
      * this are returned into an array in file array
      * @param path to create the File
@@ -170,7 +189,7 @@ public class Search {
      * this method Set the SearchCriteria Object
      * @param searchCriteria object
      * */
-    public void SetSearchCritera(SearchCriteria searchCriteria){
+    public void setSearchCriteria(SearchCriteria searchCriteria){
         this.searchCriteria = searchCriteria;
     }
 
