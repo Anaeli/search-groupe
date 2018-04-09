@@ -1,7 +1,7 @@
 package com.jalasoft.search.model;
 
 /**
- *  This class implements the Folder for model different object into a dir.
+ *  This class implements the objects for model different object into a dir.
  *
  * @version  1.0
  * @author Luis Cachi
@@ -15,7 +15,7 @@ public class Asset {
     private boolean readOnly;
 
     /**
-     * constructor of File Search
+     * constructor of Asset
      * @param name of where the object found
      * @param size in bites of the object
      * @param path of where the object found

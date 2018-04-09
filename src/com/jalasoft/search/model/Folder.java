@@ -9,7 +9,8 @@ public class Folder extends Asset{
     int cantOfFiles;
 
     /**
-     * constructor of File Search
+     * Constructor of Folder
+     * Folder is going to be created with values retrieved from found folders
      * @param name of where the object found
      * @param size in bites of the object
      * @param path of where the object found
