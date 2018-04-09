@@ -12,6 +12,7 @@
 package com.jalasoft.search.view;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 /**
  *
@@ -24,47 +25,50 @@ import java.awt.*;
 public class SimpleFieldsPanel extends JPanel{
     // Labels
     private JLabel filenameLabel;
+    private JLabel pathLabel;
 
     // Text Fields
     private JTextField filenameTextField;
+    private JTextField pathTextField;
 
     // Path Field
     private JFileChooser fileChooser;
 
+    // Button Field
+    private JButton fileChooserButton;
+
     // Panels
     private JPanel[][] panelTable;
+    private JPanel fileChooserPanel;
 
     /**
      * Constructor initializes this Panel as grid layout also add components to this JPanel
      * */
     public SimpleFieldsPanel(){
-        int row = 1;
-        int column = 2;
-        this.setLayout(new GridLayout(row, column));
+        this.setLayout(new FlowLayout());
         this.setBorder(BorderFactory.createTitledBorder("Simple Search"));
         filenameLabel = new JLabel("File Name");
+        pathLabel = new JLabel("Path");
         filenameTextField = new JTextField(20);
+        pathTextField = new JTextField(40);
+        fileChooserButton = new JButton("Select");
         fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        addPanelToGrid(row, column);
-        panelTable[0][0].setLayout(new FlowLayout());
-        panelTable[0][0].add(filenameLabel);
-        panelTable[0][0].add(filenameTextField);
-        panelTable[0][1].add(fileChooser);
+        fileChooserPanel = new JPanel(null);
+        this.add(filenameLabel);
+        this.add(filenameTextField);
+        this.add(pathLabel);
+        this.add(pathTextField);
+        this.add(fileChooserButton);
+        fileChooserButton.addActionListener(e -> selectPath());
     }
 
     /**
-     * This method is to add Panels into grid layout according to row and columns
-     * @param row quantity of rows to add panels to grid layout
-     * @param column quantity of columns to add panels to grid layout
+     * This method set pathTextField Component with path selected on FileChooser
      * */
-    private void addPanelToGrid(int row, int column) {
-        panelTable = new JPanel[row][column];
-        for (int m = 0; m < row; m++) {
-            for (int n = 0; n < column; n++) {
-                panelTable[m][n] = new JPanel(new GridLayout(1, 1));
-                this.add(panelTable[m][n]);
-            }
+    private void selectPath(){
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        if( fileChooser.showOpenDialog(fileChooserPanel) == JFileChooser.APPROVE_OPTION){
+            pathTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
         }
     }
 
@@ -77,10 +81,10 @@ public class SimpleFieldsPanel extends JPanel{
     }
 
     /**
-     * This method returns path string of fileChooser Component
+     * This method returns path string of pathTextField Component
      * @return string of fileChooser Component
      * */
     public String getPathTextField() {
-        return fileChooser.getCurrentDirectory().toString();
+        return pathTextField.getText().toString();
     }
 }
