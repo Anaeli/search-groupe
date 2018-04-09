@@ -15,9 +15,12 @@ public class Folder extends Asset{
      * @param path of where the object found
      * @param owner Owner name
      * @param cantOfFiles number of files that has the folder
+     * @param readOnly its the file readonly
+     * @param hidden  its the file hidden
      * */
-    public Folder(String name, int size, String path, String owner, int cantOfFiles) {
-        super(name, size, path, owner);
+    public Folder(String name, int size, String path, String owner, int cantOfFiles,
+                  boolean hidden, boolean readOnly) {
+        super(name, size, path, owner, hidden, readOnly);
         this.cantOfFiles = cantOfFiles;
     }
 

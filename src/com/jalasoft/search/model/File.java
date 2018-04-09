@@ -15,9 +15,12 @@ public class File extends Asset {
      * @param path of where the object found
      * @param owner Owner name
      * @param extension that has the file
+     * @param readOnly its the file readonly
+     * @param hidden  its the file hidden
      * */
-    public File(String name, int size, String path, String owner, String extension) {
-        super(name, size, path, owner);
+    public File(String name, int size, String path, String owner, String extension,
+                boolean hidden, boolean readOnly) {
+        super(name, size, path, owner, hidden, readOnly);
         this.extension = extension;
     }
 

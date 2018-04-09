@@ -11,6 +11,8 @@ public class Asset {
     private String name;
     private String path;
     private String owner;
+    private boolean hidden;
+    private boolean readOnly;
 
     /**
      * constructor of File Search
@@ -18,12 +20,17 @@ public class Asset {
      * @param size in bites of the object
      * @param path of where the object found
      * @param owner Owner name
+     * @param readOnly its the file readonly
+     * @param hidden  its the file hidden
      * */
-    public Asset(String name, int size, String path, String owner){
+    public Asset(String name, int size, String path, String owner,
+                 boolean hidden, boolean readOnly){
         this.size = size;
         this.name = name;
         this.owner = owner;
         this.path = path;
+        this.readOnly = readOnly;
+        this.hidden = hidden;
     }
 
     /**
@@ -56,5 +63,21 @@ public class Asset {
      * */
     public String getOwner() {
         return owner;
+    }
+
+    /**
+     * this method return the true if the asset is hidden
+     * @return true if the asset is hidden
+     * */
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    /**
+     * this method return the true if the asset is read only
+     * @return true if the asset is read Only
+     * */
+    public boolean isReadOnly() {
+        return readOnly;
     }
 }
