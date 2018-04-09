@@ -22,12 +22,13 @@ import java.awt.*;
  * @author Rodrigo Saul Cespedes Murillo
  */
 public class MainWindow extends JFrame {
-    SearchMenu menuPanel;
-    SimpleFieldsPanel simpleFieldPanel;
-    AdvancedFieldsPanel advancedFieldPanel;
-    ResultSearchPanel resultSearchPanel;
-    JPanel fieldsPanel;
-    HeaderPanel headerPanel;
+    private SearchMenu menuPanel;
+    private SimpleFieldsPanel simpleFieldPanel;
+    private AdvancedFieldsPanel advancedFieldPanel;
+    private ResultSearchPanel resultSearchPanel;
+    private JPanel fieldsPanel;
+    private JPanel mainFieldsPanel;
+    private HeaderPanel headerPanel;
     /**
      * Constructor initializes the name of JFrame
      * */
@@ -44,13 +45,15 @@ public class MainWindow extends JFrame {
         simpleFieldPanel = new SimpleFieldsPanel();
         advancedFieldPanel = new AdvancedFieldsPanel();
         resultSearchPanel = new ResultSearchPanel();
-        fieldsPanel = new JPanel(new GridLayout(3,1));
+        mainFieldsPanel = new JPanel(new GridLayout(2,1));
         headerPanel = new HeaderPanel();
+        fieldsPanel = new JPanel(new GridLayout(2,1));
         fieldsPanel.add(simpleFieldPanel);
         fieldsPanel.add(advancedFieldPanel);
-        fieldsPanel.add(resultSearchPanel);
+        mainFieldsPanel.add(fieldsPanel);
+        mainFieldsPanel.add(resultSearchPanel);
         this.getContentPane().add(menuPanel, BorderLayout.WEST);
-        this.getContentPane().add(fieldsPanel, BorderLayout.CENTER);
+        this.getContentPane().add(mainFieldsPanel, BorderLayout.CENTER);
         this.getContentPane().add(headerPanel, BorderLayout.NORTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setExtendedState( this.getExtendedState()|JFrame.MAXIMIZED_BOTH );
@@ -81,14 +84,23 @@ public class MainWindow extends JFrame {
         return resultSearchPanel.getSearchButton();
     }
 
+    /**
+     * This method is to display an error message on Main Window of fields validations
+     * */
     public void displayFieldErrorMessage(String errorMessage) {
         headerPanel.setErrorMessage(errorMessage);
     }
 
+    /**
+     * This method is to clean error message field
+     * */
     public void cleanErrorMessage() {
         headerPanel.cleanErrorMessage();
     }
 
+    /**
+     * This method is to set rows on result table
+     * */
     public void addRowResult(Object[] newRow){
         resultSearchPanel.addRowOnTable(newRow);
     }

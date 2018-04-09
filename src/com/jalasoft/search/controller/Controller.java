@@ -1,5 +1,6 @@
 package com.jalasoft.search.controller;
 
+import com.jalasoft.search.common.Validator;
 import com.jalasoft.search.view.MainWindow;
 import com.jalasoft.search.model.FileSearch;
 import com.jalasoft.search.model.Search;
