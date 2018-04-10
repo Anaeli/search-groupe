@@ -10,19 +10,19 @@
  */
 package com.jalasoft.search.controller;
 
+import com.jalasoft.search.common.Log;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+
 
 public class SearchCriteria {
-    private Logger log =  Logger.getLogger(getClass());
-
+    private Logger log = Logger.getLogger(getClass());
+    private Log logger = Log.getInstance();
     private String fileName;
     private String path;
     private String extension;
     private Boolean isHidden;
 
     public SearchCriteria(){
-        PropertyConfigurator.configure("log4j.properties");
     }
 
     /**
@@ -49,6 +49,7 @@ public class SearchCriteria {
      */
     public void setFileName(String fileName) {
         this.fileName = fileName;
+        log.info("filename" + fileName);
     }
 
     /**

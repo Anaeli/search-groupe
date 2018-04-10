@@ -12,7 +12,6 @@ public class SearchCriteriaTest {
     public void validateReturnFileNameInformation(){
         SearchCriteria criteria = new SearchCriteria();
         criteria.setFileName("text1.txt");
-        criteria.getFileName();
         assertEquals("text1.txt", criteria.getFileName());
     }
 
@@ -20,7 +19,6 @@ public class SearchCriteriaTest {
     public void validateReturnPathInformation(){
         SearchCriteria searchCriteria = new SearchCriteria();
         searchCriteria.setPath("test_files");
-        searchCriteria.getPath();
         assertEquals("test_files", searchCriteria.getPath());
     }
 
