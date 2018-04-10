@@ -19,14 +19,32 @@ import org.apache.log4j.PropertyConfigurator;
  * @author Eliana Navia
  */
 public class Log {
+    private static Log instance;
     Logger log = Logger.getLogger(getClass());
 
+    /**
+     * Log class constructor
+     */
     private Log() {
         PropertyConfigurator.configure("log4j.properties");
     }
 
+    /**
+     * Method that return a single instance of log
+     * @return single log instance
+     */
     public static Log getInstance() {
-        return new Log();
+        if(instance == null) {
+            instance = new Log();
+        }
+        return instance;
     }
 
+    /**
+     * Method to wrapper info Logger level
+     * @param message used to log into a file
+     */
+    public void info(String message) {
+        log.info(message);
+    }
 }

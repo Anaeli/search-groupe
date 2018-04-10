@@ -11,12 +11,9 @@
 package com.jalasoft.search.controller;
 
 import com.jalasoft.search.common.Log;
-import org.apache.log4j.Logger;
-
 
 public class SearchCriteria {
-    private Logger log = Logger.getLogger(getClass());
-    private Log logger = Log.getInstance();
+    private Log log = Log.getInstance();
     private String fileName;
     private String path;
     private String extension;
@@ -30,7 +27,7 @@ public class SearchCriteria {
      * @return file name
      */
     public String getFileName() {
-        log.info(fileName);
+        log.info("Filename: " + fileName);
         return fileName;
     }
 
@@ -39,7 +36,7 @@ public class SearchCriteria {
      * @return path
      */
     public String getPath() {
-        log.info(path);
+        log.info("Path: " + path);
         return path;
     }
 
@@ -49,7 +46,7 @@ public class SearchCriteria {
      */
     public void setFileName(String fileName) {
         this.fileName = fileName;
-        log.info("filename" + fileName);
+        log.info("New filename: " + fileName);
     }
 
     /**
