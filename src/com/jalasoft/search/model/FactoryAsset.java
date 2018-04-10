@@ -1,11 +1,30 @@
+/*
+ * Asset.java
+ *
+ * Copyright (c) 2018 Jalasoft.
+ *
+ * This software is the confidential and proprietary information of Jalasoft.
+ * ("Confidential Information").  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Jalasoft.
+ */
+
 package com.jalasoft.search.model;
 
 import java.io.File;
 
+/**
+ *  The FactoryAsset class should be return an asset created from a File.
+ *
+ * @version  1.0
+ * @author Luis Cachi
+ */
+
 public abstract class  FactoryAsset {
 
     /**
-     * this method are changer to return the asset object created
+     * this method is changer to return the asset object created
      * @param asset the File object from where we get the values
      * @param type The Type passed as string
      * */
@@ -30,7 +49,8 @@ public abstract class  FactoryAsset {
     }
 
     /**
-     * this method are changer to return the file extension
+     * this method is changer to return the file extension
+     * @param fileName this the completed name
      * */
     private static String getExtension(String fileName){
 
