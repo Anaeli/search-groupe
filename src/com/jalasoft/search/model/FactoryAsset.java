@@ -21,7 +21,7 @@ import java.io.File;
  * @author Luis Cachi
  */
 
-public abstract class  FactoryAsset {
+public class  FactoryAsset {
 
     /**
      * this method is changer to return the asset object created
