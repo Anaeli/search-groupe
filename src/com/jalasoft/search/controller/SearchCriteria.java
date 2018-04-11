@@ -10,10 +10,9 @@
  */
 package com.jalasoft.search.controller;
 
-import com.jalasoft.search.common.Log;
+import static com.jalasoft.search.common.Log.getInstance;
 
 public class SearchCriteria {
-    private Log log = Log.getInstance();
     private String fileName;
     private String path;
     private String extension;
@@ -27,7 +26,7 @@ public class SearchCriteria {
      * @return file name
      */
     public String getFileName() {
-        log.info("Filename: " + fileName);
+        getInstance().getLogger().info("Filename: " + fileName);
         return fileName;
     }
 
@@ -36,7 +35,7 @@ public class SearchCriteria {
      * @return path
      */
     public String getPath() {
-        log.info("Path: " + path);
+        getInstance().getLogger().info("Path: " + path);
         return path;
     }
 
@@ -46,7 +45,7 @@ public class SearchCriteria {
      */
     public void setFileName(String fileName) {
         this.fileName = fileName;
-        log.info("New filename: " + fileName);
+        getInstance().getLogger().info("New filename: " + fileName);
     }
 
     /**

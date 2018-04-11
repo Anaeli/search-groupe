@@ -41,10 +41,10 @@ public class Log {
     }
 
     /**
-     * Method to wrapper info Logger level
-     * @param message used to log into a file
+     * Method to get Logger
+     * @return Logger instance
      */
-    public void info(String message) {
-        log.info(message);
+    public Logger getLogger() {
+        return log;
     }
 }
