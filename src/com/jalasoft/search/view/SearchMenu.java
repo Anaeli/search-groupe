@@ -29,11 +29,30 @@ public class SearchMenu extends JPanel{
      * Constructor initializes this Panel as grid layout also add components to this JPanel
      * */
     public SearchMenu(){
-        this.setLayout(new GridLayout(4,1));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createTitledBorder("Search Menu"));
         simpleButton = new JButton("Simple");
+        simpleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         advancedButton = new JButton("Advanced");
+        advancedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(simpleButton);
+        this.add(Box.createRigidArea(new Dimension(0,10)));
         this.add(advancedButton);
+    }
+
+    /**
+     * This method returns simple button component
+     * @return JButton to implement its events
+     * */
+    public JButton getSimpleButton(){
+        return simpleButton;
+    }
+
+    /**
+     * This method returns advanced button component
+     * @return JButton to implement its events
+     * */
+    public JButton getAdvancedButton(){
+        return advancedButton;
     }
 }

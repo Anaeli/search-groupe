@@ -29,7 +29,6 @@ public class SearchCriteriaTest {
     public void validateReturnPathInformation(){
         SearchCriteria searchCriteria = new SearchCriteria();
         searchCriteria.setPath("test_files");
-        searchCriteria.getPath();
         assertEquals("test_files", searchCriteria.getPath());
     }
 

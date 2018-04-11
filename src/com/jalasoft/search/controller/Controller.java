@@ -48,6 +48,7 @@ public class Controller {
      * Method that set criteria to search files or folders
      */
     private void fillCriteria() {
+        searchWindow.cleanTable();
         searchWindow.cleanErrorMessage();
         SearchCriteria criteria = new SearchCriteria();
         String filename = searchWindow.getFileNameText();
