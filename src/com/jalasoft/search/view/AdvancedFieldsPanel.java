@@ -26,23 +26,63 @@ import java.awt.*;
 public class AdvancedFieldsPanel extends JPanel {
     private JLabel extensionLabel;
     private JLabel hiddenLabel;
+    private JLabel typeLabel;
+
     private JTextField extensionTextField;
     private JCheckBox hiddenCheckBox;
+    private JComboBox typeComboBox;
     /**
      * Constructor initializes this Panel as grid layout also add components to this JPanel
      * */
     public AdvancedFieldsPanel(){
-        this.setLayout(new FlowLayout());
+        this.setPreferredSize(new Dimension(400,100));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createTitledBorder("Advanced Search"));
+        this.setVisible(false);
+        initFieldComponents();
+        centerAllFields();
+        addComponentsToPanel();
+    }
+
+    /**
+     * This method is to initialize all components for this panel
+     * */
+    private void initFieldComponents() {
         extensionLabel = new JLabel("Ext");
         hiddenLabel = new JLabel("Hidden");
+        typeLabel = new JLabel("Type");
         extensionTextField = new JTextField(10);
+        extensionTextField.setMaximumSize(extensionTextField.getPreferredSize());
         hiddenCheckBox = new JCheckBox();
+        typeComboBox = new JComboBox();
+        typeComboBox.setMaximumSize(new Dimension(180, typeComboBox.getPreferredSize().height));
+        typeComboBox.addItem("File/Folder");
+        typeComboBox.addItem("File");
+        typeComboBox.addItem("Folder");
+    }
+
+    /**
+     * This method is to align to center all components
+     * */
+    private void centerAllFields(){
+        extensionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        extensionTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        hiddenLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        hiddenCheckBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+        typeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        typeComboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+    }
+
+    /**
+     * This method set pathTextField Component with path selected on FileChooser
+     * */
+    private void addComponentsToPanel(){
         this.add(extensionLabel);
         this.add(extensionTextField);
         this.add(hiddenLabel);
         this.add(hiddenCheckBox);
-
+        this.add(typeLabel);
+        this.add(typeComboBox);
     }
 
     /**
@@ -54,7 +94,7 @@ public class AdvancedFieldsPanel extends JPanel {
     }
 
     /**
-     * This method returns extension string
+     * This method returns hidden flag it can be true or false
      * @return Boolean of hidden TextField Component
      * */
     public Boolean getHiddenFlag() {

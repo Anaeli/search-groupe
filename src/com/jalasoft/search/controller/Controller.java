@@ -22,6 +22,7 @@ public class Controller {
     }
 
     private void fillCriteria() {
+        searchWindow.cleanTable();
         searchWindow.cleanErrorMessage();
         SearchCriteria criteria = new SearchCriteria();
         String filename = searchWindow.getFileNameText();
