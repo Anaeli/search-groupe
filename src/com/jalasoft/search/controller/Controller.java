@@ -26,7 +26,7 @@ public class Controller {
     private Validator validator;
 
     /**
-     * Constructor method
+     * Constructor method to integrate the view, controller and model
      * @param window View instance
      * @param search, instance used to search
      */

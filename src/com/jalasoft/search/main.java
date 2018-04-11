@@ -14,6 +14,10 @@ import com.jalasoft.search.view.MainWindow;
 import com.jalasoft.search.controller.Controller;
 import com.jalasoft.search.model.Search;
 
+/*
+ * Class to start interaction with search application
+ * @version  1.0
+ */
 public class main {
     public static void main(String[] args) {
         MainWindow searchWindow = new MainWindow();

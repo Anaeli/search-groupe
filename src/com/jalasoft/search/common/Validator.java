@@ -10,13 +10,9 @@
  */
 package com.jalasoft.search.common;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.InvalidPathException;
-import java.nio.file.Paths;
+import static com.jalasoft.search.common.Log.getInstance;
 
 /*
 * Class to manage validations related to files
@@ -24,11 +20,11 @@ import java.nio.file.Paths;
 * @author Eliana Navia
 */
 public class Validator {
-    private Logger log =  Logger.getLogger(getClass());
 
-    public Validator() {
-        PropertyConfigurator.configure("log4j.properties");
-    }
+    /**
+     * Constructor method to validate UI entries
+     */
+    public Validator() {  }
 
     /**
      * Method to validate that a file name has valid characters in its name.
@@ -61,7 +57,7 @@ public class Validator {
             f.getCanonicalPath();
             return true;
         } catch (IOException e) {
-            log.error(e.getMessage());
+            getInstance().getLogger().error(e.getMessage());
             return false;
         }
     }

@@ -23,7 +23,7 @@ public class Log {
     Logger log = Logger.getLogger(getClass());
 
     /**
-     * Log class constructor
+     * Log class constructor that initialize log4j properties file
      */
     private Log() {
         PropertyConfigurator.configure("log4j.properties");
