@@ -45,19 +45,27 @@ public class MainWindow extends JFrame {
         simpleFieldPanel = new SimpleFieldsPanel();
         advancedFieldPanel = new AdvancedFieldsPanel();
         resultSearchPanel = new ResultSearchPanel();
-        mainFieldsPanel = new JPanel(new GridLayout(2,1));
+        mainFieldsPanel = new JPanel();
+        mainFieldsPanel.setLayout(new BoxLayout(mainFieldsPanel, BoxLayout.Y_AXIS));
+
         headerPanel = new HeaderPanel();
-        fieldsPanel = new JPanel(new GridLayout(2,1));
+        fieldsPanel = new JPanel();
+        fieldsPanel.setLayout(new BoxLayout(fieldsPanel, BoxLayout.X_AXIS));
+        fieldsPanel.setPreferredSize(new Dimension(500,200));
         fieldsPanel.add(simpleFieldPanel);
         fieldsPanel.add(advancedFieldPanel);
         mainFieldsPanel.add(fieldsPanel);
         mainFieldsPanel.add(resultSearchPanel);
+
         this.getContentPane().add(menuPanel, BorderLayout.WEST);
         this.getContentPane().add(mainFieldsPanel, BorderLayout.CENTER);
         this.getContentPane().add(headerPanel, BorderLayout.NORTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setExtendedState( this.getExtendedState()|JFrame.MAXIMIZED_BOTH );
+        this.setSize(1200, 900);
         this.setVisible(true);
+
+        menuPanel.getSimpleButton().addActionListener(e -> advancedFieldPanel.setVisible(false));
+        menuPanel.getAdvancedButton().addActionListener(e -> advancedFieldPanel.setVisible(true));
     }
 
     /**
@@ -103,5 +111,12 @@ public class MainWindow extends JFrame {
      * */
     public void addRowResult(Object[] newRow){
         resultSearchPanel.addRowOnTable(newRow);
+    }
+
+    /**
+     * This method is to clean all rows of table results
+     * */
+    public void cleanTable(){
+        resultSearchPanel.cleanTable();
     }
 }
