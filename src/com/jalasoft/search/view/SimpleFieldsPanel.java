@@ -83,7 +83,7 @@ public class SimpleFieldsPanel extends JPanel{
     }
 
     /**
-     * This method set pathTextField Component with path selected on FileChooser
+     * This method is to tadd all components to JPanel
      * */
     private void addComponentsToPanel(){
         this.add(filenameLabel);

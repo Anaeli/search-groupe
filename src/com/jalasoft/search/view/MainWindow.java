@@ -61,7 +61,6 @@ public class MainWindow extends JFrame {
         this.getContentPane().add(mainFieldsPanel, BorderLayout.CENTER);
         this.getContentPane().add(headerPanel, BorderLayout.NORTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //this.setExtendedState( this.getExtendedState()|JFrame.MAXIMIZED_BOTH );
         this.setSize(1200, 900);
         this.setVisible(true);
 

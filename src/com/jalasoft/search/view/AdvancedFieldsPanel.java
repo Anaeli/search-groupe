@@ -74,7 +74,7 @@ public class AdvancedFieldsPanel extends JPanel {
     }
 
     /**
-     * This method set pathTextField Component with path selected on FileChooser
+     * This method is to add all components to JPanel
      * */
     private void addComponentsToPanel(){
         this.add(extensionLabel);

@@ -49,7 +49,7 @@ public class SearchMenu extends JPanel{
     }
 
     /**
-     * This method returns simple button component
+     * This method returns advanced button component
      * @return JButton to implement its events
      * */
     public JButton getAdvancedButton(){
