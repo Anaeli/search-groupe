@@ -13,6 +13,11 @@ package com.jalasoft.search.controller;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+/*
+ * Class to manage criteria for search files or folder
+ * @version  1.0
+ * @author Eliana Navia
+ */
 public class SearchCriteria {
     private Logger log =  Logger.getLogger(getClass());
 
@@ -21,6 +26,9 @@ public class SearchCriteria {
     private String extension;
     private Boolean isHidden;
 
+    /**
+     * Constructor method
+     */
     public SearchCriteria(){
         PropertyConfigurator.configure("log4j.properties");
     }

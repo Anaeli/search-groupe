@@ -1,3 +1,13 @@
+/*
+ * SearchCriteriaTest.java
+ *
+ * Copyright (c) 2018 Jalasoft.
+ *
+ * This software is the confidential and proprietary information of Jalasoft.
+ * ("Confidential Information").
+ * You shall not disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into with Jalasoft.
+ */
 package com.jalasoft.search.controller;
 
 import org.junit.Test;
@@ -12,7 +22,6 @@ public class SearchCriteriaTest {
     public void validateReturnFileNameInformation(){
         SearchCriteria criteria = new SearchCriteria();
         criteria.setFileName("text1.txt");
-        criteria.getFileName();
         assertEquals("text1.txt", criteria.getFileName());
     }
 
