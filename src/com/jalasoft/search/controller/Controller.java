@@ -11,6 +11,7 @@
 package com.jalasoft.search.controller;
 
 import com.jalasoft.search.common.Validator;
+import com.jalasoft.search.model.Asset;
 import com.jalasoft.search.view.MainWindow;
 import com.jalasoft.search.model.FileSearch;
 import com.jalasoft.search.model.Search;
@@ -62,8 +63,8 @@ public class Controller {
         criteria.setHidden(searchWindow.getHiddenFlag());
         search.setSearchCriteria(criteria);
         int counter = 1;
-        for (FileSearch file : search.getResults()) {
-            searchWindow.addRowResult(new Object[]{counter++, file.getName(), file.getPath(), file.getExtension()});
+        for (Asset file : search.getResults()) {
+            searchWindow.addRowResult(new Object[]{counter++, file.getName(), file.getPath() });
         }
     }
 }

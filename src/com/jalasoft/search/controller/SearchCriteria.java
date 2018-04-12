@@ -22,6 +22,7 @@ public class SearchCriteria {
     private String path;
     private String extension;
     private Boolean isHidden;
+    private int type;
 
     /**
      * Constructor method
@@ -48,12 +49,19 @@ public class SearchCriteria {
     }
 
     /**
+     * Method to return the path
+     * @return type file
+     */
+    public int getType() {
+        getInstance().getLogger().info("type: " + type);
+        return type;
+    }
+    /**
      * Method to set the file name
      * @param fileName
      */
     public void setFileName(String fileName) {
         this.fileName = fileName;
-        getInstance().getLogger().info("New filename: " + fileName);
     }
 
     /**
@@ -94,5 +102,13 @@ public class SearchCriteria {
      */
     public void setHidden(Boolean hidden) {
         isHidden = hidden;
+    }
+
+    /**
+     * Method to set if a file is hidden or not
+     * @param type, true if the file is hidden otherwise false
+     */
+    public void setType(int type) {
+        this.type = type;
     }
 }
