@@ -12,12 +12,20 @@ package com.jalasoft.search.controller;
 
 import static com.jalasoft.search.common.Log.getInstance;
 
+/*
+ * Class to manage criteria for search files or folder
+ * @version  1.0
+ * @author Eliana Navia
+ */
 public class SearchCriteria {
     private String fileName;
     private String path;
     private String extension;
     private Boolean isHidden;
 
+    /**
+     * Constructor method
+     */
     public SearchCriteria(){
     }
 
