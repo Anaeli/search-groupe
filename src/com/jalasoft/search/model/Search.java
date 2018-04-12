@@ -62,10 +62,9 @@ public class Search {
      * this method are charged return the results using as parameters the attributes
      * @return a list with all files what match with all parameters defined.
      * */
-    public ArrayList<FileSearch> getResults(){
+    public ArrayList<Asset> getResults(){
 
-
-        ArrayList<FileSearch> res = listAllFilesInPath(searchCriteria.getPath());
+        ArrayList<Asset> res = listAllFilesInPath(searchCriteria.getPath());
         if(searchCriteria.getFileName() != null){
             res = searchBasedOnNameCriteria(searchCriteria.getFileName(),res);
         }
@@ -76,29 +75,15 @@ public class Search {
     }
 
     /**
-     * this method are changer to return the file extension
-     * */
-    private String getExtension(String fileName){
-
-        String extension = "";
-
-        int i = fileName.lastIndexOf('.');
-        if (i > 0) {
-            extension = fileName.substring(i+1);
-        }
-        return extension;
-    }
-
-    /**
      * charged to evaluate the files into the list based on the name
      * @param nameToSearch criteria To Search
      * @param listToSearch where is lookfor the criteria
      * @return ArrayList with all files what match with the criteria
      * */
-    private ArrayList<FileSearch> searchBasedOnNameCriteria(String nameToSearch, ArrayList<FileSearch> listToSearch){
+    private ArrayList<Asset> searchBasedOnNameCriteria(String nameToSearch, ArrayList<Asset> listToSearch){
 
-        ArrayList<FileSearch> listres = new ArrayList();
-        for (FileSearch f: listToSearch) {
+        ArrayList<Asset> listres = new ArrayList();
+        for (Asset f: listToSearch) {
             if (f.getName().contains(nameToSearch) ){
                 listres.add(f);
             }
@@ -112,10 +97,10 @@ public class Search {
      * @param listSearch where is searched the criteria
      * @return ArrayList with all files what match with the criteria
      * */
-    private ArrayList<FileSearch> searchBasedOnExtension(String extension, ArrayList<FileSearch> listSearch){
+    private ArrayList<Asset> searchBasedOnExtension(String extension, ArrayList<Asset> listSearch){
 
-        ArrayList<FileSearch> listResult = new ArrayList();
-        for (FileSearch f: listSearch) {
+        ArrayList<Asset> listResult = new ArrayList();
+        for (Asset f: listSearch) {
             if (f.getName().contains(extension) ){
                 listResult.add(f);
             }
@@ -148,9 +133,9 @@ public class Search {
      * @param path to create the File
      * @return arraylist with all files and folder what are content in the path
      * */
-    private ArrayList<FileSearch> listAllFilesInPath(String path){
+    private ArrayList<Asset> listAllFilesInPath(String path){
 
-        ArrayList <FileSearch> allFilesInFolderList = new ArrayList<>();
+        ArrayList <Asset> allFilesInFolderList = new ArrayList<>();
         File files = new File(path);
         if(files.exists() && files.isDirectory())
         listFilesForFolder(files, allFilesInFolderList);
@@ -163,25 +148,19 @@ public class Search {
      * @param folder this Param is a File object with the path setup
      * @param res is an ArrayList of FileSearch what is filled the this method
      * */
-    private void listFilesForFolder(File folder , ArrayList<FileSearch> res) {
+    private void listFilesForFolder(File folder , ArrayList<Asset> res) {
 
         for (File fileEntry : folder.listFiles()) {
+            Asset asset;
             if (fileEntry.isDirectory()) {
-                String tempName = fileEntry.getName();
-                String tempPath = fileEntry.getAbsolutePath();
-                FileSearch fileJ = new FileSearch(tempPath,tempName,0,null);
-                res.add(fileJ);
+                asset = FactoryAsset.createAssets("folder",fileEntry);
                 listFilesForFolder(fileEntry, res);
-            } else {
-                if (fileEntry.isFile()) {
-                    String tempName = fileEntry.getName();
-                    String tempPath = folder.getAbsolutePath();
-                    int tempSize = (int) fileEntry.length();
-                    String temExten = getExtension(tempName);
-                    FileSearch fileJ = new FileSearch(tempPath,tempName,tempSize,temExten);
-                    res.add(fileJ);
-                }
+            } else if (fileEntry.isFile()){
+                asset = FactoryAsset.createAssets("file", fileEntry);
+            }else{
+                asset = FactoryAsset.createAssets("other", fileEntry);
             }
+            res.add(asset);
         }
     }
 

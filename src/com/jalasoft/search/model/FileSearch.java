@@ -13,59 +13,33 @@
 package com.jalasoft.search.model;
 
 /**
- * Search is charged of model the files based over the attributes
+ * Search is of model the files based over the attributes
  * @version  1.0
  * @author Luis Cachi
  */
 
-public class FileSearch {
-    private String path;
-    private String name;
-    private int size;
-    private String extension;
-
+public class FileSearch extends Asset {    String extension;
 
     /**
-     * constructor of File Search
+     * Constructor of File
+     * File is going to be created with values retrieved from found folders
+     * @param name of where the object found
+     * @param size in bites of the object
      * @param path of where the object found
-     * @param name what the object has assigned
-     * @param size in bites of the objet
-     * @param extension extension that file has
+     * @param owner Owner name
+     * @param extension that has the file
+     * @param readOnly its the file readonly
+     * @param hidden  its the file hidden
      * */
-    public FileSearch(String path, String name, int size, String extension) {
-        this.path = path;
-        this.name = name;
-        this.size = size;
+    public FileSearch(String name, int size, String path, String owner, String extension,
+                boolean hidden, boolean readOnly) {
+        super(name, size, path, owner, hidden, readOnly);
         this.extension = extension;
     }
 
     /**
-     * this method are charged return the Path where the object found
-     * @return path into a String
-     * */
-    public String getPath() {
-        return path;
-    }
-
-    /**
-     * this method are charged return the Name what the object had
-     * @return Name into a String
-     * */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * this method are charged return the Name what the object had
-     * @return Size in bites of the file
-     * */
-    public int getSize() {
-        return size;
-    }
-
-    /**
-     * this method are charged return the Name what the object had
-     * @return Extension that has the file
+     * this method return the Extension what has the file
+     * @return extension of the object
      * */
     public String getExtension() {
         return extension;
