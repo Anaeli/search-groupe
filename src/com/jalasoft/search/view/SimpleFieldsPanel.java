@@ -12,7 +12,6 @@
 package com.jalasoft.search.view;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 
 /**
  *
@@ -22,7 +21,7 @@ import java.io.File;
  * @version  1.0
  * @author Rodrigo Saul Cespedes Murillo
  */
-public class SimpleFieldsPanel extends JPanel{
+public class SimpleFieldsPanel extends BasePanel{
     // Labels
     private JLabel filenameLabel;
     private JLabel pathLabel;
@@ -40,18 +39,21 @@ public class SimpleFieldsPanel extends JPanel{
     // Panels
     private JPanel fileChooserPanel;
 
+    private JPanel formPanels[][];
+
     /**
      * Constructor initializes this Panel as grid layout also add components to this JPanel
      * */
     public SimpleFieldsPanel(){
-        this.setPreferredSize(new Dimension(400,100));
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setPreferredSize(new Dimension(500,100));
+        //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new GridLayout(5,1));
         this.setBorder(BorderFactory.createTitledBorder("Simple Search"));
         filenameLabel = new JLabel("File Name");
         pathLabel = new JLabel("Path");
         filenameTextField = new JTextField(20);
         filenameTextField.setMaximumSize(filenameTextField.getPreferredSize());
-        pathTextField = new JTextField(40);
+        pathTextField = new JTextField(30);
         pathTextField.setMaximumSize(pathTextField.getPreferredSize());
         fileChooserButton = new JButton("Select");
         fileChooser = new JFileChooser();
@@ -86,11 +88,12 @@ public class SimpleFieldsPanel extends JPanel{
      * This method is to tadd all components to JPanel
      * */
     private void addComponentsToPanel(){
-        this.add(filenameLabel);
-        this.add(filenameTextField);
-        this.add(pathLabel);
-        this.add(pathTextField);
-        this.add(fileChooserButton);
+        formPanels = addPanelToGrid(5, 1);
+        formPanels[0][0].add(filenameLabel);
+        formPanels[0][0].add(filenameTextField);
+        formPanels[1][0].add(pathLabel);
+        formPanels[1][0].add(pathTextField);
+        formPanels[1][0].add(fileChooserButton);
     }
 
     /**

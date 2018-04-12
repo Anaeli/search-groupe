@@ -5,30 +5,19 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class ResultSearchPanel extends JPanel {
-    private JButton searchButton;
     private JTable resultTable;
     private DefaultTableModel defaultTableModel;
 
     //headers for the table
-    private String[] headerTable = new String[] { "#", "Filename", "Path" };
+    private String[] headerTable = new String[] { "#", "Filename", "Path", "Extension", "Hidden" };
 
     public ResultSearchPanel(){
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createTitledBorder("Results"));
-        this.setPreferredSize(new Dimension(0, 900));
-        searchButton = new JButton("Search");
+        this.setPreferredSize(new Dimension(1000, 700));
         defaultTableModel = new DefaultTableModel(new Object[][] { }, headerTable);
         resultTable = new JTable(defaultTableModel);
         this.add(new JScrollPane(resultTable), BorderLayout.CENTER);
-        this.add(searchButton, BorderLayout.EAST);
-    }
-
-    /**
-     * This method returns Search button
-     * @return JButton to implement its event
-     * */
-    public JButton getSearchButton() {
-        return searchButton;
     }
 
     /**

@@ -58,12 +58,12 @@ public class Controller {
             searchWindow.displayFieldErrorMessage("File Name Invalid");
         }
         criteria.setPath(searchWindow.getPathText());
-//        criteria.setExtension();
-//        criteria.setHidden();
+        criteria.setExtension(searchWindow.getExtensionText());
+        criteria.setHidden(searchWindow.getHiddenFlag());
         search.setSearchCriteria(criteria);
         int counter = 1;
         for (FileSearch file : search.getResults()) {
-            searchWindow.addRowResult(new Object[]{counter++, file.getName(), file.getPath()});
+            searchWindow.addRowResult(new Object[]{counter++, file.getName(), file.getPath(), file.getExtension()});
         }
     }
 }

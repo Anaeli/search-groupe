@@ -47,13 +47,15 @@ public class MainWindow extends JFrame {
         resultSearchPanel = new ResultSearchPanel();
         mainFieldsPanel = new JPanel();
         mainFieldsPanel.setLayout(new BoxLayout(mainFieldsPanel, BoxLayout.Y_AXIS));
+        mainFieldsPanel.setPreferredSize(new Dimension(1000,900));
 
         headerPanel = new HeaderPanel();
         fieldsPanel = new JPanel();
-        fieldsPanel.setLayout(new BoxLayout(fieldsPanel, BoxLayout.X_AXIS));
-        fieldsPanel.setPreferredSize(new Dimension(500,200));
+        fieldsPanel.setLayout(new GridLayout(1,2));
+        fieldsPanel.setPreferredSize(new Dimension(1000, 200));
         fieldsPanel.add(simpleFieldPanel);
         fieldsPanel.add(advancedFieldPanel);
+
         mainFieldsPanel.add(fieldsPanel);
         mainFieldsPanel.add(resultSearchPanel);
 
@@ -69,19 +71,35 @@ public class MainWindow extends JFrame {
     }
 
     /**
-     * This method returns Filename string of simpleFieldPanel
-     * @return string of filenameTextField Component
+     * This method returns path string of simpleFieldPanel
+     * @return string of fileChooser Component
      * */
     public String getPathText(){
         return simpleFieldPanel.getPathTextField();
     }
 
     /**
-     * This method returns path string of simpleFieldPanel
-     * @return string of fileChooser Component
+     * * This method returns Filename string of simpleFieldPanel
+     * @return string of filenameTextField Component
      * */
     public String getFileNameText(){
         return simpleFieldPanel.getFilenameTextField();
+    }
+
+    /**
+     * This method returns extension string of advancedFieldPanel
+     * @return string of extensionTextField Component
+     * */
+    public String getExtensionText(){
+        return advancedFieldPanel.getExtensionText();
+    }
+
+    /**
+     * This method returns flag related to hidden field.
+     * @return Boolean hiddenCheckBox Component
+     * */
+    public Boolean getHiddenFlag(){
+        return advancedFieldPanel.getHiddenFlag();
     }
 
     /**
@@ -89,7 +107,7 @@ public class MainWindow extends JFrame {
      * @return JButton Component
      * */
     public JButton getSearchButton(){
-        return resultSearchPanel.getSearchButton();
+        return menuPanel.getSearchButton();
     }
 
     /**
