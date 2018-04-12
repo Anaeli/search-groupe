@@ -74,6 +74,12 @@ public class Search {
         if(searchCriteria.getHidden() != null){
             res = searchBasedOnHidden(searchCriteria.getHidden(),res);
         }
+        if(searchCriteria.getType() == 0){
+            res = getAllFolders(res);
+        }
+        if(searchCriteria.getType() == 1){
+            res = getAllFiles(res);
+        }
         return res;
     }
 
@@ -105,6 +111,38 @@ public class Search {
         ArrayList<Asset> listres = new ArrayList();
         for (Asset f: listToSearch) {
             if (f.isHidden()){
+                listres.add(f);
+            }
+        }
+        return listres;
+    }
+
+    /**
+     * charged to evaluate the files into the list based on the name
+     * @param listToSearch where is lookfor the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<Asset> getAllFiles(ArrayList<Asset> listToSearch){
+
+        ArrayList<Asset> listres = new ArrayList();
+        for (Asset f: listToSearch) {
+            if (f instanceof FileSearch){
+                listres.add(f);
+            }
+        }
+        return listres;
+    }
+
+    /**
+     * charged to evaluate the files into the list based on the name
+     * @param listToSearch where is lookfor the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<Asset> getAllFolders(ArrayList<Asset> listToSearch){
+
+        ArrayList<Asset> listres = new ArrayList();
+        for (Asset f: listToSearch) {
+            if (f instanceof Folder){
                 listres.add(f);
             }
         }
@@ -165,7 +203,7 @@ public class Search {
 
 
     /**
-     * this method are charged to return all files content into a path
+     * this method is charged to return all files content into a path
      * this are returned into an array in file array
      * @param path to create the File
      * @return arraylist with all files and folder what are content in the path
@@ -180,7 +218,7 @@ public class Search {
     }
 
     /**
-     * this method are charged fill the array using fileJ this only is called from
+     * this method is charged fill the array using fileJ this only is called from
      * listAllFilesInPath method
      * @param folder this Param is a File object with the path setup
      * @param res is an ArrayList of FileSearch what is filled the this method

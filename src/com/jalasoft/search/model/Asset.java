@@ -13,7 +13,6 @@ public class Asset {
     private String owner;
     private boolean hidden;
     private boolean readOnly;
-
     /**
      * constructor of Asset
      * @param name of where the object found

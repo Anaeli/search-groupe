@@ -15,7 +15,7 @@ package com.jalasoft.search.model;
 import java.io.File;
 
 /**
- *  The FactoryAsset class should be return an asset created from a File.
+ *  The FactoryAsset class should return an asset created from a File.
  *
  * @version  1.0
  * @author Luis Cachi
@@ -24,7 +24,7 @@ import java.io.File;
 public abstract class  FactoryAsset {
 
     /**
-     * this method is changer to return the asset object created
+     * this method is charged to return the asset object created
      * @param asset the File object from where we get the values
      * @param type The Type passed as string
      * */
@@ -39,17 +39,17 @@ public abstract class  FactoryAsset {
         String extension = getExtension(tempName);
 
             if (type == "folder") {
-                return new Folder(tempName,tempSize,tempPath,tempOwner, asset.listFiles().length,hidden,readOnly);
+                return new Folder(tempName, tempSize, tempPath, tempOwner, asset.listFiles().length, hidden, readOnly);
             } else if(type == "file"){
-                return new FileSearch(tempName,tempSize,tempPath,tempOwner,extension,hidden,readOnly);
+                return new FileSearch(tempName, tempSize, tempPath, tempOwner, extension, hidden, readOnly);
 
             }else{
-                return new Asset(tempName,tempSize,tempPath,tempOwner,hidden,readOnly);
+                return new Asset(tempName, tempSize, tempPath, tempOwner, hidden, readOnly);
             }
     }
 
     /**
-     * this method is changer to return the file extension
+     * this method is charged to return the file extension
      * @param fileName this the completed name
      * */
     private static String getExtension(String fileName){

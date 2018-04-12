@@ -20,6 +20,7 @@ public class SearchCriteria {
     private String path;
     private String extension;
     private Boolean isHidden;
+    private int type;
 
     public SearchCriteria(){
         PropertyConfigurator.configure("log4j.properties");
@@ -43,6 +44,14 @@ public class SearchCriteria {
         return path;
     }
 
+    /**
+     * Method to return the path
+     * @return type file
+     */
+    public int getType() {
+        log.info(type);
+        return type;
+    }
     /**
      * Method to set the file name
      * @param fileName
@@ -89,5 +98,13 @@ public class SearchCriteria {
      */
     public void setHidden(Boolean hidden) {
         isHidden = hidden;
+    }
+
+    /**
+     * Method to set if a file is hidden or not
+     * @param type, true if the file is hidden otherwise false
+     */
+    public void setType(int type) {
+        this.type = type;
     }
 }
