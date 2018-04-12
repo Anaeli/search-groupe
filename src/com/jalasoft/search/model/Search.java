@@ -134,7 +134,7 @@ public class Search {
     }
 
     /**
-     * charged to evaluate the files into the list based on the name
+     * charged to evaluate the files into the list based on the name.
      * @param listToSearch where is lookfor the criteria
      * @return ArrayList with all files what match with the criteria
      * */
