@@ -23,12 +23,8 @@ import java.awt.*;
  */
 public class MainWindow extends JFrame {
     private SearchMenu menuPanel;
-    private SimpleFieldsPanel simpleFieldPanel;
-    private AdvancedFieldsPanel advancedFieldPanel;
-    private ResultSearchPanel resultSearchPanel;
-    private JPanel fieldsPanel;
-    private JPanel mainFieldsPanel;
     private HeaderPanel headerPanel;
+    private BodyPanel bodyPanel;
     /**
      * Constructor initializes the name of JFrame
      * */
@@ -42,46 +38,50 @@ public class MainWindow extends JFrame {
     public void displayMainWindow() {
         this.getContentPane().setLayout(new BorderLayout());
         menuPanel = new SearchMenu();
-        simpleFieldPanel = new SimpleFieldsPanel();
-        advancedFieldPanel = new AdvancedFieldsPanel();
-        resultSearchPanel = new ResultSearchPanel();
-        mainFieldsPanel = new JPanel();
-        mainFieldsPanel.setLayout(new BoxLayout(mainFieldsPanel, BoxLayout.Y_AXIS));
-
         headerPanel = new HeaderPanel();
-        fieldsPanel = new JPanel();
-        fieldsPanel.setLayout(new BoxLayout(fieldsPanel, BoxLayout.X_AXIS));
-        fieldsPanel.setPreferredSize(new Dimension(500,200));
-        fieldsPanel.add(simpleFieldPanel);
-        fieldsPanel.add(advancedFieldPanel);
-        mainFieldsPanel.add(fieldsPanel);
-        mainFieldsPanel.add(resultSearchPanel);
+        bodyPanel = new BodyPanel();
 
         this.getContentPane().add(menuPanel, BorderLayout.WEST);
-        this.getContentPane().add(mainFieldsPanel, BorderLayout.CENTER);
+        this.getContentPane().add(bodyPanel, BorderLayout.CENTER);
         this.getContentPane().add(headerPanel, BorderLayout.NORTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1200, 900);
         this.setVisible(true);
 
-        menuPanel.getSimpleButton().addActionListener(e -> advancedFieldPanel.setVisible(false));
-        menuPanel.getAdvancedButton().addActionListener(e -> advancedFieldPanel.setVisible(true));
-    }
-
-    /**
-     * This method returns Filename string of simpleFieldPanel
-     * @return string of filenameTextField Component
-     * */
-    public String getPathText(){
-        return simpleFieldPanel.getPathTextField();
+        menuPanel.getSimpleButton().addActionListener(e -> bodyPanel.getSimpleFieldPanel().setVisible(false));
+        menuPanel.getAdvancedButton().addActionListener(e -> bodyPanel.getAdvancedFieldPanel().setVisible(true));
     }
 
     /**
      * This method returns path string of simpleFieldPanel
      * @return string of fileChooser Component
      * */
+    public String getPathText(){
+        return bodyPanel.getSimpleFieldPanel().getPathTextField();
+    }
+
+    /**
+     * * This method returns Filename string of simpleFieldPanel
+     * @return string of filenameTextField Component
+     * */
     public String getFileNameText(){
-        return simpleFieldPanel.getFilenameTextField();
+        return bodyPanel.getSimpleFieldPanel().getFilenameTextField();
+    }
+
+    /**
+     * This method returns extension string of advancedFieldPanel
+     * @return string of extensionTextField Component
+     * */
+    public String getExtensionText(){
+        return bodyPanel.getAdvancedFieldPanel().getExtensionText();
+    }
+
+    /**
+     * This method returns flag related to hidden field.
+     * @return Boolean hiddenCheckBox Component
+     * */
+    public Boolean getHiddenFlag(){
+        return bodyPanel.getAdvancedFieldPanel().getHiddenFlag();
     }
 
     /**
@@ -89,7 +89,7 @@ public class MainWindow extends JFrame {
      * @return JButton Component
      * */
     public JButton getSearchButton(){
-        return resultSearchPanel.getSearchButton();
+        return menuPanel.getSearchButton();
     }
 
     /**
@@ -110,13 +110,13 @@ public class MainWindow extends JFrame {
      * This method is to set rows on result table
      * */
     public void addRowResult(Object[] newRow){
-        resultSearchPanel.addRowOnTable(newRow);
+        bodyPanel.getResultSearchPanel().addRowOnTable(newRow);
     }
 
     /**
      * This method is to clean all rows of table results
      * */
     public void cleanTable(){
-        resultSearchPanel.cleanTable();
+        bodyPanel.getResultSearchPanel().cleanTable();
     }
 }

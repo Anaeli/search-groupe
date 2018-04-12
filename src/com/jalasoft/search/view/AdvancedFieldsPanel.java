@@ -10,7 +10,6 @@
  * with Jalasoft.
  */
 package com.jalasoft.search.view;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +22,8 @@ import java.awt.*;
  * @version  1.0
  * @author Rodrigo Saul Cespedes Murillo
  */
-public class AdvancedFieldsPanel extends JPanel {
+public class AdvancedFieldsPanel extends BasePanel {
+    // Labels
     private JLabel extensionLabel;
     private JLabel hiddenLabel;
     private JLabel typeLabel;
@@ -31,12 +31,15 @@ public class AdvancedFieldsPanel extends JPanel {
     private JTextField extensionTextField;
     private JCheckBox hiddenCheckBox;
     private JComboBox typeComboBox;
+
+    // Panels
+    private JPanel formPanels[][];
     /**
      * Constructor initializes this Panel as grid layout also add components to this JPanel
      * */
     public AdvancedFieldsPanel(){
-        this.setPreferredSize(new Dimension(400,100));
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setPreferredSize(new Dimension(500,100));
+        this.setLayout(new GridLayout(5,1));
         this.setBorder(BorderFactory.createTitledBorder("Advanced Search"));
         this.setVisible(false);
         initFieldComponents();
@@ -77,12 +80,13 @@ public class AdvancedFieldsPanel extends JPanel {
      * This method is to add all components to JPanel
      * */
     private void addComponentsToPanel(){
-        this.add(extensionLabel);
-        this.add(extensionTextField);
-        this.add(hiddenLabel);
-        this.add(hiddenCheckBox);
-        this.add(typeLabel);
-        this.add(typeComboBox);
+        formPanels = addPanelToGrid(5, 1);
+        formPanels[0][0].add(extensionLabel);
+        formPanels[0][0].add(extensionTextField);
+        formPanels[0][0].add(hiddenLabel);
+        formPanels[0][0].add(hiddenCheckBox);
+        formPanels[0][0].add(typeLabel);
+        formPanels[0][0].add(typeComboBox);
     }
 
     /**
