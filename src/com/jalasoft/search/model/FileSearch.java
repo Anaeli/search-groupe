@@ -13,7 +13,7 @@
 package com.jalasoft.search.model;
 
 /**
- * Search is charged of model the files based over the attributes
+ * Search is of model the files based over the attributes
  * @version  1.0
  * @author Luis Cachi
  */

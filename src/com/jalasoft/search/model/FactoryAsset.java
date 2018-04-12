@@ -15,7 +15,7 @@ package com.jalasoft.search.model;
 import java.io.File;
 
 /**
- *  The FactoryAsset class should be return an asset created from a File.
+ *  The FactoryAsset class should return an asset created from a File.
  *
  * @version  1.0
  * @author Luis Cachi
@@ -49,7 +49,7 @@ public class  FactoryAsset {
     }
 
     /**
-     * this method is changer to return the file extension
+     * this method is changed to return the file extension
      * @param fileName this the completed name
      * */
     private static String getExtension(String fileName){
