@@ -71,6 +71,9 @@ public class Search {
         if(searchCriteria.getExtension() != null){
             res = searchBasedOnExtension(searchCriteria.getExtension(),res);
         }
+        if(searchCriteria.getHidden() != null){
+            res = searchBasedOnHidden(searchCriteria.getHidden(),res);
+        }
         return res;
     }
 
@@ -85,6 +88,40 @@ public class Search {
         ArrayList<Asset> listres = new ArrayList();
         for (Asset f: listToSearch) {
             if (f.getName().contains(nameToSearch) ){
+                listres.add(f);
+            }
+        }
+        return listres;
+    }
+
+    /**
+     * charged to evaluate the files into the list based on the name
+     * @param ishiden criteria To Search
+     * @param listToSearch where is lookfor the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<Asset> searchBasedOnHidden(boolean ishiden, ArrayList<Asset> listToSearch){
+
+        ArrayList<Asset> listres = new ArrayList();
+        for (Asset f: listToSearch) {
+            if (f.isHidden()){
+                listres.add(f);
+            }
+        }
+        return listres;
+    }
+
+    /**
+     * charged to evaluate the files into the list based on the name
+     * @param isReadOnly criteria To Search
+     * @param listToSearch where is lookfor the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<Asset> searchBasedOnIsReadOnly(boolean isReadOnly, ArrayList<Asset> listToSearch){
+
+        ArrayList<Asset> listres = new ArrayList();
+        for (Asset f: listToSearch) {
+            if (f.isReadOnly()){
                 listres.add(f);
             }
         }
