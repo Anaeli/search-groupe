@@ -10,23 +10,20 @@
  */
 package com.jalasoft.search.controller;
 
-import static com.jalasoft.search.common.Log.getInstance;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
-/*
- * Class to manage criteria for search files or folder
- * @version  1.0
- * @author Eliana Navia
- */
 public class SearchCriteria {
+    private Logger log =  Logger.getLogger(getClass());
+
     private String fileName;
     private String path;
     private String extension;
     private Boolean isHidden;
+    private int type;
 
-    /**
-     * Constructor method
-     */
     public SearchCriteria(){
+        PropertyConfigurator.configure("log4j.properties");
     }
 
     /**
@@ -34,7 +31,7 @@ public class SearchCriteria {
      * @return file name
      */
     public String getFileName() {
-        getInstance().getLogger().info("Filename: " + fileName);
+        log.info(fileName);
         return fileName;
     }
 
@@ -43,17 +40,24 @@ public class SearchCriteria {
      * @return path
      */
     public String getPath() {
-        getInstance().getLogger().info("Path: " + path);
+        log.info(path);
         return path;
     }
 
+    /**
+     * Method to return the path
+     * @return type file
+     */
+    public int getType() {
+        log.info(type);
+        return type;
+    }
     /**
      * Method to set the file name
      * @param fileName
      */
     public void setFileName(String fileName) {
         this.fileName = fileName;
-        getInstance().getLogger().info("New filename: " + fileName);
     }
 
     /**
@@ -94,5 +98,13 @@ public class SearchCriteria {
      */
     public void setHidden(Boolean hidden) {
         isHidden = hidden;
+    }
+
+    /**
+     * Method to set if a file is hidden or not
+     * @param type, true if the file is hidden otherwise false
+     */
+    public void setType(int type) {
+        this.type = type;
     }
 }
