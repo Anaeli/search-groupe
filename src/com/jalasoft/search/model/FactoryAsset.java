@@ -28,14 +28,14 @@ public class  FactoryAsset {
      * @param asset the File object from where we get the values
      * @param type The Type passed as string
      * */
-    public static Asset createAssets(String type, File asset){
+    public static Asset createAssets(String type, File asset, String owner){
 
         String tempName = asset.getName();
         String tempPath = asset.getPath();
         int tempSize = (int) asset.length();
         boolean hidden = asset.isHidden();
         boolean readOnly = !asset.canWrite();
-        String tempOwner = "";
+        String tempOwner = owner;
         String extension = getExtension(tempName);
 
             if (type == "folder") {

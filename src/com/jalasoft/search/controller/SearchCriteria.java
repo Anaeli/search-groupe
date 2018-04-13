@@ -21,7 +21,7 @@ public class SearchCriteria {
     private String fileName;
     private String path;
     private String extension;
-    private Boolean isHidden;
+    private int isHidden;
     private int type;
 
     /**
@@ -84,7 +84,7 @@ public class SearchCriteria {
      * Method to get if a file is hidden or not
      * @return true if the file is hidden otherwise false
      */
-    public Boolean getHidden() {
+    public int getHidden() {
         return isHidden;
     }
 
@@ -100,7 +100,7 @@ public class SearchCriteria {
      * Method to set if a file is hidden or not
      * @param hidden, true if the file is hidden otherwise false
      */
-    public void setHidden(Boolean hidden) {
+    public void setHidden(int hidden) {
         isHidden = hidden;
     }
 
