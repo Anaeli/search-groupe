@@ -57,7 +57,8 @@ public class Controller {
         criteria.setFileName(filename);
         criteria.setPath(path);
         criteria.setExtension(searchWindow.getExtensionText());
-        //criteria.setHidden(searchWindow.getHiddenFlag());
+        criteria.setType(searchWindow.getTypeFlag());
+        criteria.setHidden(searchWindow.getHiddenFlag());
         search.setSearchCriteria(criteria);
         if ( filename.isEmpty() && !path.isEmpty()) {
             search();
@@ -75,13 +76,12 @@ public class Controller {
      * Method to search a file o folder
      */
     private void search() {
-        if(search.getResults() == null) {
-            searchWindow.displayFieldErrorMessage("No record found!!");
-        }else {
+        try {
             int counter = 1;
             for (Asset file : search.getResults()) {
                 searchWindow.addRowResult(new Object[]{counter++, file.getName(), file.getPath()});
             }
-        }
+        }catch (Exception e){searchWindow.displayFieldErrorMessage("No Records Found");}
     }
+
 }

@@ -29,7 +29,6 @@ public class  FactoryAsset {
      * @param type The Type passed as string
      * */
     public static Asset createAssets(String type, File asset, String owner){
-
         String tempName = asset.getName();
         String tempPath = asset.getPath();
         int tempSize = (int) asset.length();
@@ -37,12 +36,10 @@ public class  FactoryAsset {
         boolean readOnly = !asset.canWrite();
         String tempOwner = owner;
         String extension = getExtension(tempName);
-
             if (type == "folder") {
                 return new Folder(tempName,tempSize,tempPath,tempOwner, asset.listFiles().length,hidden,readOnly);
             } else if(type == "file"){
                 return new FileSearch(tempName,tempSize,tempPath,tempOwner,extension,hidden,readOnly);
-
             }else{
                 return new Asset(tempName,tempSize,tempPath,tempOwner,hidden,readOnly);
             }

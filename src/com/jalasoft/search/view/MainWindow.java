@@ -80,10 +80,17 @@ public class MainWindow extends JFrame {
      * This method returns flag related to hidden field.
      * @return Boolean hiddenCheckBox Component
      * */
-    public Boolean getHiddenFlag(){
+    public int getHiddenFlag(){
         return bodyPanel.getAdvancedFieldPanel().getHiddenFlag();
     }
 
+    /**
+     * This method returns flag related to hidden field.
+     * @return Boolean hiddenCheckBox Component
+     * */
+    public int getTypeFlag(){
+        return bodyPanel.getAdvancedFieldPanel().getTypeFlag();
+    }
     /**
      * This method returns Search Button
      * @return JButton Component

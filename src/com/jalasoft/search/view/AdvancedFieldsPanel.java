@@ -25,11 +25,13 @@ import java.awt.*;
 public class AdvancedFieldsPanel extends BasePanel {
     // Labels
     private JLabel extensionLabel;
+    private JLabel ownerName;
     private JLabel hiddenLabel;
     private JLabel typeLabel;
 
     private JTextField extensionTextField;
-    private JCheckBox hiddenCheckBox;
+    private JTextField ownerTextField;
+    private JComboBox hiddenComboBox;
     private JComboBox typeComboBox;
 
     // Panels
@@ -56,7 +58,11 @@ public class AdvancedFieldsPanel extends BasePanel {
         typeLabel = new JLabel("Type");
         extensionTextField = new JTextField(10);
         extensionTextField.setMaximumSize(extensionTextField.getPreferredSize());
-        hiddenCheckBox = new JCheckBox();
+        hiddenComboBox = new JComboBox();
+        //hiddenComboBox.setMaximumSize(new Dimension(180, typeComboBox.getPreferredSize().height));
+        hiddenComboBox.addItem("Hidden/No Hidden");
+        hiddenComboBox.addItem("Hidden");
+        hiddenComboBox.addItem("No Hidden");
         typeComboBox = new JComboBox();
         typeComboBox.setMaximumSize(new Dimension(180, typeComboBox.getPreferredSize().height));
         typeComboBox.addItem("File/Folder");
@@ -71,7 +77,7 @@ public class AdvancedFieldsPanel extends BasePanel {
         extensionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         extensionTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
         hiddenLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        hiddenCheckBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+        hiddenComboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
         typeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         typeComboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
@@ -84,7 +90,7 @@ public class AdvancedFieldsPanel extends BasePanel {
         formPanels[0][0].add(extensionLabel);
         formPanels[0][0].add(extensionTextField);
         formPanels[0][0].add(hiddenLabel);
-        formPanels[0][0].add(hiddenCheckBox);
+        formPanels[0][0].add(hiddenComboBox);
         formPanels[0][0].add(typeLabel);
         formPanels[0][0].add(typeComboBox);
     }
@@ -101,8 +107,16 @@ public class AdvancedFieldsPanel extends BasePanel {
      * This method returns hidden flag it can be true or false
      * @return Boolean of hidden TextField Component
      * */
-    public Boolean getHiddenFlag() {
-        return hiddenCheckBox.isSelected();
+    public int getHiddenFlag() {
+        return hiddenComboBox.getSelectedIndex();
+    }
+
+    /**
+     * This method returns hidden flag it can be true or false
+     * @return Boolean of hidden TextField Component
+     * */
+    public int getTypeFlag() {
+        return typeComboBox.getSelectedIndex();
     }
 
 }

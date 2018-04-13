@@ -66,7 +66,6 @@ public class Search {
      * @return a list with all files what match with all parameters defined.
      * */
     public ArrayList<Asset> getResults(){
-
         ArrayList<Asset> res = listAllFilesInPath(searchCriteria.getPath());
         if(searchCriteria.getFileName() != ""){
             res = searchBasedOnNameCriteria(searchCriteria.getFileName(),res);
@@ -74,17 +73,21 @@ public class Search {
         if(searchCriteria.getExtension() != ""){
             res = searchBasedOnExtension(searchCriteria.getExtension(),res);
         }
+        System.out.println("asdfasdf "+searchCriteria.getHidden());
         if(searchCriteria.getHidden() == 1){
             res = getAllHiddenFiles(res);
         }
         if(searchCriteria.getHidden() == 2){
             res = getAllNoHiddenFiles(res);
         }
-        if(searchCriteria.getType() == 1){
+        if(searchCriteria.getType() == 2){
             res = getAllFolders(res);
         }
-        if(searchCriteria.getType() == 2){
+        if(searchCriteria.getType() == 1){
             res = getAllFiles(res);
+        }
+        if(searchCriteria.getOwner() != ""){
+            res = searchBasedOnOwnerName(searchCriteria.getFileName(),res);
         }
         return res;
     }
@@ -262,7 +265,6 @@ public class Search {
      * @return arraylist with all files and folder what are content in the path
      * */
     private ArrayList<Asset> listAllFilesInPath(String path){
-
         ArrayList <Asset> allFilesInFolderList = new ArrayList<>();
         File files = new File(path);
         if(files.exists() && files.isDirectory())
