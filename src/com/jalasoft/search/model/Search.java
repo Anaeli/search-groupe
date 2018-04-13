@@ -15,6 +15,8 @@ package com.jalasoft.search.model;
 import com.jalasoft.search.controller.SearchCriteria;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 /**
@@ -25,10 +27,11 @@ import java.util.ArrayList;
 
 public class Search {
 
-    //private static String path = "C:\\testfile";
-    //private static String nameFile = "h";
     private SearchCriteria searchCriteria;
 
+    /**
+     * Constructor
+     */
     public Search() {
     }
 
@@ -65,22 +68,55 @@ public class Search {
     public ArrayList<Asset> getResults(){
 
         ArrayList<Asset> res = listAllFilesInPath(searchCriteria.getPath());
-        if(searchCriteria.getFileName() != null){
+        if(searchCriteria.getFileName() != ""){
             res = searchBasedOnNameCriteria(searchCriteria.getFileName(),res);
         }
-        if(searchCriteria.getExtension() != null){
+        if(searchCriteria.getExtension() != ""){
             res = searchBasedOnExtension(searchCriteria.getExtension(),res);
         }
-        if(searchCriteria.getHidden() != null){
-            res = searchBasedOnHidden(searchCriteria.getHidden(),res);
+        if(searchCriteria.getHidden() == 1){
+            res = getAllHiddenFiles(res);
         }
-        if(searchCriteria.getType() == 0){
-            res = getAllFolders(res);
+        if(searchCriteria.getHidden() == 2){
+            res = getAllNoHiddenFiles(res);
         }
         if(searchCriteria.getType() == 1){
+            res = getAllFolders(res);
+        }
+        if(searchCriteria.getType() == 2){
             res = getAllFiles(res);
         }
         return res;
+    }
+
+    /**
+     * This method return a list of all no Hidden Files
+     * @param listToSearch where is lookfor the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<Asset> getAllNoHiddenFiles(ArrayList<Asset> listToSearch) {
+        ArrayList<Asset> listRes = new ArrayList();
+        for (Asset f: listToSearch) {
+            if (!f.isHidden()){
+                listRes.add(f);
+            }
+        }
+        return listRes;
+    }
+
+    /**
+     * This method return a list of all Hidden Files
+     * @param listToSearch where is lookfor the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<Asset> getAllHiddenFiles(ArrayList<Asset> listToSearch) {
+        ArrayList<Asset> listRes = new ArrayList();
+        for (Asset f: listToSearch) {
+            if (f.isHidden()){
+                listRes.add(f);
+            }
+        }
+        return listRes;
     }
 
     /**
@@ -91,13 +127,30 @@ public class Search {
      * */
     private ArrayList<Asset> searchBasedOnNameCriteria(String nameToSearch, ArrayList<Asset> listToSearch){
 
-        ArrayList<Asset> listres = new ArrayList();
+        ArrayList<Asset> listRes = new ArrayList();
         for (Asset f: listToSearch) {
             if (f.getName().contains(nameToSearch) ){
-                listres.add(f);
+                listRes.add(f);
             }
         }
-        return listres;
+        return listRes;
+    }
+
+    /**
+     * charged to evaluate the files into the list based on the name
+     * @param nameToSearch criteria To Search
+     * @param listToSearch where is lookfor the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<Asset> searchBasedOnOwnerName(String nameToSearch, ArrayList<Asset> listToSearch){
+
+        ArrayList<Asset> listRes = new ArrayList();
+        for (Asset f: listToSearch) {
+            if (f.getOwner().contains(nameToSearch) ){
+                listRes.add(f);
+            }
+        }
+        return listRes;
     }
 
     /**
@@ -108,13 +161,13 @@ public class Search {
      * */
     private ArrayList<Asset> searchBasedOnHidden(boolean ishiden, ArrayList<Asset> listToSearch){
 
-        ArrayList<Asset> listres = new ArrayList();
+        ArrayList<Asset> listRes = new ArrayList();
         for (Asset f: listToSearch) {
             if (f.isHidden()){
-                listres.add(f);
+                listRes.add(f);
             }
         }
-        return listres;
+        return listRes;
     }
 
     /**
@@ -124,13 +177,13 @@ public class Search {
      * */
     private ArrayList<Asset> getAllFiles(ArrayList<Asset> listToSearch){
 
-        ArrayList<Asset> listres = new ArrayList();
+        ArrayList<Asset> listRes = new ArrayList();
         for (Asset f: listToSearch) {
             if (f instanceof FileSearch){
-                listres.add(f);
+                listRes.add(f);
             }
         }
-        return listres;
+        return listRes;
     }
 
     /**
@@ -140,13 +193,13 @@ public class Search {
      * */
     private ArrayList<Asset> getAllFolders(ArrayList<Asset> listToSearch){
 
-        ArrayList<Asset> listres = new ArrayList();
+        ArrayList<Asset> listRes = new ArrayList();
         for (Asset f: listToSearch) {
             if (f instanceof Folder){
-                listres.add(f);
+                listRes.add(f);
             }
         }
-        return listres;
+        return listRes;
     }
 
     /**
@@ -157,13 +210,13 @@ public class Search {
      * */
     private ArrayList<Asset> searchBasedOnIsReadOnly(boolean isReadOnly, ArrayList<Asset> listToSearch){
 
-        ArrayList<Asset> listres = new ArrayList();
+        ArrayList<Asset> listRes = new ArrayList();
         for (Asset f: listToSearch) {
             if (f.isReadOnly()){
-                listres.add(f);
+                listRes.add(f);
             }
         }
-        return listres;
+        return listRes;
     }
 
     /**
@@ -226,14 +279,20 @@ public class Search {
     private void listFilesForFolder(File folder , ArrayList<Asset> res) {
 
         for (File fileEntry : folder.listFiles()) {
+            String owner = "";
             Asset asset;
+            try {
+                owner = Files.getOwner(fileEntry.toPath()).getName();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (fileEntry.isDirectory()) {
-                asset = FactoryAsset.createAssets("folder",fileEntry);
+                asset = FactoryAsset.createAssets("folder",fileEntry, owner);
                 listFilesForFolder(fileEntry, res);
             } else if (fileEntry.isFile()){
-                asset = FactoryAsset.createAssets("file", fileEntry);
+                asset = FactoryAsset.createAssets("file", fileEntry, owner);
             }else{
-                asset = FactoryAsset.createAssets("other", fileEntry);
+                asset = FactoryAsset.createAssets("other", fileEntry, owner);
             }
             res.add(asset);
         }
