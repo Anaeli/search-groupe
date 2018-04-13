@@ -25,7 +25,7 @@ import java.awt.*;
 public class AdvancedFieldsPanel extends BasePanel {
     // Labels
     private JLabel extensionLabel;
-    private JLabel ownerName;
+    private JLabel ownerLabel;
     private JLabel hiddenLabel;
     private JLabel typeLabel;
 
@@ -54,12 +54,14 @@ public class AdvancedFieldsPanel extends BasePanel {
      * */
     private void initFieldComponents() {
         extensionLabel = new JLabel("Ext");
+        ownerLabel = new JLabel("Owner");
         hiddenLabel = new JLabel("Hidden");
         typeLabel = new JLabel("Type");
         extensionTextField = new JTextField(10);
         extensionTextField.setMaximumSize(extensionTextField.getPreferredSize());
+        ownerTextField = new JTextField(10);
+        ownerTextField .setMaximumSize(extensionTextField.getPreferredSize());
         hiddenComboBox = new JComboBox();
-        //hiddenComboBox.setMaximumSize(new Dimension(180, typeComboBox.getPreferredSize().height));
         hiddenComboBox.addItem("Hidden/No Hidden");
         hiddenComboBox.addItem("Hidden");
         hiddenComboBox.addItem("No Hidden");
@@ -89,6 +91,8 @@ public class AdvancedFieldsPanel extends BasePanel {
         formPanels = addPanelToGrid(5, 1);
         formPanels[0][0].add(extensionLabel);
         formPanels[0][0].add(extensionTextField);
+        formPanels[0][0].add(ownerLabel);
+        formPanels[0][0].add(ownerTextField);
         formPanels[0][0].add(hiddenLabel);
         formPanels[0][0].add(hiddenComboBox);
         formPanels[0][0].add(typeLabel);
@@ -117,6 +121,15 @@ public class AdvancedFieldsPanel extends BasePanel {
      * */
     public int getTypeFlag() {
         return typeComboBox.getSelectedIndex();
+    }
+
+    /**
+     * This method returns owner name
+     * @return String owner name
+     *
+     */
+    public String getOwnerText() {
+        return ownerTextField.getText();
     }
 
 }

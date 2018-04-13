@@ -59,6 +59,7 @@ public class Controller {
         criteria.setExtension(searchWindow.getExtensionText());
         criteria.setType(searchWindow.getTypeFlag());
         criteria.setHidden(searchWindow.getHiddenFlag());
+        criteria.setOwner(searchWindow.getOwnerText());
         search.setSearchCriteria(criteria);
         if ( filename.isEmpty() && !path.isEmpty()) {
             search();

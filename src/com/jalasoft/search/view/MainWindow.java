@@ -91,6 +91,16 @@ public class MainWindow extends JFrame {
     public int getTypeFlag(){
         return bodyPanel.getAdvancedFieldPanel().getTypeFlag();
     }
+
+    /**
+     * This method returns owner name
+     * @return String owner name
+     *
+     */
+    public String getOwnerText(){
+        return bodyPanel.getAdvancedFieldPanel().getOwnerText();
+    }
+
     /**
      * This method returns Search Button
      * @return JButton Component
