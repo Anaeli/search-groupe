@@ -37,16 +37,6 @@ public class Validator {
     }
 
     /**
-     * Method to validate that the path exist.
-     * @param path
-     * @return true if the path exist otherwise false.
-     */
-    public boolean fileExist(String path) {
-        File file = new File(path);
-        return file.exists();
-    }
-
-    /**
      * Method to validate the file according the current OS rules.
      * @param file
      * @return true if the string contains valid arguments otherwise false.
@@ -60,5 +50,20 @@ public class Validator {
             getInstance().getLogger().error(e.getMessage());
             return false;
         }
+    }
+
+    /**
+     * Method to validate if a file entry is correct
+     * @param file name input
+     * @return true if file has correct parameters otherwise false
+     */
+    public boolean isFileCorrect(String file) {
+        boolean is_correct;
+        if (isFileNameCorrect(file)&& isFileNameValid(file)) {
+            is_correct = true;
+        }else {
+            is_correct = false;
+        }
+        return is_correct;
     }
 }

@@ -63,10 +63,7 @@ public class SearchCriteriaTest {
     @Test
     public void validateUpdateHiddenFileInformation(){
         SearchCriteria searchCriteria = new SearchCriteria();
-        searchCriteria.setHidden(true);
-        assertTrue(searchCriteria.getHidden());
-
-        searchCriteria.setHidden(false);
-        assertFalse( searchCriteria.getHidden());
+        searchCriteria.setHidden(1);
+        assertEquals(1, searchCriteria.getHidden());
     }
 }

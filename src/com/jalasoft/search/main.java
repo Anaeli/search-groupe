@@ -25,5 +25,4 @@ public class main {
         Controller c = new Controller(searchWindow, search);
         c.init();
     }
-
 }
