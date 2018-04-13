@@ -53,18 +53,35 @@ public class Controller {
         searchWindow.cleanErrorMessage();
         SearchCriteria criteria = new SearchCriteria();
         String filename = searchWindow.getFileNameText();
-        if (validator.isFileNameCorrect(filename)){
-            criteria.setFileName(filename);
-        } else{
-            searchWindow.displayFieldErrorMessage("File Name Invalid");
-        }
-        criteria.setPath(searchWindow.getPathText());
+        String path = searchWindow.getPathText();
+        criteria.setFileName(filename);
+        criteria.setPath(path);
         criteria.setExtension(searchWindow.getExtensionText());
-        criteria.setHidden(searchWindow.getHiddenFlag());
+        //criteria.setHidden(searchWindow.getHiddenFlag());
         search.setSearchCriteria(criteria);
-        int counter = 1;
-        for (Asset file : search.getResults()) {
-            searchWindow.addRowResult(new Object[]{counter++, file.getName(), file.getPath() });
+        if ( filename.isEmpty() && !path.isEmpty()) {
+            search();
+        }else if (validator.isFileCorrect(filename)){
+           search();
+        } else {
+            searchWindow.displayFieldErrorMessage("File Name Invalid!!");
+        }
+        if (path.isEmpty()){
+           searchWindow.displayFieldErrorMessage("Path required field!!");
+        }
+    }
+
+    /**
+     * Method to search a file o folder
+     */
+    private void search() {
+        if(search.getResults() == null) {
+            searchWindow.displayFieldErrorMessage("No record found!!");
+        }else {
+            int counter = 1;
+            for (Asset file : search.getResults()) {
+                searchWindow.addRowResult(new Object[]{counter++, file.getName(), file.getPath()});
+            }
         }
     }
 }
