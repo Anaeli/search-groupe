@@ -218,7 +218,7 @@ public class SearchCriteria {
     }
 
     /**
-     * Method to set min size criteria to search
+     * Method to set min size criteria to search.
      * @param sizeMin value send from UI
      */
     public void setSizeMin(int sizeMin) {
