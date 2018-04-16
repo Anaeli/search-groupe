@@ -45,15 +45,15 @@ public class SimpleFieldsPanel extends BasePanel{
      * Constructor initializes this Panel as grid layout also add components to this JPanel
      * */
     public SimpleFieldsPanel(){
-        this.setPreferredSize(new Dimension(500,100));
+        this.setPreferredSize(new Dimension(350,100));
         //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setLayout(new GridLayout(5,1));
+        this.setLayout(new GridLayout(2,1));
         this.setBorder(BorderFactory.createTitledBorder("Simple Search"));
         filenameLabel = new JLabel("File Name");
         pathLabel = new JLabel("Path");
         filenameTextField = new JTextField(20);
         filenameTextField.setMaximumSize(filenameTextField.getPreferredSize());
-        pathTextField = new JTextField(30);
+        pathTextField = new JTextField(24);
         pathTextField.setMaximumSize(pathTextField.getPreferredSize());
         fileChooserButton = new JButton("Select");
         fileChooser = new JFileChooser();
@@ -88,7 +88,7 @@ public class SimpleFieldsPanel extends BasePanel{
      * This method is to tadd all components to JPanel
      * */
     private void addComponentsToPanel(){
-        formPanels = addPanelToGrid(5, 1);
+        formPanels = addPanelToGrid(2, 1);
         formPanels[0][0].add(filenameLabel);
         formPanels[0][0].add(filenameTextField);
         formPanels[1][0].add(pathLabel);

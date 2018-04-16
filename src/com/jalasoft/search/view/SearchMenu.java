@@ -22,16 +22,21 @@ import java.awt.*;
  * @version  1.0
  * @author Rodrigo Saul Cespedes Murillo
  */
-public class SearchMenu extends JPanel{
+public class SearchMenu extends BasePanel{
     private JButton simpleButton;
     private JButton advancedButton;
     private JButton searchButton;
+
+    private JPanel formPanels[][];
 
     /**
      * Constructor initializes this Panel as grid layout also add components to this JPanel
      * */
     public SearchMenu(){
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        this.setLayout(new GridLayout(4,1));
+
         this.setBorder(BorderFactory.createTitledBorder("Search Menu"));
         simpleButton = new JButton("Simple Search");
         simpleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -40,12 +45,14 @@ public class SearchMenu extends JPanel{
         advancedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         advancedButton.setFocusPainted(false);
         searchButton = new JButton("Search");
+
+        formPanels = addPanelToGrid(4, 1);
+
+        formPanels[0][0].add(simpleButton);
+        formPanels[1][0].add(advancedButton);
+        formPanels[3][0].setLayout(new BoxLayout(formPanels[3][0], BoxLayout.Y_AXIS));
+        formPanels[3][0].add(searchButton);
         searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.add(simpleButton);
-        this.add(Box.createRigidArea(new Dimension(0,10)));
-        this.add(advancedButton);
-        this.add(Box.createRigidArea(new Dimension(0,500)));
-        this.add(searchButton);
 
         try {
             Image simple = ImageIO.read(getClass().getResource("../../../../lib/icon/simple.png"));

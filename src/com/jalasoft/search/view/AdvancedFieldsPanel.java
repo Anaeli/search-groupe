@@ -40,8 +40,8 @@ public class AdvancedFieldsPanel extends BasePanel {
      * Constructor initializes this Panel as grid layout also add components to this JPanel
      * */
     public AdvancedFieldsPanel(){
-        this.setPreferredSize(new Dimension(500,100));
-        this.setLayout(new GridLayout(5,1));
+        this.setPreferredSize(new Dimension(350,100));
+        this.setLayout(new GridLayout(2,1));
         this.setBorder(BorderFactory.createTitledBorder("Advanced Search"));
         this.setVisible(false);
         initFieldComponents();
@@ -88,15 +88,15 @@ public class AdvancedFieldsPanel extends BasePanel {
      * This method is to add all components to JPanel
      * */
     private void addComponentsToPanel(){
-        formPanels = addPanelToGrid(5, 1);
+        formPanels = addPanelToGrid(2, 1);
         formPanels[0][0].add(extensionLabel);
         formPanels[0][0].add(extensionTextField);
         formPanels[0][0].add(ownerLabel);
         formPanels[0][0].add(ownerTextField);
-        formPanels[0][0].add(hiddenLabel);
-        formPanels[0][0].add(hiddenComboBox);
-        formPanels[0][0].add(typeLabel);
-        formPanels[0][0].add(typeComboBox);
+        formPanels[1][0].add(hiddenLabel);
+        formPanels[1][0].add(hiddenComboBox);
+        formPanels[1][0].add(typeLabel);
+        formPanels[1][0].add(typeComboBox);
     }
 
     /**
