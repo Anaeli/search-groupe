@@ -48,7 +48,7 @@ public class MainWindow extends JFrame {
         this.setSize(1200, 900);
         this.setVisible(true);
 
-        menuPanel.getSimpleButton().addActionListener(e -> bodyPanel.getSimpleFieldPanel().setVisible(false));
+        menuPanel.getSimpleButton().addActionListener(e -> bodyPanel.getAdvancedFieldPanel().setVisible(false));
         menuPanel.getAdvancedButton().addActionListener(e -> bodyPanel.getAdvancedFieldPanel().setVisible(true));
     }
 
