@@ -10,6 +10,8 @@
  */
 package com.jalasoft.search.controller;
 
+import java.util.Date;
+
 import static com.jalasoft.search.common.Log.getInstance;
 
 /*
@@ -24,14 +26,12 @@ public class SearchCriteria {
     private int isHidden;
     private int type;
     private String owner;
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
+    private int readOnly;
+    private int sizeMax;
+    private int sizeMin;
+    private Date modifiedDate;
+    private Date createdDate;
+    private Date accessedDate;
 
     /**
      * Constructor method
@@ -119,5 +119,133 @@ public class SearchCriteria {
      */
     public void setType(int type) {
         this.type = type;
+    }
+
+    /**
+     * Method to set owner criteria to search
+     * @param owner criteria to search
+     */
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    /**
+     * Method to get owner criteria to search
+     * @return owner criteria to search
+     */
+    public String getOwner() {
+        return owner;
+    }
+
+    /**
+     * Method to get hidden criteria to search
+     * @return hidden criteria to search
+     */
+    public int getIsHidden() {
+        return isHidden;
+    }
+
+    /**
+     * Method to get read only criteria to search
+     * @return read only criteria to search
+     */
+    public int getReadOnly() {
+        return readOnly;
+    }
+
+    /**
+     * Method to get size max criteria to search
+     * @return size max criteria to search
+     */
+    public int getSizeMax() {
+        return sizeMax;
+    }
+
+    /**
+     * Method to get size min criteria to search
+     * @return size min criteria to search
+     */
+    public int getSizeMin() {
+        return sizeMin;
+    }
+
+    /**
+     * Method to get modified date criteria to search
+     * @return modified date criteria to search
+     */
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    /**
+     * Method to get created date criteria to search
+     * @return created date criteria to search
+     */
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    /**
+     * Method to get accessed date criteria to search
+     * @return accessed date criteria to search
+     */
+    public Date getAccessedDate() {
+        return accessedDate;
+    }
+
+    /**
+     * Method to set hidden criteria to search
+     * @param isHidden int value send from UI
+     */
+    public void setIsHidden(int isHidden) {
+        this.isHidden = isHidden;
+    }
+
+    /**
+     * Method to get read only criteria to search
+     * @param readOnly value send from UI
+     */
+    public void setReadOnly(int readOnly) {
+        this.readOnly = readOnly;
+    }
+
+    /**
+     * Method to set max size criteria to search
+     * @param sizeMax value send from UI
+     */
+    public void setSizeMax(int sizeMax) {
+        this.sizeMax = sizeMax;
+    }
+
+    /**
+     * Method to set min size criteria to search
+     * @param sizeMin value send from UI
+     */
+    public void setSizeMin(int sizeMin) {
+        this.sizeMin = sizeMin;
+    }
+
+    /**
+     * Method to set modified date criteria to search
+     * @param modifiedDate value send from UI
+     */
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    /**
+     * Method to set created date criteria to search
+     * @param createdDate value send from UI
+     */
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    /**
+     * Method to set accessed date criteria to search
+     * @param accessedDate value send from UI
+     */
+    public void setAccessedDate(Date accessedDate) {
+        this.accessedDate = accessedDate;
     }
 }
