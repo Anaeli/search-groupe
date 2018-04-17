@@ -1,5 +1,5 @@
 /*
- * Validator .java
+ * ValidatorTest.java
  *
  * Copyright (c) 2018 Jalasoft.
  *
@@ -32,18 +32,6 @@ public class ValidatorTest {
     public void fileNameInvalid(){
         validator = new Validator();
         assertFalse(validator.isFileNameCorrect("fil;ename/"));
-    }
-
-    @Test
-    public void pathExist(){
-        validator = new Validator();
-        assertTrue(validator.fileExist("D:/search-project/search-groupe/test/com.jalasoft.search/common/test_files/text1.txt"));
-    }
-
-    @Test
-    public void pathDoesNotExist(){
-        validator = new Validator();
-        assertFalse(validator.fileExist("notExist"));
     }
 
     @Test

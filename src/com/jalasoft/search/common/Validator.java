@@ -1,5 +1,5 @@
 /*
- * Validator .java
+ * Validator.java
  *
  * Copyright (c) 2018 Jalasoft.
  *
@@ -10,13 +10,9 @@
  */
 package com.jalasoft.search.common;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.InvalidPathException;
-import java.nio.file.Paths;
+import static com.jalasoft.search.common.Log.getInstance;
 
 /*
 * Class to manage validations related to files
@@ -24,11 +20,11 @@ import java.nio.file.Paths;
 * @author Eliana Navia
 */
 public class Validator {
-    private Logger log =  Logger.getLogger(getClass());
 
-    public Validator() {
-        PropertyConfigurator.configure("log4j.properties");
-    }
+    /**
+     * Constructor method to validate UI entries
+     */
+    public Validator() {  }
 
     /**
      * Method to validate that a file name has valid characters in its name.
@@ -38,16 +34,6 @@ public class Validator {
      */
     public boolean isFileNameCorrect(String filename) {
         return filename.matches("^[^<>:;,?\"*|/]+$");
-    }
-
-    /**
-     * Method to validate that the path exist.
-     * @param path
-     * @return true if the path exist otherwise false.
-     */
-    public boolean fileExist(String path) {
-        File file = new File(path);
-        return file.exists();
     }
 
     /**
@@ -61,8 +47,23 @@ public class Validator {
             f.getCanonicalPath();
             return true;
         } catch (IOException e) {
-            log.error(e.getMessage());
+            getInstance().getLogger().error(e.getMessage());
             return false;
         }
+    }
+
+    /**
+     * Method to validate if a file entry is correct
+     * @param file name input
+     * @return true if file has correct parameters otherwise false
+     */
+    public boolean isFileCorrect(String file) {
+        boolean is_correct;
+        if (isFileNameCorrect(file)&& isFileNameValid(file)) {
+            is_correct = true;
+        }else {
+            is_correct = false;
+        }
+        return is_correct;
     }
 }
