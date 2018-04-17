@@ -51,9 +51,9 @@ public class SimpleFieldsPanel extends BasePanel{
         this.setBorder(BorderFactory.createTitledBorder("Simple Search"));
         filenameLabel = new JLabel("File Name");
         pathLabel = new JLabel("Path");
-        filenameTextField = new JTextField(20);
+        filenameTextField = new JTextField(14);
         filenameTextField.setMaximumSize(filenameTextField.getPreferredSize());
-        pathTextField = new JTextField(24);
+        pathTextField = new JTextField(14);
         pathTextField.setMaximumSize(pathTextField.getPreferredSize());
         fileChooserButton = new JButton("Select");
         fileChooser = new JFileChooser();
