@@ -48,7 +48,8 @@ public class BodyPanel extends JPanel {
         resultSearchPanel = new ResultSearchPanel();
 
         fieldsPanel = new JPanel();
-        fieldsPanel.setLayout(new GridLayout(1,2));
+        //fieldsPanel.setLayout(new GridLayout(1,2));
+        fieldsPanel.setLayout(new BoxLayout(fieldsPanel, BoxLayout.X_AXIS));
         fieldsPanel.setPreferredSize(new Dimension(1000, 200));
         fieldsPanel.add(simpleFieldPanel);
         fieldsPanel.add(advancedFieldPanel);
