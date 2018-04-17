@@ -17,7 +17,11 @@ import com.jalasoft.search.controller.SearchCriteria;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Search is charged of look for the files based over a criteria
@@ -33,32 +37,6 @@ public class Search {
      * Constructor
      */
     public Search() {
-    }
-
-    /**
-     * this method are changer to evaluate if the path exist
-     * */
-    private boolean existPath(File file){
-
-        return file.exists();
-    }
-
-    /**
-     * this method are charged to evaluate if the path is file
-     * */
-    private boolean isFile(File file){
-
-        return file.isFile();
-    }
-
-    /**
-     * this method are charged to evaluate if the path is a Directory
-     * @param file object created with a path
-     * @return true is the file is directory or false when not match.
-     * */
-    private boolean isDirectory(File file){
-
-        return file.isDirectory();
     }
 
     /**
@@ -156,22 +134,6 @@ public class Search {
         return listRes;
     }
 
-    /**
-     * charged to evaluate the files into the list based on the name
-     * @param ishiden criteria To Search
-     * @param listToSearch where is lookfor the criteria
-     * @return ArrayList with all files what match with the criteria
-     * */
-    private ArrayList<Asset> searchBasedOnHidden(boolean ishiden, ArrayList<Asset> listToSearch){
-
-        ArrayList<Asset> listRes = new ArrayList();
-        for (Asset f: listToSearch) {
-            if (f.isHidden()){
-                listRes.add(f);
-            }
-        }
-        return listRes;
-    }
 
     /**
      * charged to evaluate the files into the list based on the name
@@ -257,7 +219,6 @@ public class Search {
         return listResult;
     }
 
-
     /**
      * this method is charged to return all files content into a path
      * this are returned into an array in file array
@@ -285,16 +246,19 @@ public class Search {
             Asset asset;
             try {
                 owner = Files.getOwner(fileEntry.toPath()).getName();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
             if (fileEntry.isDirectory()) {
-                asset = FactoryAsset.createAssets("folder",fileEntry, owner);
+                asset = FactoryAsset.createAssets("folder",fileEntry, owner, getCreationDate(fileEntry));
                 listFilesForFolder(fileEntry, res);
             } else if (fileEntry.isFile()){
-                asset = FactoryAsset.createAssets("file", fileEntry, owner);
+                getCreationDate(fileEntry);
+                asset = FactoryAsset.createAssets("file", fileEntry, owner, getCreationDate(fileEntry));
             }else{
-                asset = FactoryAsset.createAssets("other", fileEntry, owner);
+                getCreationDate(fileEntry);
+                asset = FactoryAsset.createAssets("other", fileEntry, owner, getCreationDate(fileEntry));
             }
             res.add(asset);
         }
@@ -306,6 +270,27 @@ public class Search {
      * */
     public void setSearchCriteria(SearchCriteria searchCriteria){
         this.searchCriteria = searchCriteria;
+    }
+
+    private HashMap<String, Date> getCreationDate(File file){
+        HashMap<String, Date> dates = new HashMap();
+        BasicFileAttributes attr = null;
+        try {
+            attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        long created = attr.creationTime().to(TimeUnit.MILLISECONDS);
+        long modified  = attr.lastModifiedTime().to(TimeUnit.MILLISECONDS);
+        long access  = attr.lastAccessTime().to(TimeUnit.MILLISECONDS);
+        Date createdDate = new Date(created);
+        Date modifiedDate = new Date(modified);
+        Date accessDate = new Date(access);
+        dates.put("cDate",createdDate);
+        dates.put("mDate",modifiedDate);
+        dates.put("aDate",accessDate);
+
+        return dates;
     }
 
 }
