@@ -57,9 +57,17 @@ public class Controller {
         criteria.setFileName(filename);
         criteria.setPath(path);
         criteria.setExtension(searchWindow.getExtensionText());
-        criteria.setType(searchWindow.getTypeFlag());
-        criteria.setHidden(searchWindow.getHiddenFlag());
         criteria.setOwner(searchWindow.getOwnerText());
+        criteria.setHidden(searchWindow.getHiddenFlag());
+        criteria.setType(searchWindow.getTypeFlag());
+        criteria.setReadOnly(searchWindow.getReadOnlyIndex());
+        criteria.setCreatedDateFrom(searchWindow.getFromCreatedDate());
+        criteria.setCreatedDateTo(searchWindow.getToCreatedDate());
+        criteria.setModifiedDateFrom(searchWindow.getFromModifiedDate());
+        criteria.setModifiedDateTo(searchWindow.getToModifiedDate());
+        criteria.setAccessedDateFrom(searchWindow.getFromAccessedDate());
+        criteria.setAccessedDateTo(searchWindow.getToAccessedDate());
+
         search.setSearchCriteria(criteria);
         if ( filename.isEmpty() && !path.isEmpty()) {
             search();
