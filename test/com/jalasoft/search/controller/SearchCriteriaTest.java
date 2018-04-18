@@ -151,6 +151,6 @@ public class SearchCriteriaTest {
         SearchCriteria searchCriteria = new SearchCriteria();
         Date date = Calendar.getInstance().getTime();
         searchCriteria.setAccessedDateTo(date);
-        assertEquals(date, searchCriteria.getModifiedDateTo());
+        assertEquals(date, searchCriteria.getAccessedDateTo());
     }
 }
