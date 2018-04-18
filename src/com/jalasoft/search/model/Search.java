@@ -48,10 +48,10 @@ public class Search {
     public ArrayList<Asset> getResults(){
         ArrayList<Asset> res = listAllFilesInPath(searchCriteria.getPath());
         if(searchCriteria.getFileName() != ""){
-            res = searchBasedOnNameCriteria(searchCriteria.getFileName(),res);
+            res = searchBasedOnNameCriteria(searchCriteria.getFileName(), res);
         }
         if(searchCriteria.getExtension() != ""){
-            res = searchBasedOnExtension(searchCriteria.getExtension(),res);
+            res = searchBasedOnExtension(searchCriteria.getExtension(), res);
         }
         if(searchCriteria.getHidden() == 1){
             res = getAllHiddenFiles(res);
@@ -66,7 +66,7 @@ public class Search {
             res = getAllFiles(res);
         }
         if(searchCriteria.getOwner() != ""){
-            res = searchBasedOnOwnerName(searchCriteria.getFileName(),res);
+            res = searchBasedOnOwnerName(searchCriteria.getFileName(), res);
         }
         if(searchCriteria.getReadOnly() == 1){
             res = getAllReadOnlyFiles(res);
@@ -74,18 +74,18 @@ public class Search {
         if(searchCriteria.getReadOnly() == 2){
             res = getAllNoReadOnlyFiles(res);
         }
-        if(searchCriteria.getAccessedDateFrom() != null && searchCriteria.getAccessedDateTo() !=null){
-            res = searchBasedOnAccessDate(searchCriteria.getAccessedDateTo(),searchCriteria.getAccessedDateFrom(),res);
+        if(searchCriteria.getAccessedDateFrom() != null && searchCriteria.getAccessedDateTo() != null){
+            res = searchBasedOnAccessDate(searchCriteria.getAccessedDateTo(),searchCriteria.getAccessedDateFrom(), res);
         }
-        if(searchCriteria.getModifiedDateFrom() != null && searchCriteria.getModifiedDateTo() !=null){
-            res = searchBasedOnModifiedDate(searchCriteria.getModifiedDateTo(),searchCriteria.getModifiedDateFrom(),res);
+        if(searchCriteria.getModifiedDateFrom() != null && searchCriteria.getModifiedDateTo() != null){
+            res = searchBasedOnModifiedDate(searchCriteria.getModifiedDateTo(),searchCriteria.getModifiedDateFrom(), res);
         }
-        if(searchCriteria.getCreatedDateFrom() != null && searchCriteria.getCreatedDateTo() !=null){
-            res = searchBasedOnCreationDate(searchCriteria.getCreatedDateTo(),searchCriteria.getCreatedDateFrom(),res);
+        if(searchCriteria.getCreatedDateFrom() != null && searchCriteria.getCreatedDateTo() != null){
+            res = searchBasedOnCreationDate(searchCriteria.getCreatedDateTo(),searchCriteria.getCreatedDateFrom(), res);
 
         }
-        if(searchCriteria.getSizeMax() != 0 && searchCriteria.getSizeMin() !=0){
-            res = searchBasedOnSize(searchCriteria.getSizeMax(),searchCriteria.getSizeMin(),res);
+        if(searchCriteria.getSizeMax() != 0 && searchCriteria.getSizeMin() != 0){
+            res = searchBasedOnSize(searchCriteria.getSizeMax(),searchCriteria.getSizeMin(), res);
         }else{
             getInstance().getLogger().error("no allowed search with 0 values");
         }
@@ -99,10 +99,9 @@ public class Search {
      * @return ArrayList with all files what match with the criteria
      * */
     private ArrayList<Asset> searchBasedOnAccessDate (Date max, Date min, ArrayList<Asset> listSearch){
-
         ArrayList<Asset> listResult = new ArrayList();
         for (Asset f: listSearch) {
-            if (min.compareTo(f.getAccessDate())<=0 && max.compareTo(f.getAccessDate())>=0)
+            if (min.compareTo(f.getAccessDate()) <= 0 && max.compareTo(f.getAccessDate()) >= 0)
                 listResult.add(f);
         }
         return listResult;
@@ -115,10 +114,9 @@ public class Search {
      * @return ArrayList with all files what match with the criteria
      * */
     private ArrayList<Asset> searchBasedOnModifiedDate (Date max, Date min, ArrayList<Asset> listSearch){
-
         ArrayList<Asset> listResult = new ArrayList();
         for (Asset f: listSearch) {
-            if (min.compareTo(f.getModifiedDate())<=0 && max.compareTo(f.getModifiedDate())>=0)
+            if (min.compareTo(f.getModifiedDate()) <= 0 && max.compareTo(f.getModifiedDate()) >= 0)
                 listResult.add(f);
         }
         return listResult;
@@ -131,10 +129,9 @@ public class Search {
      * @return ArrayList with all files what match with the criteria
      * */
     private ArrayList<Asset> searchBasedOnCreationDate (Date max, Date min, ArrayList<Asset> listSearch){
-
         ArrayList<Asset> listResult = new ArrayList();
         for (Asset f: listSearch) {
-            if (min.compareTo(f.getCreationDate())<=0 && max.compareTo(f.getCreationDate())>=0)
+            if (min.compareTo(f.getCreationDate()) <= 0 && max.compareTo(f.getCreationDate()) >= 0)
                 listResult.add(f);
         }
         return listResult;
@@ -224,7 +221,6 @@ public class Search {
      * @return ArrayList with all files what match with the criteria
      * */
     private ArrayList<Asset> searchBasedOnOwnerName(String nameToSearch, ArrayList<Asset> listToSearch){
-
         ArrayList<Asset> listRes = new ArrayList();
         for (Asset f: listToSearch) {
             if (f.getOwner().contains(nameToSearch) ){
@@ -234,14 +230,12 @@ public class Search {
         return listRes;
     }
 
-
     /**
      * charged to evaluate the files into the list based on the name
      * @param listToSearch where is lookfor the criteria
      * @return ArrayList with all files what match with the criteria
      * */
     private ArrayList<Asset> getAllFiles(ArrayList<Asset> listToSearch){
-
         ArrayList<Asset> listRes = new ArrayList();
         for (Asset f: listToSearch) {
             if (f instanceof FileSearch){
@@ -257,7 +251,6 @@ public class Search {
      * @return ArrayList with all files what match with the criteria
      * */
     private ArrayList<Asset> getAllFolders(ArrayList<Asset> listToSearch){
-
         ArrayList<Asset> listRes = new ArrayList();
         for (Asset f: listToSearch) {
             if (f instanceof Folder){
@@ -275,7 +268,6 @@ public class Search {
      * @return ArrayList with all files what match with the criteria
      * */
     private ArrayList<Asset> searchBasedOnExtension(String extension, ArrayList<Asset> listSearch){
-
         ArrayList<Asset> listResult = new ArrayList();
         for (Asset f: listSearch) {
             if (f.getName().contains(extension) ){
@@ -292,7 +284,6 @@ public class Search {
      * @return ArrayList with all files what match with the criteria
      * */
     private ArrayList<Asset> searchBasedOnSize(int max, int min, ArrayList<Asset> listSearch){
-
         ArrayList<Asset> listResult = new ArrayList();
         for (Asset f: listSearch) {
             int size = f.getSize();
@@ -324,7 +315,6 @@ public class Search {
      * @param res is an ArrayList of FileSearch what is filled the this method
      * */
     private void listFilesForFolder(File folder , ArrayList<Asset> res) {
-
         for (File fileEntry : folder.listFiles()) {
             String owner = "";
             Asset asset;
