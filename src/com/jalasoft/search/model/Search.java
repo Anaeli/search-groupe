@@ -74,14 +74,32 @@ public class Search {
         if(searchCriteria.getReadOnly() == 2){
             res = getAllNoReadOnlyFiles(res);
         }
+        if(searchCriteria.getCreatedDate() != null && searchCriteria.getCreatedDate() !=null){
+            res = searchBasedOnCreationDate(searchCriteria.getCreatedDate(),searchCriteria.getCreatedDate(),res);
+        }
         if(searchCriteria.getSizeMax() != 0 && searchCriteria.getSizeMin() !=0){
-            res = seachBasedOnSize(searchCriteria.getSizeMax(),searchCriteria.getSizeMin(),res);
+            res = searchBasedOnSize(searchCriteria.getSizeMax(),searchCriteria.getSizeMin(),res);
         }else{
             getInstance().getLogger().error("no allowed search with 0 values");
         }
         return res;
     }
 
+    /**
+     * charged to evaluate the files into the list based on a range of creation date
+     * @param max, min is a criteria To Search by date
+     * @param listSearch where is searched the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<Asset> searchBasedOnCreationDate (Date max, Date min, ArrayList<Asset> listSearch){
+
+        ArrayList<Asset> listResult = new ArrayList();
+        for (Asset f: listSearch) {
+            if (min.compareTo(f.getCreationDate())<=0 && max.compareTo(f.getCreationDate())>=0)
+                listResult.add(f);
+        }
+        return listResult;
+    }
 
     /**
      * This method return a list of all Read Only  Files
@@ -234,7 +252,7 @@ public class Search {
      * @param listSearch where is searched the criteria
      * @return ArrayList with all files what match with the criteria
      * */
-    private ArrayList<Asset> seachBasedOnSize(int max, int min, ArrayList<Asset> listSearch){
+    private ArrayList<Asset> searchBasedOnSize(int max, int min, ArrayList<Asset> listSearch){
 
         ArrayList<Asset> listResult = new ArrayList();
         for (Asset f: listSearch) {
