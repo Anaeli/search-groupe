@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import static com.jalasoft.search.common.Log.getInstance;
+
 /**
  * Search is charged of look for the files based over a criteria
  * @version  1.0
@@ -71,6 +73,11 @@ public class Search {
         }
         if(searchCriteria.getReadOnly() == 2){
             res = getAllNoReadOnlyFiles(res);
+        }
+        if(searchCriteria.getSizeMax() != 0 && searchCriteria.getSizeMin() !=0){
+            res = seachBasedOnSize(searchCriteria.getSizeMax(),searchCriteria.getSizeMin(),res);
+        }else{
+            getInstance().getLogger().error("no allowed search with 0 values");
         }
         return res;
     }
@@ -203,22 +210,6 @@ public class Search {
         return listRes;
     }
 
-    /**
-     * charged to evaluate the files into the list based on the name
-     * @param isReadOnly criteria To Search
-     * @param listToSearch where is lookfor the criteria
-     * @return ArrayList with all files what match with the criteria
-     * */
-    private ArrayList<Asset> searchBasedOnIsReadOnly(boolean isReadOnly, ArrayList<Asset> listToSearch){
-
-        ArrayList<Asset> listRes = new ArrayList();
-        for (Asset f: listToSearch) {
-            if (f.isReadOnly()){
-                listRes.add(f);
-            }
-        }
-        return listRes;
-    }
 
     /**
      * charged to evaluate the files into the list based on the extension
@@ -243,10 +234,10 @@ public class Search {
      * @param listSearch where is searched the criteria
      * @return ArrayList with all files what match with the criteria
      * */
-    private ArrayList<FileSearch> seachBasedOnSize(int max, int min, ArrayList<FileSearch> listSearch){
+    private ArrayList<Asset> seachBasedOnSize(int max, int min, ArrayList<Asset> listSearch){
 
-        ArrayList<FileSearch> listResult = new ArrayList();
-        for (FileSearch f: listSearch) {
+        ArrayList<Asset> listResult = new ArrayList();
+        for (Asset f: listSearch) {
             int size = f.getSize();
             if (max >= size && min <= size ){
                 listResult.add(f);
