@@ -82,4 +82,12 @@ public class BodyPanel extends JPanel {
     public ResultSearchPanel getResultSearchPanel(){
         return resultSearchPanel;
     }
+
+    /**
+     * This method returns Criteria Panel instance
+     * @return CriteriaPanel criteria component
+     * */
+    public CriteriaPanel getCriteriaPanel(){
+        return criteriaPanel;
+    }
 }

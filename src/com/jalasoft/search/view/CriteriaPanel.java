@@ -69,4 +69,8 @@ public class CriteriaPanel extends JPanel {
     public void addRowOnTable(Object[] newRow){
         defaultTableModel.addRow(newRow);
     }
+
+    public JButton getCriteriaSaveButton(){
+        return criteriaSaveButton;
+    }
 }
