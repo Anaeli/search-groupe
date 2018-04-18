@@ -70,13 +70,15 @@ public class Controller {
         criteria.setModifiedDateTo(searchWindow.getToModifiedDate());
         criteria.setAccessedDateFrom(searchWindow.getFromAccessedDate());
         criteria.setAccessedDateTo(searchWindow.getToAccessedDate());
-        int unit_size =searchWindow.getSizeIndex();
-        int from_size = helper.convertStringtoInt(searchWindow.getFromSize());
-        int to_size = helper.convertStringtoInt(searchWindow.getToSize());
-        int min_size = helper.convertToBytes(from_size, unit_size);
-        int max_size = helper.convertToBytes(to_size, unit_size);
-        criteria.setSizeMax(max_size);
-        criteria.setSizeMax(min_size);
+        if (!searchWindow.getFromSize().isEmpty()&&!searchWindow.getToSize().isEmpty()){
+            int unit_size = searchWindow.getSizeIndex();
+            int from_size = helper.convertStringtoInt(searchWindow.getFromSize());
+            int to_size = helper.convertStringtoInt(searchWindow.getToSize());
+            int min_size = helper.convertToBytes(from_size, unit_size);
+            int max_size = helper.convertToBytes(to_size, unit_size);
+            criteria.setSizeMax(max_size);
+            criteria.setSizeMax(min_size);
+        }
         search.setSearchCriteria(criteria);
         if ( filename.isEmpty() && !path.isEmpty()) {
             search();
