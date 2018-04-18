@@ -82,6 +82,7 @@ public class Search {
         }
         if(searchCriteria.getCreatedDateFrom() != null && searchCriteria.getCreatedDateTo() !=null){
             res = searchBasedOnCreationDate(searchCriteria.getCreatedDateTo(),searchCriteria.getCreatedDateFrom(),res);
+
         }
         if(searchCriteria.getSizeMax() != 0 && searchCriteria.getSizeMin() !=0){
             res = searchBasedOnSize(searchCriteria.getSizeMax(),searchCriteria.getSizeMin(),res);
