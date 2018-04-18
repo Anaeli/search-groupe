@@ -51,7 +51,6 @@ public class Search {
         if(searchCriteria.getExtension() != ""){
             res = searchBasedOnExtension(searchCriteria.getExtension(),res);
         }
-        System.out.println("asdfasdf "+searchCriteria.getHidden());
         if(searchCriteria.getHidden() == 1){
             res = getAllHiddenFiles(res);
         }
@@ -67,7 +66,44 @@ public class Search {
         if(searchCriteria.getOwner() != ""){
             res = searchBasedOnOwnerName(searchCriteria.getFileName(),res);
         }
+        if(searchCriteria.getReadOnly() == 1){
+            res = getAllReadOnlyFiles(res);
+        }
+        if(searchCriteria.getReadOnly() == 2){
+            res = getAllNoReadOnlyFiles(res);
+        }
         return res;
+    }
+
+
+    /**
+     * This method return a list of all Read Only  Files
+     * @param listToSearch where is lookfor the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<Asset> getAllReadOnlyFiles (ArrayList<Asset> listToSearch) {
+        ArrayList<Asset> listRes = new ArrayList();
+        for (Asset f: listToSearch) {
+            if (f.isReadOnly()){
+                listRes.add(f);
+            }
+        }
+        return listRes;
+    }
+
+    /**
+     * This method return a list of all no Read Only  Files
+     * @param listToSearch where is lookfor the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<Asset> getAllNoReadOnlyFiles (ArrayList<Asset> listToSearch) {
+        ArrayList<Asset> listRes = new ArrayList();
+        for (Asset f: listToSearch) {
+            if (!f.isReadOnly()){
+                listRes.add(f);
+            }
+        }
+        return listRes;
     }
 
     /**
