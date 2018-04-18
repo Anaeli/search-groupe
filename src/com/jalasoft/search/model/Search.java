@@ -74,6 +74,12 @@ public class Search {
         if(searchCriteria.getReadOnly() == 2){
             res = getAllNoReadOnlyFiles(res);
         }
+        if(searchCriteria.getAccessedDate() != null && searchCriteria.getModifiedDate() !=null){
+            res = searchBasedOnAccessDate(searchCriteria.getAccessedDate(),searchCriteria.getAccessedDate(),res);
+        }
+        if(searchCriteria.getModifiedDate() != null && searchCriteria.getModifiedDate() !=null){
+            res = searchBasedOnModifiedDate(searchCriteria.getModifiedDate(),searchCriteria.getModifiedDate(),res);
+        }
         if(searchCriteria.getCreatedDate() != null && searchCriteria.getCreatedDate() !=null){
             res = searchBasedOnCreationDate(searchCriteria.getCreatedDate(),searchCriteria.getCreatedDate(),res);
         }
@@ -83,6 +89,38 @@ public class Search {
             getInstance().getLogger().error("no allowed search with 0 values");
         }
         return res;
+    }
+
+    /**
+     * charged to evaluate the files into the list based on a range of access date
+     * @param max, min is a criteria To Search by date
+     * @param listSearch where is searched the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<Asset> searchBasedOnAccessDate (Date max, Date min, ArrayList<Asset> listSearch){
+
+        ArrayList<Asset> listResult = new ArrayList();
+        for (Asset f: listSearch) {
+            if (min.compareTo(f.getAccessDate())<=0 && max.compareTo(f.getAccessDate())>=0)
+                listResult.add(f);
+        }
+        return listResult;
+    }
+
+    /**
+     * charged to evaluate the files into the list based on a range of modified date
+     * @param max, min is a criteria To Search by date
+     * @param listSearch where is searched the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<Asset> searchBasedOnModifiedDate (Date max, Date min, ArrayList<Asset> listSearch){
+
+        ArrayList<Asset> listResult = new ArrayList();
+        for (Asset f: listSearch) {
+            if (min.compareTo(f.getModifiedDate())<=0 && max.compareTo(f.getModifiedDate())>=0)
+                listResult.add(f);
+        }
+        return listResult;
     }
 
     /**
@@ -317,6 +355,11 @@ public class Search {
         this.searchCriteria = searchCriteria;
     }
 
+    /**
+     * this method is charged to get the differents dates that a File or directory has assigned
+     * @param file this Param is a File object
+     * @return  HashMap is an List with specified keys
+     * */
     private HashMap<String, Date> getCreationDate(File file){
         HashMap<String, Date> dates = new HashMap();
         BasicFileAttributes attr = null;
