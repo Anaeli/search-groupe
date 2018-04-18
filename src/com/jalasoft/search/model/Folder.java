@@ -12,6 +12,8 @@
 
 package com.jalasoft.search.model;
 
+import java.util.Date;
+
 /**
  * This class implements the Folder for model a Folder object.
  * @version  1.0
@@ -32,8 +34,8 @@ public class Folder extends Asset{
      * @param hidden  its the file hidden
      * */
     public Folder(String name, int size, String path, String owner, int cantOfFiles,
-                  boolean hidden, boolean readOnly) {
-        super(name, size, path, owner, hidden, readOnly);
+                  boolean hidden, boolean readOnly, Date creationDate, Date modifiedDate, Date accessDate) {
+        super(name, size, path, owner, hidden, readOnly ,creationDate, modifiedDate, accessDate);
         this.cantOfFiles = cantOfFiles;
     }
 

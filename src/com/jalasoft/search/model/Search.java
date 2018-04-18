@@ -17,7 +17,13 @@ import com.jalasoft.search.controller.SearchCriteria;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+
+import static com.jalasoft.search.common.Log.getInstance;
 
 /**
  * Search is charged of look for the files based over a criteria
@@ -36,32 +42,6 @@ public class Search {
     }
 
     /**
-     * this method are changer to evaluate if the path exist
-     * */
-    private boolean existPath(File file){
-
-        return file.exists();
-    }
-
-    /**
-     * this method are charged to evaluate if the path is file
-     * */
-    private boolean isFile(File file){
-
-        return file.isFile();
-    }
-
-    /**
-     * this method are charged to evaluate if the path is a Directory
-     * @param file object created with a path
-     * @return true is the file is directory or false when not match.
-     * */
-    private boolean isDirectory(File file){
-
-        return file.isDirectory();
-    }
-
-    /**
      * this method are charged return the results using as parameters the attributes
      * @return a list with all files what match with all parameters defined.
      * */
@@ -73,7 +53,6 @@ public class Search {
         if(searchCriteria.getExtension() != ""){
             res = searchBasedOnExtension(searchCriteria.getExtension(),res);
         }
-        System.out.println("asdfasdf "+searchCriteria.getHidden());
         if(searchCriteria.getHidden() == 1){
             res = getAllHiddenFiles(res);
         }
@@ -89,7 +68,67 @@ public class Search {
         if(searchCriteria.getOwner() != ""){
             res = searchBasedOnOwnerName(searchCriteria.getFileName(),res);
         }
+        if(searchCriteria.getReadOnly() == 1){
+            res = getAllReadOnlyFiles(res);
+        }
+        if(searchCriteria.getReadOnly() == 2){
+            res = getAllNoReadOnlyFiles(res);
+        }
+        if(searchCriteria.getCreatedDate() != null && searchCriteria.getCreatedDate() !=null){
+            res = searchBasedOnCreationDate(searchCriteria.getCreatedDate(),searchCriteria.getCreatedDate(),res);
+        }
+        if(searchCriteria.getSizeMax() != 0 && searchCriteria.getSizeMin() !=0){
+            res = searchBasedOnSize(searchCriteria.getSizeMax(),searchCriteria.getSizeMin(),res);
+        }else{
+            getInstance().getLogger().error("no allowed search with 0 values");
+        }
         return res;
+    }
+
+    /**
+     * charged to evaluate the files into the list based on a range of creation date
+     * @param max, min is a criteria To Search by date
+     * @param listSearch where is searched the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<Asset> searchBasedOnCreationDate (Date max, Date min, ArrayList<Asset> listSearch){
+
+        ArrayList<Asset> listResult = new ArrayList();
+        for (Asset f: listSearch) {
+            if (min.compareTo(f.getCreationDate())<=0 && max.compareTo(f.getCreationDate())>=0)
+                listResult.add(f);
+        }
+        return listResult;
+    }
+
+    /**
+     * This method return a list of all Read Only  Files
+     * @param listToSearch where is lookfor the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<Asset> getAllReadOnlyFiles (ArrayList<Asset> listToSearch) {
+        ArrayList<Asset> listRes = new ArrayList();
+        for (Asset f: listToSearch) {
+            if (f.isReadOnly()){
+                listRes.add(f);
+            }
+        }
+        return listRes;
+    }
+
+    /**
+     * This method return a list of all no Read Only  Files
+     * @param listToSearch where is lookfor the criteria
+     * @return ArrayList with all files what match with the criteria
+     * */
+    private ArrayList<Asset> getAllNoReadOnlyFiles (ArrayList<Asset> listToSearch) {
+        ArrayList<Asset> listRes = new ArrayList();
+        for (Asset f: listToSearch) {
+            if (!f.isReadOnly()){
+                listRes.add(f);
+            }
+        }
+        return listRes;
     }
 
     /**
@@ -156,22 +195,6 @@ public class Search {
         return listRes;
     }
 
-    /**
-     * charged to evaluate the files into the list based on the name
-     * @param ishiden criteria To Search
-     * @param listToSearch where is lookfor the criteria
-     * @return ArrayList with all files what match with the criteria
-     * */
-    private ArrayList<Asset> searchBasedOnHidden(boolean ishiden, ArrayList<Asset> listToSearch){
-
-        ArrayList<Asset> listRes = new ArrayList();
-        for (Asset f: listToSearch) {
-            if (f.isHidden()){
-                listRes.add(f);
-            }
-        }
-        return listRes;
-    }
 
     /**
      * charged to evaluate the files into the list based on the name
@@ -205,22 +228,6 @@ public class Search {
         return listRes;
     }
 
-    /**
-     * charged to evaluate the files into the list based on the name
-     * @param isReadOnly criteria To Search
-     * @param listToSearch where is lookfor the criteria
-     * @return ArrayList with all files what match with the criteria
-     * */
-    private ArrayList<Asset> searchBasedOnIsReadOnly(boolean isReadOnly, ArrayList<Asset> listToSearch){
-
-        ArrayList<Asset> listRes = new ArrayList();
-        for (Asset f: listToSearch) {
-            if (f.isReadOnly()){
-                listRes.add(f);
-            }
-        }
-        return listRes;
-    }
 
     /**
      * charged to evaluate the files into the list based on the extension
@@ -245,10 +252,10 @@ public class Search {
      * @param listSearch where is searched the criteria
      * @return ArrayList with all files what match with the criteria
      * */
-    private ArrayList<FileSearch> seachBasedOnSize(int max, int min, ArrayList<FileSearch> listSearch){
+    private ArrayList<Asset> searchBasedOnSize(int max, int min, ArrayList<Asset> listSearch){
 
-        ArrayList<FileSearch> listResult = new ArrayList();
-        for (FileSearch f: listSearch) {
+        ArrayList<Asset> listResult = new ArrayList();
+        for (Asset f: listSearch) {
             int size = f.getSize();
             if (max >= size && min <= size ){
                 listResult.add(f);
@@ -256,7 +263,6 @@ public class Search {
         }
         return listResult;
     }
-
 
     /**
      * this method is charged to return all files content into a path
@@ -285,16 +291,19 @@ public class Search {
             Asset asset;
             try {
                 owner = Files.getOwner(fileEntry.toPath()).getName();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
             if (fileEntry.isDirectory()) {
-                asset = FactoryAsset.createAssets("folder",fileEntry, owner);
+                asset = FactoryAsset.createAssets("folder",fileEntry, owner, getCreationDate(fileEntry));
                 listFilesForFolder(fileEntry, res);
             } else if (fileEntry.isFile()){
-                asset = FactoryAsset.createAssets("file", fileEntry, owner);
+                getCreationDate(fileEntry);
+                asset = FactoryAsset.createAssets("file", fileEntry, owner, getCreationDate(fileEntry));
             }else{
-                asset = FactoryAsset.createAssets("other", fileEntry, owner);
+                getCreationDate(fileEntry);
+                asset = FactoryAsset.createAssets("other", fileEntry, owner, getCreationDate(fileEntry));
             }
             res.add(asset);
         }
@@ -306,6 +315,27 @@ public class Search {
      * */
     public void setSearchCriteria(SearchCriteria searchCriteria){
         this.searchCriteria = searchCriteria;
+    }
+
+    private HashMap<String, Date> getCreationDate(File file){
+        HashMap<String, Date> dates = new HashMap();
+        BasicFileAttributes attr = null;
+        try {
+            attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        long created = attr.creationTime().to(TimeUnit.MILLISECONDS);
+        long modified  = attr.lastModifiedTime().to(TimeUnit.MILLISECONDS);
+        long access  = attr.lastAccessTime().to(TimeUnit.MILLISECONDS);
+        Date createdDate = new Date(created);
+        Date modifiedDate = new Date(modified);
+        Date accessDate = new Date(access);
+        dates.put("cDate",createdDate);
+        dates.put("mDate",modifiedDate);
+        dates.put("aDate",accessDate);
+
+        return dates;
     }
 
 }

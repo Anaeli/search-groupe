@@ -12,6 +12,8 @@
 
 package com.jalasoft.search.model;
 
+import java.util.Date;
+
 /**
  * Search is of model the files based over the attributes
  * @version  1.0
@@ -32,8 +34,8 @@ public class FileSearch extends Asset {    String extension;
      * @param hidden  its the file hidden
      * */
     public FileSearch(String name, int size, String path, String owner, String extension,
-                boolean hidden, boolean readOnly) {
-        super(name, size, path, owner, hidden, readOnly);
+                      boolean hidden, boolean readOnly, Date creationDate, Date modifiedDate, Date accessDate) {
+        super(name, size, path, owner, hidden, readOnly, creationDate, modifiedDate, accessDate);
         this.extension = extension;
     }
 

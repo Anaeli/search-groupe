@@ -1,5 +1,7 @@
 package com.jalasoft.search.model;
 
+import java.util.Date;
+
 /**
  *  This class implements the objects for model different object into a dir.
  *
@@ -13,6 +15,9 @@ public class Asset {
     private String owner;
     private boolean hidden;
     private boolean readOnly;
+    private Date creationDate;
+    private Date accessDate;
+    private Date modifiedDate;
 
     /**
      * constructor of Asset
@@ -24,13 +29,16 @@ public class Asset {
      * @param hidden  its the file hidden
      * */
     public Asset(String name, int size, String path, String owner,
-                 boolean hidden, boolean readOnly){
+                 boolean hidden, boolean readOnly, Date creationDate, Date modifiedDate, Date accessDate){
         this.size = size;
         this.name = name;
         this.owner = owner;
         this.path = path;
         this.readOnly = readOnly;
         this.hidden = hidden;
+        this.creationDate = creationDate;
+        this.accessDate = accessDate;
+        this.modifiedDate = modifiedDate;
     }
 
     /**
@@ -79,5 +87,29 @@ public class Asset {
      * */
     public boolean isReadOnly() {
         return readOnly;
+    }
+
+    /**
+     * this method return the creation date
+     * @return Date creation
+     * */
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    /**
+     * this method return modified Date
+     * @return Date modified
+     * */
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    /**
+     * this method return access date
+     * @return access Date
+     * */
+    public Date getAccessDate() {
+        return accessDate;
     }
 }
