@@ -12,6 +12,7 @@
 package com.jalasoft.search.view;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Date;
 
 /**
  *
@@ -45,7 +46,8 @@ public class MainWindow extends JFrame {
         this.getContentPane().add(bodyPanel, BorderLayout.CENTER);
         this.getContentPane().add(headerPanel, BorderLayout.NORTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1200, 900);
+        this.setSize(1020, 700);
+        this.setResizable(false);
         this.setVisible(true);
 
         menuPanel.getSimpleButton().addActionListener(e -> bodyPanel.getAdvancedFieldPanel().setVisible(false));
@@ -135,5 +137,93 @@ public class MainWindow extends JFrame {
      * */
     public void cleanTable(){
         bodyPanel.getResultSearchPanel().cleanTable();
+    }
+
+    /**
+     * This method returns get From Created Date
+     * @return Date From Created Date
+     *
+     */
+    public Date getFromCreatedDate() {
+        return bodyPanel.getAdvancedFieldPanel().getFromCreatedDate();
+    }
+
+    /**
+     * This method returns get From Modified Date
+     * @return Date From Modified Date
+     *
+     */
+    public Date getFromModifiedDate() {
+        return bodyPanel.getAdvancedFieldPanel().getFromModifiedDate();
+    }
+
+    /**
+     * This method returns get From Accessed Date
+     * @return Date From Accessed Date
+     *
+     */
+    public Date getFromAccessedDate() {
+        return bodyPanel.getAdvancedFieldPanel().getFromAccessedDate();
+    }
+
+    /**
+     * This method returns get From Created Date
+     * @return Date From Created Date
+     *
+     */
+    public Date getToCreatedDate() {
+        return bodyPanel.getAdvancedFieldPanel().getToCreatedDate();
+    }
+
+    /**
+     * This method returns get From Modified Date
+     * @return Date From Modified Date
+     *
+     */
+    public Date getToModifiedDate() {
+        return bodyPanel.getAdvancedFieldPanel().getToModifiedDate();
+    }
+
+    /**
+     * This method returns get From Accessed Date
+     * @return Date From Accessed Date
+     *
+     */
+    public Date getToAccessedDate() {
+        return bodyPanel.getAdvancedFieldPanel().getToAccessedDate();
+    }
+
+    /**
+     * This method returns Read Only value, it can be both = 0, read only = 1 and no read only = 2
+     * @return int of Read Only TextField Component
+     * */
+    public int getReadOnlyIndex() {
+        return bodyPanel.getAdvancedFieldPanel().getReadOnlyIndex();
+    }
+
+    /**
+     * This method returns size value, it can be KB = 0, MB = 1 and GB = 2
+     * @return int of size Combo box component
+     * */
+    public int getSizeIndex() {
+        return bodyPanel.getAdvancedFieldPanel().getSizeIndex();
+    }
+
+    /**
+     * This method returns From Size
+     * @return String owner name
+     *
+     */
+    public String getFromSize() {
+        return bodyPanel.getAdvancedFieldPanel().getFromSize();
+    }
+
+    /**
+     * This method returns To Size
+     * @return String owner name
+     *
+     */
+    public String getToSize() {
+        return bodyPanel.getAdvancedFieldPanel().getToSize();
     }
 }
