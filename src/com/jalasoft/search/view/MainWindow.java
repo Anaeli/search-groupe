@@ -226,4 +226,13 @@ public class MainWindow extends JFrame {
     public String getToSize() {
         return bodyPanel.getAdvancedFieldPanel().getToSize();
     }
+
+    /**
+     * This method returns Save Criteria Button to implement its event on Controller
+     * @return JButton criteria Save Button
+     *
+     */
+    public JButton getCriteriaSaveButton() {
+        return bodyPanel.getCriteriaPanel().getCriteriaSaveButton();
+    }
 }
