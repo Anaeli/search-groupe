@@ -74,9 +74,9 @@ public class Search {
         if(searchCriteria.getReadOnly() == 2){
             res = getAllNoReadOnlyFiles(res);
         }
-        if(searchCriteria.getCreatedDate() != null && searchCriteria.getCreatedDate() !=null){
-            res = searchBasedOnCreationDate(searchCriteria.getCreatedDate(),searchCriteria.getCreatedDate(),res);
-        }
+//        if(searchCriteria.getCreatedDate() != null && searchCriteria.getCreatedDate() !=null){
+//            res = searchBasedOnCreationDate(searchCriteria.getCreatedDate(),searchCriteria.getCreatedDate(),res);
+//        }
         if(searchCriteria.getSizeMax() != 0 && searchCriteria.getSizeMin() !=0){
             res = searchBasedOnSize(searchCriteria.getSizeMax(),searchCriteria.getSizeMin(),res);
         }else{
