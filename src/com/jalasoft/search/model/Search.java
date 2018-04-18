@@ -74,14 +74,14 @@ public class Search {
         if(searchCriteria.getReadOnly() == 2){
             res = getAllNoReadOnlyFiles(res);
         }
-        if(searchCriteria.getAccessedDate() != null && searchCriteria.getModifiedDate() !=null){
-            res = searchBasedOnAccessDate(searchCriteria.getAccessedDate(),searchCriteria.getAccessedDate(),res);
+        if(searchCriteria.getAccessedDateFrom() != null && searchCriteria.getAccessedDateTo() !=null){
+            res = searchBasedOnAccessDate(searchCriteria.getAccessedDateTo(),searchCriteria.getAccessedDateFrom(),res);
         }
-        if(searchCriteria.getModifiedDate() != null && searchCriteria.getModifiedDate() !=null){
-            res = searchBasedOnModifiedDate(searchCriteria.getModifiedDate(),searchCriteria.getModifiedDate(),res);
+        if(searchCriteria.getModifiedDateFrom() != null && searchCriteria.getModifiedDateTo() !=null){
+            res = searchBasedOnModifiedDate(searchCriteria.getModifiedDateTo(),searchCriteria.getModifiedDateFrom(),res);
         }
-        if(searchCriteria.getCreatedDate() != null && searchCriteria.getCreatedDate() !=null){
-            res = searchBasedOnCreationDate(searchCriteria.getCreatedDate(),searchCriteria.getCreatedDate(),res);
+        if(searchCriteria.getCreatedDateFrom() != null && searchCriteria.getCreatedDateTo() !=null){
+            res = searchBasedOnCreationDate(searchCriteria.getCreatedDateTo(),searchCriteria.getCreatedDateFrom(),res);
         }
         if(searchCriteria.getSizeMax() != 0 && searchCriteria.getSizeMin() !=0){
             res = searchBasedOnSize(searchCriteria.getSizeMax(),searchCriteria.getSizeMin(),res);
