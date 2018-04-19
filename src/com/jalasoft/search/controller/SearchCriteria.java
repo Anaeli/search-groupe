@@ -111,15 +111,15 @@ public class SearchCriteria {
 
     /**
      * Method to set if a file is hidden or not
-     * @param hidden, true if the file is hidden otherwise false
+     * @param hidden, flag to search between hidden or not hidden
      */
     public void setHidden(int hidden) {
         isHidden = hidden;
     }
 
     /**
-     * Method to set if a file is hidden or not
-     * @param type, true if the file is hidden otherwise false
+     * Method to set type of file to serch flag
+     * @param type, int flag is hidden or not
      */
     public void setType(int type) {
         this.type = type;
@@ -139,14 +139,6 @@ public class SearchCriteria {
      */
     public String getOwner() {
         return owner;
-    }
-
-    /**
-     * Method to get hidden criteria to search
-     * @return hidden criteria to search
-     */
-    public int getIsHidden() {
-        return isHidden;
     }
 
     /**
@@ -219,14 +211,6 @@ public class SearchCriteria {
      */
     public Date getAccessedDateTo() {
         return accessedDateTo;
-    }
-
-    /**
-     * Method to set hidden criteria to search
-     * @param isHidden int value send from UI
-     */
-    public void setIsHidden(int isHidden) {
-        this.isHidden = isHidden;
     }
 
     /**

@@ -12,6 +12,8 @@ package com.jalasoft.search.common;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
+
 import static com.jalasoft.search.common.Log.getInstance;
 
 /*
@@ -21,10 +23,14 @@ import static com.jalasoft.search.common.Log.getInstance;
 */
 public class Validator {
 
+    Helper helper;
+
     /**
      * Constructor method to validate UI entries
      */
-    public Validator() {  }
+    public Validator() {
+        helper = new Helper();
+    }
 
     /**
      * Method to validate that a file name has valid characters in its name.
@@ -65,5 +71,51 @@ public class Validator {
             is_correct = false;
         }
         return is_correct;
+    }
+
+    /**
+     * Method to validate if a file path string
+     * @param pathText the string path
+     * @return true if file has correct parameters otherwise false
+     */
+    public boolean validPath(String pathText) {
+        File f = new File(pathText);
+        return f.exists();
+    }
+
+    /**
+     * Method to verify id the input is a valid
+     * @param date name input
+     * @return true if file has correct parameters otherwise false
+     */
+    public boolean isValidDate(Date date) {
+        return date instanceof Date;
+    }
+
+    /**
+     * Method to verify id the input is a valid
+     * @param from, to Dates is not overlapped with the Dates
+     * @return true if file has correct parameters otherwise false
+     */
+    public boolean dateFromIsLessThanTo(Date from, Date to) {
+        return (from.compareTo(to) <= 0);
+    }
+
+    /**
+     * Method to verify id the input is a valid
+     * @param num is not empty
+     * @return true if the string is not empty
+     * */
+    public boolean isNotEmpty(String num) {
+        return !num.isEmpty();
+    }
+
+    /**
+     * Method to verify id the input is a valid
+     * @param min, max int to evaluate
+     * @return true the min is less tha max
+     * */
+    public boolean minInLessThanMax(int min, int max) {
+        return min <= max;
     }
 }

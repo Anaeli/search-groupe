@@ -13,7 +13,6 @@
 package com.jalasoft.search.model;
 
 import com.jalasoft.search.controller.SearchCriteria;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
-
 import static com.jalasoft.search.common.Log.getInstance;
 
 /**
@@ -45,12 +43,12 @@ public class Search {
      * this method are charged return the results using as parameters the attributes
      * @return a list with all files what match with all parameters defined.
      * */
-    public ArrayList<Asset> getResults(){
+    public ArrayList<Asset> getResults() throws InterruptedException {
         ArrayList<Asset> res = listAllFilesInPath(searchCriteria.getPath());
-        if(searchCriteria.getFileName() != ""){
+        if(!searchCriteria.getFileName().isEmpty()){
             res = searchBasedOnNameCriteria(searchCriteria.getFileName(), res);
         }
-        if(searchCriteria.getExtension() != ""){
+        if(searchCriteria.getExtension() != null){
             res = searchBasedOnExtension(searchCriteria.getExtension(), res);
         }
         if(searchCriteria.getHidden() == 1){
@@ -65,7 +63,7 @@ public class Search {
         if(searchCriteria.getType() == 1){
             res = getAllFiles(res);
         }
-        if(searchCriteria.getOwner() != ""){
+        if(searchCriteria.getOwner() != null){
             res = searchBasedOnOwnerName(searchCriteria.getFileName(), res);
         }
         if(searchCriteria.getReadOnly() == 1){
@@ -84,7 +82,7 @@ public class Search {
             res = searchBasedOnCreationDate(searchCriteria.getCreatedDateTo(),searchCriteria.getCreatedDateFrom(), res);
 
         }
-        if(searchCriteria.getSizeMax() != 0 && searchCriteria.getSizeMin() != 0){
+        if(searchCriteria.getSizeMax() >= 0 && searchCriteria.getSizeMin() >= 0){
             res = searchBasedOnSize(searchCriteria.getSizeMax(),searchCriteria.getSizeMin(), res);
         }else{
             getInstance().getLogger().error("no allowed search with 0 values");
@@ -260,7 +258,6 @@ public class Search {
         return listRes;
     }
 
-
     /**
      * charged to evaluate the files into the list based on the extension
      * @param extension is a criteria To Search
@@ -303,8 +300,9 @@ public class Search {
     private ArrayList<Asset> listAllFilesInPath(String path){
         ArrayList <Asset> allFilesInFolderList = new ArrayList<>();
         File files = new File(path);
-        if(files.exists() && files.isDirectory())
+        if (files.isDirectory()){
             listFilesForFolder(files, allFilesInFolderList);
+            }
         return allFilesInFolderList;
     }
 
@@ -313,28 +311,25 @@ public class Search {
      * listAllFilesInPath method
      * @param folder this Param is a File object with the path setup
      * @param res is an ArrayList of FileSearch what is filled the this method
+     * @return true if finished
      * */
-    private void listFilesForFolder(File folder , ArrayList<Asset> res) {
+    private void listFilesForFolder(File folder, ArrayList<Asset> res) {
         for (File fileEntry : folder.listFiles()) {
             String owner = "";
             Asset asset;
             try {
                 owner = Files.getOwner(fileEntry.toPath()).getName();
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
             if (fileEntry.isDirectory()) {
                 asset = FactoryAsset.createAssets("folder",fileEntry, owner, getCreationDate(fileEntry));
+                res.add(asset);
                 listFilesForFolder(fileEntry, res);
-            } else if (fileEntry.isFile()){
-                getCreationDate(fileEntry);
+            } else {
                 asset = FactoryAsset.createAssets("file", fileEntry, owner, getCreationDate(fileEntry));
-            }else{
-                getCreationDate(fileEntry);
-                asset = FactoryAsset.createAssets("other", fileEntry, owner, getCreationDate(fileEntry));
+                res.add(asset);
             }
-            res.add(asset);
         }
     }
 
