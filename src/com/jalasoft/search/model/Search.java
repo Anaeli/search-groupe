@@ -311,7 +311,8 @@ public class Search {
      * listAllFilesInPath method
      * @param folder this Param is a File object with the path setup
      * @param res is an ArrayList of FileSearch what is filled the this method
-     * @return true if finished  */
+     * @return true if finished
+     * */
     private void listFilesForFolder(File folder, ArrayList<Asset> res) {
         for (File fileEntry : folder.listFiles()) {
             String owner = "";

@@ -73,35 +73,49 @@ public class Validator {
         return is_correct;
     }
 
-    public boolean isPathDirection(String pathText) {
+    /**
+     * Method to validate if a file path string
+     * @param pathText the string path
+     * @return true if file has correct parameters otherwise false
+     */
+    public boolean validPath(String pathText) {
         File f = new File(pathText);
         return f.exists();
     }
 
+    /**
+     * Method to verify id the input is a valid
+     * @param date name input
+     * @return true if file has correct parameters otherwise false
+     */
     public boolean isValidDate(Date date) {
-        if(date instanceof Date)
-            return true;
-        return false;
+        return date instanceof Date;
     }
 
+    /**
+     * Method to verify id the input is a valid
+     * @param from, to Dates is not overlapped with the Dates
+     * @return true if file has correct parameters otherwise false
+     */
     public boolean dateFromIsLessThanTo(Date from, Date to) {
-        if(from.compareTo(to) <= 0){
-            return true;
-        }
-        return false;
+        return (from.compareTo(to) <= 0);
     }
 
+    /**
+     * Method to verify id the input is a valid
+     * @param num is not empty
+     * @return true if the string is not empty
+     * */
     public boolean isNotEmpty(String num) {
-        if (!num.isEmpty()){
-            return true;
-        }
-        return false;
+        return !num.isEmpty();
     }
 
+    /**
+     * Method to verify id the input is a valid
+     * @param min, max int to evaluate
+     * @return true the min is less tha max
+     * */
     public boolean minInLessThanMax(int min, int max) {
-        if (min <= max){
-            return true;
-        }
-        return false;
+        return min <= max;
     }
 }

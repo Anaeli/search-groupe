@@ -49,7 +49,6 @@ public class Helper {
      * @return int number converted
      */
     public int convertStringToInt(String number) {
-
         return Integer.parseInt(number);
     }
 }

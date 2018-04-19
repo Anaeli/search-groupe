@@ -15,9 +15,10 @@ import com.jalasoft.search.common.Validator;
 import com.jalasoft.search.model.Asset;
 import com.jalasoft.search.view.MainWindow;
 import com.jalasoft.search.model.Search;
+import com.jalasoft.search.model.QueryManager;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
-import static com.jalasoft.search.common.Log.getInstance;
 import static com.jalasoft.search.common.Log.getInstance;
 
 /*
@@ -171,7 +172,7 @@ public class Controller {
      */
     private boolean validatePath(String pathText) {
         boolean res = false;
-        if(validator.isPathDirection(pathText)){
+        if(validator.validPath(pathText)){
             res = true;
         }else{
             searchWindow.displayFieldErrorMessage("invalid Path");
