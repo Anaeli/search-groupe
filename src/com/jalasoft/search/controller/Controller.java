@@ -128,9 +128,6 @@ public class Controller {
             int unit_size = searchWindow.getSizeIndex();
             int num = helper.convertStringToInt(intValue);
             value = helper.convertToBytes(num, unit_size);
-        }else{
-            searchWindow.displayFieldErrorMessage("The size is not Setup correctly");
-            getInstance().getLogger().error("The Size is not Setup correctly");
         }
         return value;
     }
@@ -157,11 +154,13 @@ public class Controller {
      */
     private boolean validateDateGraterThan(Date from, Date to) {
         boolean res = false;
-        if(validator.isValidDate(from) && validator.isValidDate(to)){
-            res = validator.dateFromIsLessThanTo(from, to);
-            if (res == false){
-                searchWindow.displayFieldErrorMessage("The Date is not Setup correctly");
-                getInstance().getLogger().error("The Date is not Setup correctly");
+        if(from != null && to != null){
+            if(validator.isValidDate(from) && validator.isValidDate(to)){
+                res = validator.dateFromIsLessThanTo(from, to);
+                if (res == false){
+                    searchWindow.displayFieldErrorMessage("The Date is not Setup correctly");
+                    getInstance().getLogger().error("The Date is not Setup correctly");
+                }
             }
         }
         return res;
@@ -174,11 +173,15 @@ public class Controller {
      */
     private String validateTheString(String text) {
         String res = null;
-        if(validator.isFileNameCorrect(text)){
-            res = text;
+        if(!text.isEmpty()){
+            if(validator.isFileNameCorrect(text)){
+                res = text;
+            }else{
+                searchWindow.displayFieldErrorMessage("Invalid Text Field input");
+                getInstance().getLogger().error("Some test input are field with no valid value");
+            }
         }else{
-            searchWindow.displayFieldErrorMessage("Invalid Text Field input");
-            getInstance().getLogger().error("Some test input are field with no valid value");;
+            res = text;
         }
         return res;
     }
@@ -206,7 +209,7 @@ public class Controller {
      */
     private void searchBasedOnSearchCriteria() {
         searchWindow.cleanTable();
-        //searchWindow.cleanErrorMessage();
+        searchWindow.cleanErrorMessage();
         SearchCriteria criteria = validateSearchCriteria();
         if (!searchWindow.hasError()) {
             search.setSearchCriteria(criteria);
