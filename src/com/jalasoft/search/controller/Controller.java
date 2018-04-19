@@ -264,11 +264,15 @@ public class Controller {
      */
     private String validateTheString(String text) {
         String res = null;
-        if(validator.isFileNameCorrect(text)){
-            res = text;
+        if(!text.isEmpty()){
+            if(validator.isFileNameCorrect(text)){
+                res = text;
+            }else{
+                searchWindow.displayFieldErrorMessage("Invalid Text Field input");
+                getInstance().getLogger().error("Some test input are field with no valid value");
+            }
         }else{
-            searchWindow.displayFieldErrorMessage("Invalid Text Field input");
-            getInstance().getLogger().error("Some test input are field with no valid value");;
+            res = text;
         }
         return res;
     }
@@ -296,7 +300,7 @@ public class Controller {
      */
     private void searchBasedOnSearchCriteria() {
         searchWindow.cleanTable();
-        //searchWindow.cleanErrorMessage();
+        searchWindow.cleanErrorMessage();
         SearchCriteria criteria = validateSearchCriteria();
         if (!searchWindow.hasError()) {
             search.setSearchCriteria(criteria);
@@ -315,5 +319,4 @@ public class Controller {
             }
         }catch (Exception e){searchWindow.displayFieldErrorMessage("No Records Found");}
     }
-
 }
