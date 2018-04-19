@@ -45,10 +45,10 @@ public class Search {
      * */
     public ArrayList<Asset> getResults() throws InterruptedException {
         ArrayList<Asset> res = listAllFilesInPath(searchCriteria.getPath());
-        if(searchCriteria.getFileName() != ""){
+        if(!searchCriteria.getFileName().isEmpty()){
             res = searchBasedOnNameCriteria(searchCriteria.getFileName(), res);
         }
-        if(searchCriteria.getExtension() != ""){
+        if(searchCriteria.getExtension() != null){
             res = searchBasedOnExtension(searchCriteria.getExtension(), res);
         }
         if(searchCriteria.getHidden() == 1){
@@ -63,7 +63,7 @@ public class Search {
         if(searchCriteria.getType() == 1){
             res = getAllFiles(res);
         }
-        if(searchCriteria.getOwner() != ""){
+        if(searchCriteria.getOwner() != null){
             res = searchBasedOnOwnerName(searchCriteria.getFileName(), res);
         }
         if(searchCriteria.getReadOnly() == 1){
@@ -297,16 +297,13 @@ public class Search {
      * @param path to create the File
      * @return arraylist with all files and folder what are content in the path
      * */
-    private ArrayList<Asset> listAllFilesInPath(String path) throws InterruptedException {
+    private ArrayList<Asset> listAllFilesInPath(String path){
         ArrayList <Asset> allFilesInFolderList = new ArrayList<>();
         File files = new File(path);
-        boolean finished = false;
         if (files.isDirectory()){
             listFilesForFolder(files, allFilesInFolderList);
             }
-        while (finished)
-            Thread.sleep(10);
-        return null;
+        return allFilesInFolderList;
     }
 
     /**
@@ -326,11 +323,12 @@ public class Search {
             }
             if (fileEntry.isDirectory()) {
                 asset = FactoryAsset.createAssets("folder",fileEntry, owner, getCreationDate(fileEntry));
+                res.add(asset);
                 listFilesForFolder(fileEntry, res);
             } else {
                 asset = FactoryAsset.createAssets("file", fileEntry, owner, getCreationDate(fileEntry));
+                res.add(asset);
             }
-            res.add(asset);
         }
     }
 
