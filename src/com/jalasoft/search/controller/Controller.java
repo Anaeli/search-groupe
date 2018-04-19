@@ -18,6 +18,7 @@ import com.jalasoft.search.model.Search;
 import java.util.Date;
 import java.util.HashMap;
 import static com.jalasoft.search.common.Log.getInstance;
+import static com.jalasoft.search.common.Log.getInstance;
 
 /*
  * Class to manage integration among view, controller and model
@@ -54,13 +55,6 @@ public class Controller {
         searchWindow.displayMainWindow();
         searchWindow.getSearchButton().addActionListener(e -> fillCriteria());
         searchWindow.getCriteriaSaveButton().addActionListener(e -> saveCriteriaOnDataBase());
-    }
-
-    /**
-     * Event Method that save criteria on Data Base
-     */
-    private void saveCriteriaOnDataBase() {
-        searchWindow.getSearchButton().addActionListener(e -> searchBasedOnSearchCriteria());
     }
 
     /**
@@ -135,9 +129,6 @@ public class Controller {
             int unit_size = searchWindow.getSizeIndex();
             int num = helper.convertStringToInt(intValue);
             value = helper.convertToBytes(num, unit_size);
-        }else{
-            searchWindow.displayFieldErrorMessage("The size is not Setup correctly");
-            getInstance().getLogger().error("The Size is not Setup correctly");
         }
         return value;
     }
@@ -164,14 +155,106 @@ public class Controller {
      */
     private boolean validateDateGraterThan(Date from, Date to) {
         boolean res = false;
-        if(validator.isValidDate(from) && validator.isValidDate(to)){
-            res = validator.dateFromIsLessThanTo(from, to);
-            if (res == false){
-                searchWindow.displayFieldErrorMessage("The Date is not Setup correctly");
-                getInstance().getLogger().error("The Date is not Setup correctly");
+        if(from != null && to != null){
+            if(validator.isValidDate(from) && validator.isValidDate(to)){
+                res = validator.dateFromIsLessThanTo(from, to);
+                if (res == false){
+                    searchWindow.displayFieldErrorMessage("The Date is not Setup correctly");
+                    getInstance().getLogger().error("The Date is not Setup correctly");
+                }
             }
         }
         return res;
+    }
+
+    /**
+     * Method to validate the String input is valid String
+     * @param text String to evaluate teh Criteria
+     * @return the String if meet the Criteria and null if no meet it
+     */
+    private String validateTheString(String text) {
+        String res = null;
+        if(!text.isEmpty()){
+            if(validator.isFileNameCorrect(text)){
+                res = text;
+            }else{
+                searchWindow.displayFieldErrorMessage("Invalid Text Field input");
+                getInstance().getLogger().error("Some test input are field with no valid value");
+            }
+        }else{
+            res = text;
+        }
+        return res;
+    }
+
+    /**
+     * Method to validate is the path is valid
+     * @param pathText validate the String path exist
+     * @return True if the path exist
+     */
+    private boolean validatePath(String pathText) {
+        boolean res = false;
+        if(validator.isPathDirection(pathText)){
+            res = true;
+        }else{
+            searchWindow.displayFieldErrorMessage("invalid Path");
+            getInstance().getLogger().error("path no valid to set");
+        }
+        return res;
+    }
+
+
+    /// this method will be replaced by setSearchCriteria
+    /**
+     * Event Method that save criteria on Data Base
+     */
+    private void saveCriteriaOnDataBase() {
+        searchWindow.getSearchButton().addActionListener(e -> searchBasedOnSearchCriteria());
+    }
+
+    /**
+     * Method to set the Advanced Search boolean flag
+     */
+    public void setAdvancedSearch(boolean Advanced){
+        this.advanced = advanced;
+    }
+
+    /**
+     * Method to validate all files and set search criteria with valid values
+     */
+
+
+    /**
+     * Method to transform the String setup into Int also convert it in bites
+     * @param intValue String to Transform in Integer
+     * @return int value in bites
+     */
+    private int getIntValue(String intValue) {
+        int value = -1;
+        if( validator.isNotEmpty(intValue) ){
+            int unit_size = searchWindow.getSizeIndex();
+            int num = helper.convertStringToInt(intValue);
+            value = helper.convertToBytes(num, unit_size);
+        }else{
+            searchWindow.displayFieldErrorMessage("The size is not Setup correctly");
+            getInstance().getLogger().error("The Size is not Setup correctly");
+        }
+        return value;
+    }
+
+    /**
+     * Method to validate the Size grater than
+     * @param min, max: the min should be less than maz
+     * @return true if meet the criteria
+     */
+    private boolean validateSizeGraterThan(int min, int max) {
+        if(validator.minInLessThanMax(min, max)){
+            return true;
+        }else{
+            searchWindow.displayFieldErrorMessage("The size values are not Setup correctly");
+            getInstance().getLogger().error("The size values are not Setup correctly the Max should be grater than Min");
+        }
+        return false;
     }
 
     /**
@@ -232,4 +315,5 @@ public class Controller {
             }
         }catch (Exception e){searchWindow.displayFieldErrorMessage("No Records Found");}
     }
+
 }

@@ -26,7 +26,6 @@ public class MainWindow extends JFrame {
     private SearchMenu menuPanel;
     private HeaderPanel headerPanel;
     private BodyPanel bodyPanel;
-    private ResultSearchPanel resultSearchPanel;
     /**
      * Constructor initializes the name of JFrame
      * */

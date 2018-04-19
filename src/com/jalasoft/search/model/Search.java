@@ -13,7 +13,6 @@
 package com.jalasoft.search.model;
 
 import com.jalasoft.search.controller.SearchCriteria;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
-
 import static com.jalasoft.search.common.Log.getInstance;
 
 /**
@@ -45,7 +43,7 @@ public class Search {
      * this method are charged return the results using as parameters the attributes
      * @return a list with all files what match with all parameters defined.
      * */
-    public ArrayList<Asset> getResults(){
+    public ArrayList<Asset> getResults() throws InterruptedException {
         ArrayList<Asset> res = listAllFilesInPath(searchCriteria.getPath());
         if(searchCriteria.getFileName() != ""){
             res = searchBasedOnNameCriteria(searchCriteria.getFileName(), res);
@@ -260,7 +258,6 @@ public class Search {
         return listRes;
     }
 
-
     /**
      * charged to evaluate the files into the list based on the extension
      * @param extension is a criteria To Search
@@ -300,12 +297,16 @@ public class Search {
      * @param path to create the File
      * @return arraylist with all files and folder what are content in the path
      * */
-    private ArrayList<Asset> listAllFilesInPath(String path){
+    private ArrayList<Asset> listAllFilesInPath(String path) throws InterruptedException {
         ArrayList <Asset> allFilesInFolderList = new ArrayList<>();
         File files = new File(path);
-        if(files.exists() && files.isDirectory())
-            listFilesForFolder(files, allFilesInFolderList);
-        return allFilesInFolderList;
+        boolean finished = false;
+        if (files.isDirectory()){
+            finished = listFilesForFolder(files, allFilesInFolderList);
+            }
+        while (finished)
+            Thread.sleep(10);
+        return null;
     }
 
     /**
@@ -313,29 +314,33 @@ public class Search {
      * listAllFilesInPath method
      * @param folder this Param is a File object with the path setup
      * @param res is an ArrayList of FileSearch what is filled the this method
-     * */
-    private void listFilesForFolder(File folder , ArrayList<Asset> res) {
-        for (File fileEntry : folder.listFiles()) {
+     * @return true if finished  */
+    private boolean listFilesForFolder(File folder, ArrayList<Asset> res) {
+        boolean boolRes = false;
+        File[] listFiles = folder.listFiles();
+        int tam = listFiles.length;
+        for (int i = 0; i < tam; i++) {
+            File fileEntry = listFiles[i];
             String owner = "";
             Asset asset;
             try {
                 owner = Files.getOwner(fileEntry.toPath()).getName();
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
             if (fileEntry.isDirectory()) {
                 asset = FactoryAsset.createAssets("folder",fileEntry, owner, getCreationDate(fileEntry));
-                listFilesForFolder(fileEntry, res);
-            } else if (fileEntry.isFile()){
-                getCreationDate(fileEntry);
+                boolRes = listFilesForFolder(fileEntry, res);
+            } else {
                 asset = FactoryAsset.createAssets("file", fileEntry, owner, getCreationDate(fileEntry));
-            }else{
-                getCreationDate(fileEntry);
-                asset = FactoryAsset.createAssets("other", fileEntry, owner, getCreationDate(fileEntry));
             }
             res.add(asset);
+            if(i == tam){
+                boolRes = true;
+            }
+            i++;
         }
+        return boolRes;
     }
 
     /**
