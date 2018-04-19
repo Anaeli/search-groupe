@@ -302,7 +302,7 @@ public class Search {
         File files = new File(path);
         boolean finished = false;
         if (files.isDirectory()){
-            finished = listFilesForFolder(files, allFilesInFolderList);
+            listFilesForFolder(files, allFilesInFolderList);
             }
         while (finished)
             Thread.sleep(10);
@@ -315,12 +315,8 @@ public class Search {
      * @param folder this Param is a File object with the path setup
      * @param res is an ArrayList of FileSearch what is filled the this method
      * @return true if finished  */
-    private boolean listFilesForFolder(File folder, ArrayList<Asset> res) {
-        boolean boolRes = false;
-        File[] listFiles = folder.listFiles();
-        int tam = listFiles.length;
-        for (int i = 0; i < tam; i++) {
-            File fileEntry = listFiles[i];
+    private void listFilesForFolder(File folder, ArrayList<Asset> res) {
+        for (File fileEntry : folder.listFiles()) {
             String owner = "";
             Asset asset;
             try {
@@ -330,17 +326,12 @@ public class Search {
             }
             if (fileEntry.isDirectory()) {
                 asset = FactoryAsset.createAssets("folder",fileEntry, owner, getCreationDate(fileEntry));
-                boolRes = listFilesForFolder(fileEntry, res);
+                listFilesForFolder(fileEntry, res);
             } else {
                 asset = FactoryAsset.createAssets("file", fileEntry, owner, getCreationDate(fileEntry));
             }
             res.add(asset);
-            if(i == tam){
-                boolRes = true;
-            }
-            i++;
         }
-        return boolRes;
     }
 
     /**
