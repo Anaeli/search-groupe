@@ -11,6 +11,8 @@
  */
 package com.jalasoft.search.common;
 
+import static com.jalasoft.search.common.Log.getInstance;
+
 /*
  * Helper class to implement utilities to the app
  * @version  1.0
@@ -46,7 +48,8 @@ public class Helper {
      * @param number on string to convert on int
      * @return int number converted
      */
-    public int convertStringtoInt(String number) {
-        return Integer.valueOf(number);
+    public int convertStringToInt(String number) {
+
+        return Integer.parseInt(number);
     }
 }

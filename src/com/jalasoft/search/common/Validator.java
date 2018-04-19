@@ -12,6 +12,8 @@ package com.jalasoft.search.common;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
+
 import static com.jalasoft.search.common.Log.getInstance;
 
 /*
@@ -21,10 +23,14 @@ import static com.jalasoft.search.common.Log.getInstance;
 */
 public class Validator {
 
+    Helper helper;
+
     /**
      * Constructor method to validate UI entries
      */
-    public Validator() {  }
+    public Validator() {
+        helper = new Helper();
+    }
 
     /**
      * Method to validate that a file name has valid characters in its name.
@@ -70,5 +76,32 @@ public class Validator {
     public boolean isPathDirection(String pathText) {
         File f = new File(pathText);
         return f.exists();
+    }
+
+    public boolean isValidDate(Date date) {
+        if(date instanceof Date)
+            return true;
+        return false;
+    }
+
+    public boolean dateFromIsLessThanTo(Date from, Date to) {
+        if(from.compareTo(to) <= 0){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isNotEmpty(String num) {
+        if (!num.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean minInLessThanMax(int min, int max) {
+        if (min <= max){
+            return true;
+        }
+        return false;
     }
 }

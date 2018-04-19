@@ -238,4 +238,8 @@ public class MainWindow extends JFrame {
     public JButton getCriteriaSaveButton() {
         return bodyPanel.getCriteriaPanel().getCriteriaSaveButton();
     }
+
+    public boolean hasError() {
+        return headerPanel.hasError();
+    }
 }
