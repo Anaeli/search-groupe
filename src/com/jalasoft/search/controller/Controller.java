@@ -15,6 +15,7 @@ import com.jalasoft.search.common.Helper;
 import com.jalasoft.search.common.Log;
 import com.jalasoft.search.common.Validator;
 import com.jalasoft.search.model.Asset;
+import com.jalasoft.search.model.FileSearch;
 import com.jalasoft.search.view.MainWindow;
 import com.jalasoft.search.model.Search;
 import com.jalasoft.search.model.QueryManager;
@@ -92,7 +93,7 @@ public class Controller {
             sCriteria.setSizeMax(maxSize);
         }
 
-        if(advanced){
+        if(true){
             if (owner != null)
                 sCriteria.setOwner(owner);
             if (extension != null)
@@ -276,7 +277,17 @@ public class Controller {
         try {
             int counter = 1;
             for (Asset file : search.getResults()) {
-                searchWindow.addRowResult(new Object[]{counter++, file.getName(), file.getPath()});
+                String extension = "" ;
+                String type;
+                if(file instanceof FileSearch){
+                    extension = ((FileSearch)file).getExtension();
+                    type = "File";
+                }
+                else {
+                    type = "Folder";
+                }
+                searchWindow.addRowResult(new Object[]{counter++, file.getName(),
+                                    file.getPath(), extension, file.isHidden(), type});
             }
         }catch (Exception e){searchWindow.displayFieldErrorMessage("No Records Found");}
     }
