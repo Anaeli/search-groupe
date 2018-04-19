@@ -61,10 +61,6 @@ public class QueryManager {
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery("select * from search");
-            while(rs.next()){
-                System.out.println("id = " + rs.getInt("id"));
-                System.out.println("Criteria = " + rs.getString("criteria"));
-            }
             return rs;
         } catch (SQLException e) {
             Log.getInstance().getLogger().error("DB Exception: " + e);

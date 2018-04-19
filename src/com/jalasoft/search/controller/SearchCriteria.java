@@ -20,6 +20,7 @@ import static com.jalasoft.search.common.Log.getInstance;
  * @author Eliana Navia
  */
 public class SearchCriteria {
+    private String criteriaDataBaseName;
     private String fileName;
     private String path;
     private String extension;
@@ -299,5 +300,13 @@ public class SearchCriteria {
      */
     public void setSizeUnit(int sizeUnit) {
         this.sizeUnit = sizeUnit;
+    }
+
+    public String getCriteriaDataBaseName() {
+        return criteriaDataBaseName;
+    }
+
+    public void setCriteriaDataBaseName(String criteriaDataBaseName) {
+        this.criteriaDataBaseName = criteriaDataBaseName;
     }
 }

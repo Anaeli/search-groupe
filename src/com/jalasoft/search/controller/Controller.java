@@ -10,12 +10,16 @@
  */
 package com.jalasoft.search.controller;
 
+import com.google.gson.Gson;
 import com.jalasoft.search.common.Helper;
+import com.jalasoft.search.common.Log;
 import com.jalasoft.search.common.Validator;
 import com.jalasoft.search.model.Asset;
 import com.jalasoft.search.view.MainWindow;
 import com.jalasoft.search.model.Search;
 import com.jalasoft.search.model.QueryManager;
+
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
@@ -33,6 +37,7 @@ public class Controller {
     private Helper helper;
     private boolean advanced;
     private HashMap<String, Object > criteriaMap;
+    private QueryManager queryManager;
 
     /**
      * Constructor method to integrate the view, controller and model
@@ -55,6 +60,7 @@ public class Controller {
         searchWindow.displayMainWindow();
         searchWindow.getSearchButton().addActionListener(e -> searchBasedOnSearchCriteria());
         searchWindow.getCriteriaSaveButton().addActionListener(e -> saveCriteriaOnDataBase());
+        queryManager = new QueryManager();
     }
 
     /**
@@ -106,7 +112,6 @@ public class Controller {
             sCriteria.setType(searchWindow.getTypeFlag());
             sCriteria.setHidden(searchWindow.getTypeFlag());
             sCriteria.setReadOnly(searchWindow.getReadOnlyIndex());
-
         }
         return sCriteria;
     }
@@ -181,13 +186,36 @@ public class Controller {
         return res;
     }
 
-
-    /// this method will be replaced by setSearchCriteria
     /**
      * Event Method that save criteria on Data Base
      */
     private void saveCriteriaOnDataBase() {
-        searchWindow.getSearchButton().addActionListener(e -> searchBasedOnSearchCriteria());
+        SearchCriteria criteria = validateSearchCriteria();
+        criteria.setCriteriaDataBaseName("Criterioooo 1");
+        Gson gson = new Gson();
+        try {
+            queryManager.addCriteria(gson.toJson(criteria));
+        } catch (SQLException e) {
+            Log.getInstance().getLogger().error("Data Base: " + e);
+        }
+        displayCriteriasFromDataBase();
+    }
+
+    /**
+     * Event Method that save criteria on Data Base
+     */
+    private void displayCriteriasFromDataBase() {
+        ResultSet allCriterias = queryManager.getAllCriterials();
+        Gson gson = new Gson();
+        try{
+            while(allCriterias.next()){
+                SearchCriteria criteria = gson.fromJson(allCriterias.getString("criteria"), SearchCriteria.class);
+                String criteriaName = criteria.getCriteriaDataBaseName();
+                searchWindow.addRowOnCriteriaTable(new Object[]{allCriterias.getInt("id"), criteriaName});
+            }
+        } catch (Exception e){
+            
+        }
     }
 
     /**

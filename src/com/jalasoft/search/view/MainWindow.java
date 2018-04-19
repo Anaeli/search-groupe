@@ -247,4 +247,11 @@ public class MainWindow extends JFrame {
     public boolean hasError() {
         return headerPanel.hasError();
     }
+
+    /**
+     * This method is to add rows on result table about search results
+     * */
+    public void addRowOnCriteriaTable(Object[] newRow){
+        bodyPanel.getCriteriaPanel().addRowOnTable(newRow);
+    }
 }
