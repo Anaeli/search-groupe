@@ -14,7 +14,7 @@ public class ResultSearchPanel extends JPanel {
     public ResultSearchPanel(){
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createTitledBorder("Results"));
-        this.setPreferredSize(new Dimension(1000, 300));
+        this.setPreferredSize(new Dimension(1000, 200));
         defaultTableModel = new DefaultTableModel(new Object[][] { }, headerTable);
         resultTable = new JTable(defaultTableModel);
         this.add(new JScrollPane(resultTable), BorderLayout.CENTER);

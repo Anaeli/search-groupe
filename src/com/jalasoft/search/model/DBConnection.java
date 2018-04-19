@@ -1,6 +1,10 @@
 package com.jalasoft.search.model;
 
-import java.sql.*;
+import com.jalasoft.search.common.Log;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DBConnection {
     private static DBConnection dbCon;
@@ -10,9 +14,9 @@ public class DBConnection {
         try {
             init();
         } catch (ClassNotFoundException e) {
-            System.out.println("1" + e);
+            Log.getInstance().getLogger().info("DB Exception: " + e);
         } catch (SQLException e) {
-            System.out.println("2" + e);
+            Log.getInstance().getLogger().info("DB Exception: " + e);
         }
     }
 
@@ -25,16 +29,9 @@ public class DBConnection {
 
     private void init() throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
-        connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
+        connection = DriverManager.getConnection("jdbc:sqlite:searchGroupE.db");
         Statement createDataBase = connection.createStatement();
-        createDataBase.executeUpdate("create table if not exists search (id integer, criteria varchar(900), primary key(id))");
-        ResultSet rs = createDataBase.executeQuery("select * from search");
-        while(rs.next())
-        {
-            // read the result set
-            System.out.println("name = " + rs.getString("criteria"));
-            System.out.println("id = " + rs.getInt("id"));
-        }
+        createDataBase.executeUpdate("create table if not exists search (id INTEGER PRIMARY KEY AUTOINCREMENT, criteria varchar(900))");
     }
 
     public static Connection getConnection(){

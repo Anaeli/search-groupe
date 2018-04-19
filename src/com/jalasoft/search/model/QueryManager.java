@@ -1,28 +1,38 @@
 package com.jalasoft.search.model;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import com.jalasoft.search.common.Log;
+
+import java.sql.*;
 
 public class QueryManager {
     private static Connection connection;
     private Statement statement;
 
 
-    public QueryManager(){
+    public QueryManager() throws SQLException {
         connection = DBConnection.getInstance().getConnection();
+
     }
 
-    public String addCriteria() throws SQLException {
-//        statement = connection.createStatement();
-//        ResultSet rs = statement.executeQuery("select * from search");
-//        while(rs.next())
-//        {
-//            // read the result set
-//            System.out.println("Criteria = " + rs.getString("Criteria"));
-//            System.out.println("id = " + rs.getInt("Id"));
-//        }
+    public String addCriteria(String criteriaString) throws SQLException {
+        String insertString = "insert into search (id, criteria) values(?,?)";
+        PreparedStatement insertCriteria = connection.prepareStatement(insertString);
+        insertCriteria.setString(2, criteriaString);
+        insertCriteria.execute();
+        return "asd";
+    }
+
+    public String getAllCriterials(){
+        try {
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("select * from search");
+            while(rs.next()){
+                System.out.println("id = " + rs.getInt("id"));
+                System.out.println("Criteria = " + rs.getString("criteria"));
+            }
+        } catch (SQLException e) {
+            Log.getInstance().getLogger().info("DB Exception: " + e);
+        }
         return "asd";
     }
 }

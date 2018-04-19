@@ -28,6 +28,7 @@ public class Controller {
     private MainWindow searchWindow;
     private Search search;
     private Validator validator;
+    private Boolean advancedFlag;
 
     /**
      * Constructor method to integrate the view, controller and model
@@ -49,13 +50,11 @@ public class Controller {
         searchWindow.getCriteriaSaveButton().addActionListener(e -> saveCriteriaOnDataBase());
     }
 
+    /**
+     * Event Method that save criteria on Data Base
+     */
     private void saveCriteriaOnDataBase() {
-        QueryManager qm = new QueryManager();
-        try {
-            qm.addCriteria();
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+
     }
 
     /**

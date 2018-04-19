@@ -26,7 +26,6 @@ public class BodyPanel extends JPanel {
     private SimpleFieldsPanel simpleFieldPanel;
     private AdvancedFieldsPanel advancedFieldPanel;
     private CriteriaPanel criteriaPanel;
-    private ResultSearchPanel resultSearchPanel;
 
     /**
      * Constructor calls to init method to initialize all components
@@ -45,7 +44,7 @@ public class BodyPanel extends JPanel {
         simpleFieldPanel = new SimpleFieldsPanel();
         advancedFieldPanel = new AdvancedFieldsPanel();
         criteriaPanel = new CriteriaPanel();
-        resultSearchPanel = new ResultSearchPanel();
+
 
         fieldsPanel = new JPanel();
         //fieldsPanel.setLayout(new GridLayout(1,2));
@@ -56,7 +55,8 @@ public class BodyPanel extends JPanel {
 
         this.add(fieldsPanel);
         this.add(criteriaPanel);
-        this.add(resultSearchPanel);
+
+
     }
 
     /**
@@ -75,13 +75,6 @@ public class BodyPanel extends JPanel {
         return advancedFieldPanel;
     }
 
-    /**
-     * This method returns ResultSearchPanel instance
-     * @return ResultSearchPanel resultSearchPanel component
-     * */
-    public ResultSearchPanel getResultSearchPanel(){
-        return resultSearchPanel;
-    }
 
     /**
      * This method returns Criteria Panel instance
