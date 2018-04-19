@@ -1,9 +1,28 @@
+/*
+ * Search .java
+ *
+ * Copyright (c) 2018 Jalasoft.
+ *
+ * This software is the confidential and proprietary information of Jalasoft.
+ * ("Confidential Information").  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Jalasoft.
+ */
 package com.jalasoft.search.view;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
+/**
+ *
+ This class implements the GUI for Criteria panel.
+ using components from swing library
+ *
+ * @version  1.0
+ * @author Rodrigo Saul Cespedes Murillo
+ */
 public class CriteriaPanel extends JPanel {
     private JPanel tablePanel;
     private JPanel saveCriteriaFormPanel;
@@ -16,10 +35,16 @@ public class CriteriaPanel extends JPanel {
     //headers for the table
     private String[] headerTable = new String[] { "ID", "Criteria Name" };
 
+    /**
+     * Constructor initializes init method
+     * */
     public CriteriaPanel(){
         init();
     }
 
+    /**
+     * This initializes this Panel as BoxLayout also add components to this JPanel
+     * */
     private void init() {
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.setBorder(BorderFactory.createTitledBorder("Criteria Table"));
@@ -38,14 +63,7 @@ public class CriteriaPanel extends JPanel {
         this.add(tablePanel);
         this.add(saveCriteriaFormPanel);
 
-        defaultTableModel.addRow(new Object[]{ "1", "Criteria 1"});
-        defaultTableModel.addRow(new Object[]{ "2", "Criteria 2"});
-        defaultTableModel.addRow(new Object[]{ "3", "Criteria 3"});
-        defaultTableModel.addRow(new Object[]{ "4", "Criteria 4"});
-        defaultTableModel.addRow(new Object[]{ "5", "Criteria 5"});
-
         criteriaTable.getSelectionModel().addListSelectionListener(e -> loadCriteria());
-
         criteriaSaveLabel = new JLabel("Criteria Name");
         criteriaSaveLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         criteriaSaveTextField = new JTextField(15);
@@ -53,7 +71,6 @@ public class CriteriaPanel extends JPanel {
         criteriaSaveTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
         criteriaSaveButton = new JButton("Save");
         criteriaSaveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         saveCriteriaFormPanel.add(criteriaSaveLabel);
         saveCriteriaFormPanel.add(criteriaSaveTextField);
         saveCriteriaFormPanel.add(criteriaSaveButton);

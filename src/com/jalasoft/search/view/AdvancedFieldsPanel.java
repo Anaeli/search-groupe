@@ -12,7 +12,6 @@
 package com.jalasoft.search.view;
 
 import org.jdesktop.swingx.JXDatePicker;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Date;
