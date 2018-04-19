@@ -26,6 +26,7 @@ public class MainWindow extends JFrame {
     private SearchMenu menuPanel;
     private HeaderPanel headerPanel;
     private BodyPanel bodyPanel;
+    private ResultSearchPanel resultSearchPanel;
     /**
      * Constructor initializes the name of JFrame
      * */
@@ -41,12 +42,14 @@ public class MainWindow extends JFrame {
         menuPanel = new SearchMenu();
         headerPanel = new HeaderPanel();
         bodyPanel = new BodyPanel();
+        resultSearchPanel = new ResultSearchPanel();
 
         this.getContentPane().add(menuPanel, BorderLayout.WEST);
         this.getContentPane().add(bodyPanel, BorderLayout.CENTER);
         this.getContentPane().add(headerPanel, BorderLayout.NORTH);
+        this.getContentPane().add(resultSearchPanel, BorderLayout.SOUTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1020, 700);
+        this.setSize(800, 600);
         this.setResizable(false);
         this.setVisible(true);
 
@@ -129,14 +132,14 @@ public class MainWindow extends JFrame {
      * This method is to set rows on result table
      * */
     public void addRowResult(Object[] newRow){
-        bodyPanel.getResultSearchPanel().addRowOnTable(newRow);
+        resultSearchPanel.addRowOnTable(newRow);
     }
 
     /**
      * This method is to clean all rows of table results
      * */
     public void cleanTable(){
-        bodyPanel.getResultSearchPanel().cleanTable();
+        resultSearchPanel.cleanTable();
     }
 
     /**
@@ -225,5 +228,14 @@ public class MainWindow extends JFrame {
      */
     public String getToSize() {
         return bodyPanel.getAdvancedFieldPanel().getToSize();
+    }
+
+    /**
+     * This method returns Save Criteria Button to implement its event on Controller
+     * @return JButton criteria Save Button
+     *
+     */
+    public JButton getCriteriaSaveButton() {
+        return bodyPanel.getCriteriaPanel().getCriteriaSaveButton();
     }
 }

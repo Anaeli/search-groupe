@@ -13,9 +13,12 @@ package com.jalasoft.search.controller;
 import com.jalasoft.search.common.Helper;
 import com.jalasoft.search.common.Validator;
 import com.jalasoft.search.model.Asset;
+import com.jalasoft.search.model.QueryManager;
 import com.jalasoft.search.view.MainWindow;
 import com.jalasoft.search.model.FileSearch;
 import com.jalasoft.search.model.Search;
+
+import java.sql.SQLException;
 
 /*
  * Class to manage integration among view, controller and model
@@ -26,6 +29,7 @@ public class Controller {
     private MainWindow searchWindow;
     private Search search;
     private Validator validator;
+    private Boolean advancedFlag;
     private Helper helper;
 
     /**
@@ -46,6 +50,14 @@ public class Controller {
     public void init() {
         searchWindow.displayMainWindow();
         searchWindow.getSearchButton().addActionListener(e -> fillCriteria());
+        searchWindow.getCriteriaSaveButton().addActionListener(e -> saveCriteriaOnDataBase());
+    }
+
+    /**
+     * Event Method that save criteria on Data Base
+     */
+    private void saveCriteriaOnDataBase() {
+
     }
 
     /**

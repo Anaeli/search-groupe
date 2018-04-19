@@ -35,34 +35,34 @@ public class SearchMenu extends BasePanel{
     public SearchMenu(){
         //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.setLayout(new GridLayout(4,1));
+        this.setLayout(new GridLayout(3,1));
 
         this.setBorder(BorderFactory.createTitledBorder("Search Menu"));
-        simpleButton = new JButton("Simple Search");
+        simpleButton = new JButton("Simple");
         simpleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         simpleButton.setFocusPainted(false);
-        advancedButton = new JButton("Advanced Search");
+        advancedButton = new JButton("Advanced");
         advancedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         advancedButton.setFocusPainted(false);
         searchButton = new JButton("Search");
 
-        formPanels = addPanelToGrid(4, 1);
+        formPanels = addPanelToGrid(3, 1);
 
         formPanels[0][0].add(simpleButton);
         formPanels[1][0].add(advancedButton);
-        formPanels[3][0].setLayout(new BoxLayout(formPanels[3][0], BoxLayout.Y_AXIS));
-        formPanels[3][0].add(searchButton);
+        formPanels[2][0].setLayout(new BoxLayout(formPanels[2][0], BoxLayout.Y_AXIS));
+        formPanels[2][0].add(searchButton);
         searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         try {
             Image simple = ImageIO.read(getClass().getResource("../../../../lib/icon/simple.png"));
-            Image new_simple = simple.getScaledInstance( 70, 70,  java.awt.Image.SCALE_SMOOTH ) ;
+            Image new_simple = simple.getScaledInstance( 30, 30,  java.awt.Image.SCALE_SMOOTH ) ;
             simpleButton.setIcon(new ImageIcon(new_simple));
             Image advanced = ImageIO.read(getClass().getResource("../../../../lib/icon/advanced.png"));
-            Image new_advanced = advanced.getScaledInstance( 70, 70,  java.awt.Image.SCALE_SMOOTH ) ;
+            Image new_advanced = advanced.getScaledInstance( 30, 30,  java.awt.Image.SCALE_SMOOTH ) ;
             advancedButton.setIcon(new ImageIcon(new_advanced));
             Image search = ImageIO.read(getClass().getResource("../../../../lib/icon/search.png"));
-            Image new_search = search.getScaledInstance( 70, 70,  java.awt.Image.SCALE_SMOOTH ) ;
+            Image new_search = search.getScaledInstance( 30, 30,  java.awt.Image.SCALE_SMOOTH ) ;
             searchButton.setIcon(new ImageIcon(new_search));
         } catch (Exception ex) {
             System.out.println(ex);
