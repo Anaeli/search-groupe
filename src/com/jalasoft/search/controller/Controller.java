@@ -29,7 +29,6 @@ public class Controller {
     private MainWindow searchWindow;
     private Search search;
     private Validator validator;
-    private Boolean advancedFlag;
     private Helper helper;
     private boolean advanced;
     private HashMap<String, Object > criteriaMap;
@@ -64,25 +63,29 @@ public class Controller {
         SearchCriteria sCriteria = new SearchCriteria();
         String path = searchWindow.getPathText();
         String fileName = validateTheString(searchWindow.getFileNameText());
+        int minSize = getIntValue(searchWindow.getFromSize());
+        int maxSize = getIntValue(searchWindow.getToSize());
+        Date fCDate = searchWindow.getFromCreatedDate();
+        Date tCDate = searchWindow.getToCreatedDate();
+        Date fADate = searchWindow.getFromAccessedDate();
+        Date tADate = searchWindow.getToAccessedDate();
+        Date fMDate = searchWindow.getFromModifiedDate();
+        Date tMDate = searchWindow.getToModifiedDate();
+        String owner = validateTheString(searchWindow.getOwnerText());
+        String extension = validateTheString(searchWindow.getExtensionText());
+
         if(validatePath(path)){
             sCriteria.setPath(path);
         }
         if(fileName != null){
             sCriteria.setFileName(fileName);
         }
+        if (validateSizeGraterThan(minSize, maxSize)){
+            sCriteria.setSizeMin(minSize);
+            sCriteria.setSizeMax(maxSize);
+        }
 
         if(advanced){
-            int minSize = getIntValue(searchWindow.getFromSize());
-            int maxSize = getIntValue(searchWindow.getToSize());
-            Date fCDate = searchWindow.getFromCreatedDate();
-            Date tCDate = searchWindow.getToCreatedDate();
-            Date fADate = searchWindow.getFromAccessedDate();
-            Date tADate = searchWindow.getToAccessedDate();
-            Date fMDate = searchWindow.getFromModifiedDate();
-            Date tMDate = searchWindow.getToModifiedDate();
-            String owner = validateTheString(searchWindow.getOwnerText());
-            String extension = validateTheString(searchWindow.getExtensionText());
-
             if (owner != null)
                 sCriteria.setOwner(owner);
             if (extension != null)
@@ -98,10 +101,6 @@ public class Controller {
             if (validateDateGraterThan(fMDate, tMDate)){
                 sCriteria.setModifiedDateFrom(fMDate);
                 sCriteria.setModifiedDateTo(tMDate);
-            }
-            if (validateSizeGraterThan(minSize, maxSize)){
-                sCriteria.setSizeMin(minSize);
-                sCriteria.setSizeMax(maxSize);
             }
             sCriteria.setType(searchWindow.getTypeFlag());
             sCriteria.setHidden(searchWindow.getTypeFlag());
@@ -209,13 +208,20 @@ public class Controller {
      */
     private int getIntValue(String intValue) {
         int value = -1;
-        if( validator.isNotEmpty(intValue) ){
-            int unit_size = searchWindow.getSizeIndex();
-            int num = helper.convertStringToInt(intValue);
-            value = helper.convertToBytes(num, unit_size);
-        }else{
-            searchWindow.displayFieldErrorMessage("The size is not Setup correctly");
-            getInstance().getLogger().error("The Size is not Setup correctly");
+        if (!intValue.isEmpty()){
+            if( validator.isNotEmpty(intValue) ){
+                try{
+                    int unit_size = searchWindow.getSizeIndex();
+                    int num = helper.convertStringToInt(intValue);
+                    value = helper.convertToBytes(num, unit_size);
+                }catch (Exception e){
+                    searchWindow.displayFieldErrorMessage("invalid input is required an integer");
+                    getInstance().getLogger().error("The Size is not Setup correctly");
+                }
+            }else{
+                searchWindow.displayFieldErrorMessage("The size is not Setup correctly");
+                getInstance().getLogger().error("The Size is not Setup correctly");
+            }
         }
         return value;
     }

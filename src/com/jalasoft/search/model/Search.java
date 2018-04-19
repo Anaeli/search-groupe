@@ -82,7 +82,7 @@ public class Search {
             res = searchBasedOnCreationDate(searchCriteria.getCreatedDateTo(),searchCriteria.getCreatedDateFrom(), res);
 
         }
-        if(searchCriteria.getSizeMax() != 0 && searchCriteria.getSizeMin() != 0){
+        if(searchCriteria.getSizeMax() >= 0 && searchCriteria.getSizeMin() >= 0){
             res = searchBasedOnSize(searchCriteria.getSizeMax(),searchCriteria.getSizeMin(), res);
         }else{
             getInstance().getLogger().error("no allowed search with 0 values");
