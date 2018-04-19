@@ -1,5 +1,5 @@
 /*
- * Search .java
+ * QueryManager .java
  *
  * Copyright (c) 2018 Jalasoft.
  *
@@ -67,7 +67,7 @@ public class QueryManager {
             }
             return rs;
         } catch (SQLException e) {
-            Log.getInstance().getLogger().info("DB Exception: " + e);
+            Log.getInstance().getLogger().error("DB Exception: " + e);
             return null;
         }
     }

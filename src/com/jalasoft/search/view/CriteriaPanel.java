@@ -1,5 +1,5 @@
 /*
- * Search .java
+ * Criteria .java
  *
  * Copyright (c) 2018 Jalasoft.
  *
@@ -87,6 +87,9 @@ public class CriteriaPanel extends JPanel {
         defaultTableModel.addRow(newRow);
     }
 
+    /**
+     * This method returns JButton to save a criteria
+     * */
     public JButton getCriteriaSaveButton(){
         return criteriaSaveButton;
     }

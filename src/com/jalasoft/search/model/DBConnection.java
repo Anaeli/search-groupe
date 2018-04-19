@@ -1,5 +1,5 @@
 /*
- * Search .java
+ * DBConnection .java
  *
  * Copyright (c) 2018 Jalasoft.
  *
@@ -37,9 +37,9 @@ public class DBConnection {
         try {
             init();
         } catch (ClassNotFoundException e) {
-            Log.getInstance().getLogger().info("DB Exception: " + e);
+            Log.getInstance().getLogger().error("DB Exception: " + e);
         } catch (SQLException e) {
-            Log.getInstance().getLogger().info("DB Exception: " + e);
+            Log.getInstance().getLogger().error("DB Exception: " + e);
         }
     }
 
