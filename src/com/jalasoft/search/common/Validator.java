@@ -66,4 +66,9 @@ public class Validator {
         }
         return is_correct;
     }
+
+    public boolean isPathDirection(String pathText) {
+        File f = new File(pathText);
+        return f.exists();
+    }
 }

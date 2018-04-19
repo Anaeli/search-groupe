@@ -14,8 +14,11 @@ import com.jalasoft.search.common.Helper;
 import com.jalasoft.search.common.Validator;
 import com.jalasoft.search.model.Asset;
 import com.jalasoft.search.view.MainWindow;
-import com.jalasoft.search.model.FileSearch;
 import com.jalasoft.search.model.Search;
+
+import java.util.HashMap;
+
+import static com.jalasoft.search.common.Log.getInstance;
 
 /*
  * Class to manage integration among view, controller and model
@@ -27,6 +30,8 @@ public class Controller {
     private Search search;
     private Validator validator;
     private Helper helper;
+    private boolean advanced;
+    private HashMap<String, Object > criteriaMap;
 
     /**
      * Constructor method to integrate the view, controller and model
@@ -38,6 +43,8 @@ public class Controller {
         this.search = search;
         validator = new Validator();
         helper = new Helper();
+        this.advanced = false;
+        this.criteriaMap = new HashMap<>();
     }
 
     /**
@@ -48,6 +55,63 @@ public class Controller {
         searchWindow.getSearchButton().addActionListener(e -> fillCriteria());
     }
 
+    /**
+     * Method to set the Advanced Search boolean flag
+     */
+    public void setAdvancedSearch(boolean Advanced){
+        this.advanced = advanced;
+    }
+
+    /**
+     * Method to validate all files before to set the search criteria
+     */
+    private boolean validateCriteria(){
+        boolean isOk = false;
+        isOk = validatePath(searchWindow.getPathText());
+        isOk = validateFileName(searchWindow.getFileNameText());
+        if(advanced != false){
+            // call methods to validate Advanced Search
+        }
+        if ( isOk ){
+            setSearchCriteria();
+        }else{
+            getInstance().getLogger().error("the validation over the input is failed");
+        }
+        return true;
+    }
+
+    /**
+     * Method to validate the String name and set criteria into the Hash map
+     */
+    private boolean validateFileName(String fileNameText) {
+        boolean res = false;
+        if(validator.isFileNameCorrect(fileNameText)){
+            criteriaMap.put("fileName", fileNameText);
+            res = true;
+        }else{
+            searchWindow.displayFieldErrorMessage("Invalid File Name");
+            getInstance().getLogger().error("path no valid to set");;
+        }
+        return res;
+    }
+
+    /**
+     * Method to validate the path and set criteria into the Hash map
+     */
+    private boolean validatePath(String pathText) {
+        boolean res = false;
+        if(validator.isPathDirection(pathText)){
+            criteriaMap.put("path", pathText);
+            res = true;
+        }else{
+            searchWindow.displayFieldErrorMessage("invalid Path");
+            getInstance().getLogger().error("path no valid to set");
+        }
+        return res;
+    }
+
+
+    /// this method will be replaced by setSearchCriteria
     /**
      * Method that set criteria to search files or folders
      */
@@ -104,4 +168,15 @@ public class Controller {
         }catch (Exception e){searchWindow.displayFieldErrorMessage("No Records Found");}
     }
 
+    /**
+     * Method that set criteria in Search Criteria
+     */
+    private void setSearchCriteria() {
+        SearchCriteria criteria = new SearchCriteria();
+        criteria.setPath((String) criteriaMap.get("path"));
+        criteria.setPath((String) criteriaMap.get("fileName"));
+        if(advanced != false){
+            // set values for Advanced Search into Search Criteria
+        }
+    }
 }
