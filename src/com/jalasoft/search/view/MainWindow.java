@@ -9,10 +9,10 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-package com.jalasoft.search.view;
-import javax.swing.*;
-import java.awt.*;
-import java.util.Date;
+        package com.jalasoft.search.view;
+        import javax.swing.*;
+        import java.awt.*;
+        import java.util.Date;
 
 /**
  *
@@ -26,6 +26,7 @@ public class MainWindow extends JFrame {
     private SearchMenu menuPanel;
     private HeaderPanel headerPanel;
     private BodyPanel bodyPanel;
+    private ResultSearchPanel resultSearchPanel;
     /**
      * Constructor initializes the name of JFrame
      * */
@@ -238,6 +239,11 @@ public class MainWindow extends JFrame {
         return bodyPanel.getCriteriaPanel().getCriteriaSaveButton();
     }
 
+    /**
+     * This method returns true if the window displays an error
+     * @return boolean if in the window has error
+     *
+     */
     public boolean hasError() {
         return headerPanel.hasError();
     }

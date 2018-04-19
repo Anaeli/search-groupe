@@ -53,15 +53,8 @@ public class Controller {
      */
     public void init() {
         searchWindow.displayMainWindow();
-        searchWindow.getSearchButton().addActionListener(e -> fillCriteria());
+        searchWindow.getSearchButton().addActionListener(e -> searchBasedOnSearchCriteria());
         searchWindow.getCriteriaSaveButton().addActionListener(e -> saveCriteriaOnDataBase());
-    }
-
-    /**
-     * Method to set the Advanced Search boolean flag
-     */
-    public void setAdvancedSearch(boolean Advanced){
-        this.advanced = advanced;
     }
 
     /**
@@ -116,21 +109,6 @@ public class Controller {
 
         }
         return sCriteria;
-    }
-
-    /**
-     * Method to transform the String setup into Int also convert it in bites
-     * @param intValue String to Transform in Integer
-     * @return int value in bites
-     */
-    private int getIntValue(String intValue) {
-        int value = -1;
-        if( validator.isNotEmpty(intValue) ){
-            int unit_size = searchWindow.getSizeIndex();
-            int num = helper.convertStringToInt(intValue);
-            value = helper.convertToBytes(num, unit_size);
-        }
-        return value;
     }
 
     /**
@@ -241,58 +219,6 @@ public class Controller {
         }
         return value;
     }
-
-    /**
-     * Method to validate the Size grater than
-     * @param min, max: the min should be less than maz
-     * @return true if meet the criteria
-     */
-    private boolean validateSizeGraterThan(int min, int max) {
-        if(validator.minInLessThanMax(min, max)){
-            return true;
-        }else{
-            searchWindow.displayFieldErrorMessage("The size values are not Setup correctly");
-            getInstance().getLogger().error("The size values are not Setup correctly the Max should be grater than Min");
-        }
-        return false;
-    }
-
-    /**
-     * Method to validate the String input is valid String
-     * @param text String to evaluate teh Criteria
-     * @return the String if meet the Criteria and null if no meet it
-     */
-    private String validateTheString(String text) {
-        String res = null;
-        if(!text.isEmpty()){
-            if(validator.isFileNameCorrect(text)){
-                res = text;
-            }else{
-                searchWindow.displayFieldErrorMessage("Invalid Text Field input");
-                getInstance().getLogger().error("Some test input are field with no valid value");
-            }
-        }else{
-            res = text;
-        }
-        return res;
-    }
-
-    /**
-     * Method to validate is the path is valid
-     * @param pathText validate the String path exist
-     * @return True if the path exist
-     */
-    private boolean validatePath(String pathText) {
-        boolean res = false;
-        if(validator.isPathDirection(pathText)){
-            res = true;
-        }else{
-            searchWindow.displayFieldErrorMessage("invalid Path");
-            getInstance().getLogger().error("path no valid to set");
-        }
-        return res;
-    }
-
 
     /// this method will be replaced by setSearchCriteria
     /**
