@@ -226,4 +226,8 @@ public class MainWindow extends JFrame {
     public String getToSize() {
         return bodyPanel.getAdvancedFieldPanel().getToSize();
     }
+
+    public boolean hasError() {
+        return headerPanel.hasError();
+    }
 }

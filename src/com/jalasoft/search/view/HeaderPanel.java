@@ -20,4 +20,11 @@ public class HeaderPanel extends JPanel{
     public void cleanErrorMessage(){
         this.errorMessage.setText("");
     }
+
+    public boolean hasError(){
+        if(this.errorMessage.getText() != "")
+            return true;
+        return false;
+
+    }
 }

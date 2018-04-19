@@ -16,6 +16,7 @@ import com.jalasoft.search.model.Asset;
 import com.jalasoft.search.view.MainWindow;
 import com.jalasoft.search.model.Search;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import static com.jalasoft.search.common.Log.getInstance;
@@ -52,7 +53,7 @@ public class Controller {
      */
     public void init() {
         searchWindow.displayMainWindow();
-        searchWindow.getSearchButton().addActionListener(e -> fillCriteria());
+        searchWindow.getSearchButton().addActionListener(e -> searchBasedOnSearchCriteria());
     }
 
     /**
@@ -63,45 +64,133 @@ public class Controller {
     }
 
     /**
-     * Method to validate all files before to set the search criteria
+     * Method to validate all files and set search criteria with valid values
      */
-    private boolean validateCriteria(){
-        boolean isOk = false;
-        isOk = validatePath(searchWindow.getPathText());
-        isOk = validateFileName(searchWindow.getFileNameText());
-        if(advanced != false){
-            // call methods to validate Advanced Search
+    private SearchCriteria validateSearchCriteria(){
+        SearchCriteria sCriteria = new SearchCriteria();
+        String path = searchWindow.getPathText();
+        String fileName = validateTheString(searchWindow.getFileNameText());
+        if(validatePath(path)){
+            sCriteria.setPath(path);
         }
-        if ( isOk ){
-            setSearchCriteria();
-        }else{
-            getInstance().getLogger().error("the validation over the input is failed");
+        if(fileName != null){
+            sCriteria.setFileName(fileName);
         }
-        return true;
+
+        if(advanced){
+            int minSize = getIntValue(searchWindow.getFromSize());
+            int maxSize = getIntValue(searchWindow.getToSize());
+            Date fCDate = searchWindow.getFromCreatedDate();
+            Date tCDate = searchWindow.getToCreatedDate();
+            Date fADate = searchWindow.getFromAccessedDate();
+            Date tADate = searchWindow.getToAccessedDate();
+            Date fMDate = searchWindow.getFromModifiedDate();
+            Date tMDate = searchWindow.getToModifiedDate();
+            String owner = validateTheString(searchWindow.getOwnerText());
+            String extension = validateTheString(searchWindow.getExtensionText());
+
+            if (owner != null)
+                sCriteria.setOwner(owner);
+            if (extension != null)
+                sCriteria.setExtension(extension);
+            if (validateDateGraterThan(fCDate, tCDate)){
+                sCriteria.setCreatedDateFrom(fCDate);
+                sCriteria.setCreatedDateTo(tCDate);
+            }
+            if (validateDateGraterThan(fADate, tADate)){
+                sCriteria.setAccessedDateFrom(fADate);
+                sCriteria.setAccessedDateTo(tADate);
+            }
+            if (validateDateGraterThan(fMDate, tMDate)){
+                sCriteria.setModifiedDateFrom(fMDate);
+                sCriteria.setModifiedDateTo(tMDate);
+            }
+            if (validateSizeGraterThan(minSize, maxSize)){
+                sCriteria.setSizeMin(minSize);
+                sCriteria.setSizeMax(maxSize);
+            }
+            sCriteria.setType(searchWindow.getTypeFlag());
+            sCriteria.setHidden(searchWindow.getTypeFlag());
+            sCriteria.setReadOnly(searchWindow.getReadOnlyIndex());
+
+        }
+        return sCriteria;
     }
 
     /**
-     * Method to validate the String name and set criteria into the Hash map
+     * Method to transform the String setup into Int also convert it in bites
+     * @param intValue String to Transform in Integer
+     * @return int value in bites
      */
-    private boolean validateFileName(String fileNameText) {
-        boolean res = false;
-        if(validator.isFileNameCorrect(fileNameText)){
-            criteriaMap.put("fileName", fileNameText);
-            res = true;
+    private int getIntValue(String intValue) {
+        int value = -1;
+        if( validator.isNotEmpty(intValue) ){
+            int unit_size = searchWindow.getSizeIndex();
+            int num = helper.convertStringToInt(intValue);
+            value = helper.convertToBytes(num, unit_size);
         }else{
-            searchWindow.displayFieldErrorMessage("Invalid File Name");
-            getInstance().getLogger().error("path no valid to set");;
+            searchWindow.displayFieldErrorMessage("The size is not Setup correctly");
+            getInstance().getLogger().error("The Size is not Setup correctly");
+        }
+        return value;
+    }
+
+    /**
+     * Method to validate the Size grater than
+     * @param min, max: the min should be less than maz
+     * @return true if meet the criteria
+     */
+    private boolean validateSizeGraterThan(int min, int max) {
+        if(validator.minInLessThanMax(min, max)){
+            return true;
+        }else{
+            searchWindow.displayFieldErrorMessage("The size values are not Setup correctly");
+            getInstance().getLogger().error("The size values are not Setup correctly the Max should be grater than Min");
+        }
+        return false;
+    }
+
+    /**
+     * Method to validate a Date is greater than other
+     * @param from, to: the from should be less than to date
+     * @return true if meet the criteria
+     */
+    private boolean validateDateGraterThan(Date from, Date to) {
+        boolean res = false;
+        if(validator.isValidDate(from) && validator.isValidDate(to)){
+            res = validator.dateFromIsLessThanTo(from, to);
+            if (res == false){
+                searchWindow.displayFieldErrorMessage("The Date is not Setup correctly");
+                getInstance().getLogger().error("The Date is not Setup correctly");
+            }
         }
         return res;
     }
 
     /**
-     * Method to validate the path and set criteria into the Hash map
+     * Method to validate the String input is valid String
+     * @param text String to evaluate teh Criteria
+     * @return the String if meet the Criteria and null if no meet it
+     */
+    private String validateTheString(String text) {
+        String res = null;
+        if(validator.isFileNameCorrect(text)){
+            res = text;
+        }else{
+            searchWindow.displayFieldErrorMessage("Invalid Text Field input");
+            getInstance().getLogger().error("Some test input are field with no valid value");;
+        }
+        return res;
+    }
+
+    /**
+     * Method to validate is the path is valid
+     * @param pathText validate the String path exist
+     * @return True if the path exist
      */
     private boolean validatePath(String pathText) {
         boolean res = false;
         if(validator.isPathDirection(pathText)){
-            criteriaMap.put("path", pathText);
             res = true;
         }else{
             searchWindow.displayFieldErrorMessage("invalid Path");
@@ -115,44 +204,13 @@ public class Controller {
     /**
      * Method that set criteria to search files or folders
      */
-    private void fillCriteria() {
+    private void searchBasedOnSearchCriteria() {
         searchWindow.cleanTable();
-        searchWindow.cleanErrorMessage();
-        SearchCriteria criteria = new SearchCriteria();
-        String filename = searchWindow.getFileNameText();
-        String path = searchWindow.getPathText();
-        criteria.setFileName(filename);
-        criteria.setPath(path);
-        criteria.setExtension(searchWindow.getExtensionText());
-        criteria.setOwner(searchWindow.getOwnerText());
-        criteria.setHidden(searchWindow.getHiddenFlag());
-        criteria.setType(searchWindow.getTypeFlag());
-        criteria.setReadOnly(searchWindow.getReadOnlyIndex());
-        criteria.setCreatedDateFrom(searchWindow.getFromCreatedDate());
-        criteria.setCreatedDateTo(searchWindow.getToCreatedDate());
-        criteria.setModifiedDateFrom(searchWindow.getFromModifiedDate());
-        criteria.setModifiedDateTo(searchWindow.getToModifiedDate());
-        criteria.setAccessedDateFrom(searchWindow.getFromAccessedDate());
-        criteria.setAccessedDateTo(searchWindow.getToAccessedDate());
-        if (!searchWindow.getFromSize().isEmpty()&&!searchWindow.getToSize().isEmpty()){
-            int unit_size = searchWindow.getSizeIndex();
-            int from_size = helper.convertStringtoInt(searchWindow.getFromSize());
-            int to_size = helper.convertStringtoInt(searchWindow.getToSize());
-            int min_size = helper.convertToBytes(from_size, unit_size);
-            int max_size = helper.convertToBytes(to_size, unit_size);
-            criteria.setSizeMax(max_size);
-            criteria.setSizeMax(min_size);
-        }
-        search.setSearchCriteria(criteria);
-        if ( filename.isEmpty() && !path.isEmpty()) {
+        //searchWindow.cleanErrorMessage();
+        SearchCriteria criteria = validateSearchCriteria();
+        if (!searchWindow.hasError()) {
+            search.setSearchCriteria(criteria);
             search();
-        }else if (validator.isFileCorrect(filename)){
-           search();
-        } else {
-            searchWindow.displayFieldErrorMessage("File Name Invalid!!");
-        }
-        if (path.isEmpty()){
-           searchWindow.displayFieldErrorMessage("Path required field!!");
         }
     }
 
@@ -166,17 +224,5 @@ public class Controller {
                 searchWindow.addRowResult(new Object[]{counter++, file.getName(), file.getPath()});
             }
         }catch (Exception e){searchWindow.displayFieldErrorMessage("No Records Found");}
-    }
-
-    /**
-     * Method that set criteria in Search Criteria
-     */
-    private void setSearchCriteria() {
-        SearchCriteria criteria = new SearchCriteria();
-        criteria.setPath((String) criteriaMap.get("path"));
-        criteria.setPath((String) criteriaMap.get("fileName"));
-        if(advanced != false){
-            // set values for Advanced Search into Search Criteria
-        }
     }
 }

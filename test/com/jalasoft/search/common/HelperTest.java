@@ -20,7 +20,7 @@ public class HelperTest {
     @Test
     public void validateStringConversionToInt(){
         helper = new Helper();
-        assertEquals(123, helper.convertStringtoInt("123"));
+        assertEquals(123, helper.convertStringToInt("123"));
     }
 
 }
