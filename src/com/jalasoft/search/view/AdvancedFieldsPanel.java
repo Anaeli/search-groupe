@@ -12,7 +12,6 @@
 package com.jalasoft.search.view;
 
 import org.jdesktop.swingx.JXDatePicker;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Date;
@@ -64,7 +63,7 @@ public class AdvancedFieldsPanel extends BasePanel {
      * Constructor initializes this Panel as grid layout also add components to this JPanel
      * */
     public AdvancedFieldsPanel(){
-        this.setPreferredSize(new Dimension(750,100));
+        this.setPreferredSize(new Dimension(500,100));
         this.setLayout(new GridLayout(6,1));
         this.setBorder(BorderFactory.createTitledBorder("Advanced Search"));
         this.setVisible(false);
@@ -144,10 +143,10 @@ public class AdvancedFieldsPanel extends BasePanel {
         formPanels[0][0].add(extensionTextField);
         formPanels[0][0].add(ownerLabel);
         formPanels[0][0].add(ownerTextField);
+        formPanels[0][0].add(typeLabel);
+        formPanels[0][0].add(typeComboBox);
         formPanels[1][0].add(hiddenLabel);
         formPanels[1][0].add(hiddenComboBox);
-        formPanels[1][0].add(typeLabel);
-        formPanels[1][0].add(typeComboBox);
         formPanels[1][0].add(readOnlyLabel);
         formPanels[1][0].add(readOnlyComboBox);
 
