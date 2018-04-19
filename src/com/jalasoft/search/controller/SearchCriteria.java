@@ -23,15 +23,19 @@ public class SearchCriteria {
     private String fileName;
     private String path;
     private String extension;
+    private String owner;
     private int isHidden;
     private int type;
-    private String owner;
     private int readOnly;
     private int sizeMax;
     private int sizeMin;
-    private Date modifiedDate;
-    private Date createdDate;
-    private Date accessedDate;
+    private int sizeUnit;
+    private Date modifiedDateFrom;
+    private Date modifiedDateTo;
+    private Date createdDateFrom;
+    private Date createdDateTo;
+    private Date accessedDateFrom;
+    private Date accessedDateTo;
 
     /**
      * Constructor method
@@ -173,24 +177,48 @@ public class SearchCriteria {
      * Method to get modified date criteria to search
      * @return modified date criteria to search
      */
-    public Date getModifiedDate() {
-        return modifiedDate;
+    public Date getModifiedDateFrom() {
+        return modifiedDateFrom;
+    }
+
+    /**
+     * Method to get modified date criteria to search
+     * @return modified date criteria to search
+     */
+    public Date getModifiedDateTo() {
+        return modifiedDateTo;
     }
 
     /**
      * Method to get created date criteria to search
      * @return created date criteria to search
      */
-    public Date getCreatedDate() {
-        return createdDate;
+    public Date getCreatedDateFrom() {
+        return createdDateFrom;
+    }
+
+    /**
+     * Method to get created date criteria to search
+     * @return created date criteria to search
+     */
+    public Date getCreatedDateTo() {
+        return createdDateTo;
     }
 
     /**
      * Method to get accessed date criteria to search
      * @return accessed date criteria to search
      */
-    public Date getAccessedDate() {
-        return accessedDate;
+    public Date getAccessedDateFrom() {
+        return accessedDateFrom;
+    }
+
+    /**
+     * Method to get accessed date criteria to search
+     * @return accessed date criteria to search
+     */
+    public Date getAccessedDateTo() {
+        return accessedDateTo;
     }
 
     /**
@@ -229,23 +257,63 @@ public class SearchCriteria {
      * Method to set modified date criteria to search
      * @param modifiedDate value send from UI
      */
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
+    public void setModifiedDateFrom(Date modifiedDate) {
+        this.modifiedDateFrom = modifiedDate;
+    }
+
+    /**
+     * Method to set modified date criteria to search
+     * @param modifiedDate value send from UI
+     */
+    public void setModifiedDateTo(Date modifiedDate) {
+        this.modifiedDateTo = modifiedDate;
     }
 
     /**
      * Method to set created date criteria to search
      * @param createdDate value send from UI
      */
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setCreatedDateFrom(Date createdDate) {
+        this.createdDateFrom = createdDate;
+    }
+
+    /**
+     * Method to set created date criteria to search
+     * @param createdDate value send from UI
+     */
+    public void setCreatedDateTo(Date createdDate) {
+        this.createdDateTo = createdDate;
     }
 
     /**
      * Method to set accessed date criteria to search
      * @param accessedDate value send from UI
      */
-    public void setAccessedDate(Date accessedDate) {
-        this.accessedDate = accessedDate;
+    public void setAccessedDateFrom(Date accessedDate) {
+        this.accessedDateFrom = accessedDate;
+    }
+
+    /**
+     * Method to set accessed date criteria to search
+     * @param accessedDate value send from UI
+     */
+    public void setAccessedDateTo(Date accessedDate) {
+        this.accessedDateTo = accessedDate;
+    }
+
+    /**
+     * Method to get size unit KB, GB or MB
+     * @return unit value set by UI
+     */
+    public int getSizeUnit() {
+        return sizeUnit;
+    }
+
+    /**
+     * Method to set size unit KB = 0, MB = 1 or GB = 2
+     * @param sizeUnit unit value set by UI
+     */
+    public void setSizeUnit(int sizeUnit) {
+        this.sizeUnit = sizeUnit;
     }
 }

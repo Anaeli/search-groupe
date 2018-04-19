@@ -10,6 +10,7 @@
  */
 package com.jalasoft.search.controller;
 
+import com.jalasoft.search.common.Helper;
 import com.jalasoft.search.common.Validator;
 import com.jalasoft.search.model.Asset;
 import com.jalasoft.search.model.QueryManager;
@@ -29,6 +30,7 @@ public class Controller {
     private Search search;
     private Validator validator;
     private Boolean advancedFlag;
+    private Helper helper;
 
     /**
      * Constructor method to integrate the view, controller and model
@@ -39,6 +41,7 @@ public class Controller {
         this.searchWindow = window;
         this.search = search;
         validator = new Validator();
+        helper = new Helper();
     }
 
     /**
@@ -69,9 +72,25 @@ public class Controller {
         criteria.setFileName(filename);
         criteria.setPath(path);
         criteria.setExtension(searchWindow.getExtensionText());
-        criteria.setType(searchWindow.getTypeFlag());
-        criteria.setHidden(searchWindow.getHiddenFlag());
         criteria.setOwner(searchWindow.getOwnerText());
+        criteria.setHidden(searchWindow.getHiddenFlag());
+        criteria.setType(searchWindow.getTypeFlag());
+        criteria.setReadOnly(searchWindow.getReadOnlyIndex());
+        criteria.setCreatedDateFrom(searchWindow.getFromCreatedDate());
+        criteria.setCreatedDateTo(searchWindow.getToCreatedDate());
+        criteria.setModifiedDateFrom(searchWindow.getFromModifiedDate());
+        criteria.setModifiedDateTo(searchWindow.getToModifiedDate());
+        criteria.setAccessedDateFrom(searchWindow.getFromAccessedDate());
+        criteria.setAccessedDateTo(searchWindow.getToAccessedDate());
+        if (!searchWindow.getFromSize().isEmpty()&&!searchWindow.getToSize().isEmpty()){
+            int unit_size = searchWindow.getSizeIndex();
+            int from_size = helper.convertStringtoInt(searchWindow.getFromSize());
+            int to_size = helper.convertStringtoInt(searchWindow.getToSize());
+            int min_size = helper.convertToBytes(from_size, unit_size);
+            int max_size = helper.convertToBytes(to_size, unit_size);
+            criteria.setSizeMax(max_size);
+            criteria.setSizeMax(min_size);
+        }
         search.setSearchCriteria(criteria);
         if ( filename.isEmpty() && !path.isEmpty()) {
             search();
