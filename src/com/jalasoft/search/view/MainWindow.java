@@ -300,4 +300,11 @@ public class MainWindow extends JFrame {
     public void setPathTextField(String pathTextField) {
         bodyPanel.getSimpleFieldPanel().setPathTextField(pathTextField);
     }
+
+    /**
+     * This method sets path Text field
+     * */
+    public CriteriaPanel getCriteriaPanel() {
+        return bodyPanel.getCriteriaPanel();
+    }
 }

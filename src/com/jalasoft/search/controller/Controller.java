@@ -82,8 +82,10 @@ public class Controller {
      * Method to fill inputs on GUI according to criteria saved on Data Base
      */
     private void loadCriteria() {
-        String id = (String)searchWindow.getCriteriaTable().getValueAt(searchWindow.getCriteriaTable().getSelectedRow(),0);
-        fillSearchFields(id);
+        if(!searchWindow.getCriteriaTable().getSelectionModel().isSelectionEmpty()){
+            String id = (String)searchWindow.getCriteriaTable().getValueAt(searchWindow.getCriteriaTable().getSelectedRow(),0);
+            fillSearchFields(id);
+        }
     }
 
     /**

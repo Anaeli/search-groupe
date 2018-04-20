@@ -296,4 +296,36 @@ public class AdvancedFieldsPanel extends BasePanel {
     public Date getToAccessedDate() {
         return toAccessedDP.getDate();
     }
+
+    public void setExtensionTextField(String extensionTextField) {
+        this.extensionTextField.setText(extensionTextField);
+    }
+
+    public void setOwnerTextField(String ownerTextField) {
+        this.ownerTextField.setText(ownerTextField);
+    }
+
+    public void setFromSizeTextField(String fromSizeTextField) {
+        this.fromSizeTextField.setText(fromSizeTextField);
+    }
+
+    public void setToSizeTextField(String toSizeTextField) {
+        this.toSizeTextField.setText(toSizeTextField);
+    }
+
+    public void setSizeComboBox(JComboBox sizeComboBox) {
+        this.sizeComboBox = sizeComboBox;
+    }
+
+    public void setHiddenComboBox(JComboBox hiddenComboBox) {
+        this.hiddenComboBox = hiddenComboBox;
+    }
+
+    public void setTypeComboBox(JComboBox typeComboBox) {
+        this.typeComboBox = typeComboBox;
+    }
+
+    public void setReadOnlyComboBox(JComboBox readOnlyComboBox) {
+        this.readOnlyComboBox = readOnlyComboBox;
+    }
 }
