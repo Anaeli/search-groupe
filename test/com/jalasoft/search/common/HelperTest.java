@@ -23,4 +23,21 @@ public class HelperTest {
         assertEquals(123, helper.convertStringToInt("123"));
     }
 
+    @Test
+    public void validateConvertKBtoBytes(){
+        helper = new Helper();
+        assertEquals(2000, helper.convertToBytes(2, 0));
+    }
+
+    @Test
+    public void validateConvertMBtoBytes(){
+        helper = new Helper();
+        assertEquals(4000000, helper.convertToBytes(4, 1));
+    }
+
+    @Test
+    public void validateConvertGBtoBytes(){
+        helper = new Helper();
+        assertEquals(1073741824 , helper.convertToBytes(1, 2));
+    }
 }
