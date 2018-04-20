@@ -15,10 +15,10 @@ import com.jalasoft.search.common.Helper;
 import com.jalasoft.search.common.Log;
 import com.jalasoft.search.common.Validator;
 import com.jalasoft.search.model.Asset;
+import com.jalasoft.search.model.FileSearch;
 import com.jalasoft.search.view.MainWindow;
 import com.jalasoft.search.model.Search;
 import com.jalasoft.search.model.QueryManager;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -29,6 +29,7 @@ import static com.jalasoft.search.common.Log.getInstance;
  * Class to manage integration among view, controller and model
  * @version  1.0
  * @author Eliana Navia
+ * @co-authors Luis Cachi - Rodrigo Cespedes
  */
 public class Controller {
     private MainWindow searchWindow;
@@ -65,6 +66,7 @@ public class Controller {
 
     /**
      * Method to validate all files and set search criteria with valid values
+     * @return Search Criteria when all setup are success in otherwise it return null
      */
     private SearchCriteria validateSearchCriteria(){
         SearchCriteria sCriteria = new SearchCriteria();
@@ -83,32 +85,34 @@ public class Controller {
 
         if(validatePath(path)){
             sCriteria.setPath(path);
-        }
+        }else {return null;}
         if(fileName != null){
             sCriteria.setFileName(fileName);
-        }
+        }else {return null;}
         if (validateSizeGraterThan(minSize, maxSize)){
             sCriteria.setSizeMin(minSize);
             sCriteria.setSizeMax(maxSize);
-        }
+        }else {return null;}
 
-        if(advanced){
+        if(true){
             if (owner != null)
                 sCriteria.setOwner(owner);
+            else {return null;}
             if (extension != null)
                 sCriteria.setExtension(extension);
+            else {return null;}
             if (validateDateGraterThan(fCDate, tCDate)){
                 sCriteria.setCreatedDateFrom(fCDate);
                 sCriteria.setCreatedDateTo(tCDate);
-            }
+            }else {return null;}
             if (validateDateGraterThan(fADate, tADate)){
                 sCriteria.setAccessedDateFrom(fADate);
                 sCriteria.setAccessedDateTo(tADate);
-            }
+            }else {return null;}
             if (validateDateGraterThan(fMDate, tMDate)){
                 sCriteria.setModifiedDateFrom(fMDate);
                 sCriteria.setModifiedDateTo(tMDate);
-            }
+            }else {return null;}
             sCriteria.setType(searchWindow.getTypeFlag());
             sCriteria.setHidden(searchWindow.getTypeFlag());
             sCriteria.setReadOnly(searchWindow.getReadOnlyIndex());
@@ -138,15 +142,15 @@ public class Controller {
      */
     private boolean validateDateGraterThan(Date from, Date to) {
         boolean res = false;
-        if(from != null && to != null){
-            if(validator.isValidDate(from) && validator.isValidDate(to)){
-                res = validator.dateFromIsLessThanTo(from, to);
-                if (res == false){
-                    searchWindow.displayFieldErrorMessage("The Date is not Setup correctly");
-                    getInstance().getLogger().error("The Date is not Setup correctly");
-                }
+        if(from == null && to == null){return true;}
+        if(validator.isValidDate(from) && validator.isValidDate(to)){
+            res = validator.dateFromIsLessThanTo(from, to);
+            if (res == false){
+                searchWindow.displayFieldErrorMessage("The Date is not Setup correctly");
+                getInstance().getLogger().error("The Date is not Setup correctly");
             }
         }
+
         return res;
     }
 
@@ -191,14 +195,19 @@ public class Controller {
      */
     private void saveCriteriaOnDataBase() {
         SearchCriteria criteria = validateSearchCriteria();
-        criteria.setCriteriaDataBaseName("Criterioooo 1");
-        Gson gson = new Gson();
-        try {
-            queryManager.addCriteria(gson.toJson(criteria));
-        } catch (SQLException e) {
-            Log.getInstance().getLogger().error("Data Base: " + e);
+        if (criteria != null){
+            criteria.setCriteriaDataBaseName("Criterioooo 1");
+            Gson gson = new Gson();
+            try {
+                queryManager.addCriteria(gson.toJson(criteria));
+            } catch (SQLException e) {
+                Log.getInstance().getLogger().error("Data Base: " + e);
+            }
+            displayCriteriasFromDataBase();
+        }else{
+            searchWindow.displayFieldErrorMessage("is not able save the criteria with invalid input");
+            getInstance().getLogger().error("Data Base: invalid criteria not able to save");
         }
-        displayCriteriasFromDataBase();
     }
 
     /**
@@ -263,7 +272,8 @@ public class Controller {
         searchWindow.cleanTable();
         searchWindow.cleanErrorMessage();
         SearchCriteria criteria = validateSearchCriteria();
-        if (!searchWindow.hasError()) {
+        if (criteria != null)
+        if (!searchWindow.hasError() ) {
             search.setSearchCriteria(criteria);
             search();
         }
@@ -276,7 +286,17 @@ public class Controller {
         try {
             int counter = 1;
             for (Asset file : search.getResults()) {
-                searchWindow.addRowResult(new Object[]{counter++, file.getName(), file.getPath()});
+                String extension = "";
+                String type;
+                if(file instanceof FileSearch){
+                    extension = ((FileSearch)file).getExtension();
+                    type = "File";
+                }
+                else {
+                    type = "Folder";
+                }
+                searchWindow.addRowResult(new Object[]{counter++, file.getName(),
+                                    file.getPath(), extension, file.isHidden(), type});
             }
         }catch (Exception e){searchWindow.displayFieldErrorMessage("No Records Found");}
     }

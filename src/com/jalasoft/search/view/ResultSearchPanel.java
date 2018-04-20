@@ -9,7 +9,7 @@ public class ResultSearchPanel extends JPanel {
     private DefaultTableModel defaultTableModel;
 
     //headers for the table
-    private String[] headerTable = new String[] { "#", "Filename", "Path", "Extension", "Hidden" };
+    private String[] headerTable = new String[] { "#", "Filename", "Path", "Extension", "Hidden", "Type",  };
 
     public ResultSearchPanel(){
         this.setLayout(new BorderLayout());
