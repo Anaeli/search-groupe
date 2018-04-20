@@ -111,4 +111,18 @@ public class SimpleFieldsPanel extends BasePanel{
     public String getPathTextField() {
         return pathTextField.getText().toString();
     }
+
+    /**
+     * This method sets file name field
+     * */
+    public void setFilenameTextField(String filenameTextField) {
+        this.filenameTextField.setText(filenameTextField);
+    }
+
+    /**
+     * This method sets path Text field
+     * */
+    public void setPathTextField(String pathTextField) {
+        this.pathTextField.setText(pathTextField);
+    }
 }

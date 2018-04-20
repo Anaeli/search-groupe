@@ -19,6 +19,8 @@ import com.jalasoft.search.model.FileSearch;
 import com.jalasoft.search.view.MainWindow;
 import com.jalasoft.search.model.Search;
 import com.jalasoft.search.model.QueryManager;
+
+import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -81,7 +83,19 @@ public class Controller {
      */
     private void loadCriteria() {
         String id = (String)searchWindow.getCriteriaTable().getValueAt(searchWindow.getCriteriaTable().getSelectedRow(),0);
-        System.out.println("Selected: " + id);
+        fillSearchFields(id);
+    }
+
+    /**
+     * Method to fill simple search fields
+     */
+    private void fillSearchFields(String id) {
+        SearchCriteria criteria = (SearchCriteria)criteriaMap.get(id);
+        searchWindow.setFilenameTextField(criteria.getFileName());
+        searchWindow.setPathTextField(criteria.getPath());
+        if(advanced){
+            
+        }
     }
 
     /**
@@ -114,7 +128,7 @@ public class Controller {
             sCriteria.setSizeMax(maxSize);
         }else {return null;}
 
-        if(true){
+        if(advanced){
             if (owner != null)
                 sCriteria.setOwner(owner);
             else {return null;}

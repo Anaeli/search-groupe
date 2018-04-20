@@ -286,4 +286,18 @@ public class MainWindow extends JFrame {
     public BodyPanel getBodyPanel(){
         return bodyPanel;
     }
+
+    /**
+     * This method sets file name field
+     * */
+    public void setFilenameTextField(String filenameTextField) {
+        bodyPanel.getSimpleFieldPanel().setFilenameTextField(filenameTextField);
+    }
+
+    /**
+     * This method sets path Text field
+     * */
+    public void setPathTextField(String pathTextField) {
+        bodyPanel.getSimpleFieldPanel().setPathTextField(pathTextField);
+    }
 }
