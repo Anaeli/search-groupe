@@ -106,4 +106,28 @@ public class ValidatorTest {
         Date dateTo = Calendar.getInstance().getTime();
         assertFalse(validator.dateFromIsLessThanTo(dateFrom, dateTo));
     }
+
+    @Test
+    public void validateStringIsNotEmpty() {
+        validator = new Validator();
+        assertTrue(validator.isNotEmpty("abc"));
+    }
+
+    @Test
+    public void validateStringIsEmpty() {
+        validator = new Validator();
+        assertFalse(validator.isNotEmpty(""));
+    }
+
+    @Test
+    public void validateMinIsLessToMaxCorrect() {
+        validator = new Validator();
+        assertTrue(validator.minInLessThanMax(1, 2));
+    }
+
+    @Test
+    public void validateMinIsLessToMaxIncorrect() {
+        validator = new Validator();
+        assertFalse(validator.minInLessThanMax(4, 1));
+    }
 }
