@@ -1,37 +1,60 @@
 package com.jalasoft.search.model;
 
+import com.jalasoft.search.controller.SearchCriteria;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertFalse;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
+import static org.junit.Assert.assertArrayEquals;
 
 public class SearchTest {
 
     @Test
-    public void verifyThisFileDoesnExist(){
-        String fileName = "d:\\prueba\\prueba.txt";
+    public void verifySearchBasedOnPath() throws InterruptedException {
         Search search = new Search();
-        //assertFalse(search.ExistPath());
+        SearchCriteria sCriteria = new SearchCriteria();
+        sCriteria.setFileName("");
+        sCriteria.setPath("C:\\search-groupe");
+        search.setSearchCriteria(sCriteria);
+        ArrayList<Asset> result = search.getResults();
+        assertArrayEquals(result.toArray(), result.toArray());
     }
 
     @Test
-    public void verifyThisFileExist(){
-        String fileName = "c:\\users\\";
+    public void verifySearchBasedOnFile() throws InterruptedException {
         Search search = new Search();
-        //assertTrue(search.ExistPath());
+        SearchCriteria sCriteria = new SearchCriteria();
+        sCriteria.setFileName("README.md");
+        sCriteria.setPath("C:\\search-groupe");
+        search.setSearchCriteria(sCriteria);
+        ArrayList<Asset> result = search.getResults();
+        assertArrayEquals(result.toArray(), result.toArray());
     }
 
     @Test
-    public void verifyThisIsFolderFile(){
-        String fileName = "c:\\users\\";
+    public void verifySearchBasedOnAccessedDate() throws InterruptedException {
         Search search = new Search();
-        //assertTrue(search.isDirectory());
+        Date date = Calendar.getInstance().getTime();
+        SearchCriteria sCriteria = new SearchCriteria();
+        sCriteria.setFileName("");
+        sCriteria.setAccessedDateTo(date);
+        sCriteria.setPath("C:\\search-groupe");
+        search.setSearchCriteria(sCriteria);
+        ArrayList<Asset> result = search.getResults();
+        assertArrayEquals(result.toArray(), result.toArray());
     }
 
     @Test
-    public void verifyThisIsFile(){
-        String fileName = "c:\\Windows\\WindowsUpdate.txt";
+    public void verifySearchBasedOnExtension() throws InterruptedException {
         Search search = new Search();
-        //assertTrue(search.isFile());
+        SearchCriteria sCriteria = new SearchCriteria();
+        sCriteria.setFileName("");
+        sCriteria.setExtension("md");
+        sCriteria.setPath("C:\\search-groupe");
+        search.setSearchCriteria(sCriteria);
+        ArrayList<Asset> result = search.getResults();
+        assertArrayEquals(result.toArray(), result.toArray());
     }
 }
