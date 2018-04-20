@@ -114,7 +114,7 @@ public class Controller {
                 sCriteria.setModifiedDateTo(tMDate);
             }else {return null;}
             sCriteria.setType(searchWindow.getTypeFlag());
-            sCriteria.setHidden(searchWindow.getTypeFlag());
+            sCriteria.setHidden(searchWindow.getHiddenFlag());
             sCriteria.setReadOnly(searchWindow.getReadOnlyIndex());
         }
         return sCriteria;
