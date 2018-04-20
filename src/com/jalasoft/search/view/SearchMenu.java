@@ -33,10 +33,7 @@ public class SearchMenu extends BasePanel{
      * Constructor initializes this Panel as grid layout also add components to this JPanel
      * */
     public SearchMenu(){
-        //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         this.setLayout(new GridLayout(3,1));
-
         this.setBorder(BorderFactory.createTitledBorder("Search Menu"));
         simpleButton = new JButton("Simple");
         simpleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -45,15 +42,12 @@ public class SearchMenu extends BasePanel{
         advancedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         advancedButton.setFocusPainted(false);
         searchButton = new JButton("Search");
-
         formPanels = addPanelToGrid(3, 1);
-
         formPanels[0][0].add(simpleButton);
         formPanels[1][0].add(advancedButton);
         formPanels[2][0].setLayout(new BoxLayout(formPanels[2][0], BoxLayout.Y_AXIS));
         formPanels[2][0].add(searchButton);
         searchButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         try {
             Image simple = ImageIO.read(getClass().getResource("../../../../lib/icon/simple.png"));
             Image new_simple = simple.getScaledInstance( 30, 30,  java.awt.Image.SCALE_SMOOTH ) ;
