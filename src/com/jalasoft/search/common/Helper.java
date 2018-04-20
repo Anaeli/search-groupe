@@ -36,7 +36,7 @@ public class Helper {
         if(unit == 0) {
             bytes = numToConvert*1000;
         }else if(unit == 1) {
-            bytes = numToConvert*1000;
+            bytes = numToConvert*1000000;
         } else if(unit == 2) {
             bytes = numToConvert*1073741824;
         }

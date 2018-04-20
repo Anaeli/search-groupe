@@ -17,19 +17,27 @@ package com.jalasoft.search.common;
 
 import org.junit.Test;
 
+import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import static junit.framework.TestCase.*;
 
 public class ValidatorTest {
     private Validator validator;
 
     @Test
-    public void fileNameValid(){
+    public void fileNameCorrect(){
         validator = new Validator();
         assertTrue(validator.isFileNameCorrect("filename"));
     }
 
     @Test
-    public void fileNameInvalid(){
+    public void fileNameIncorrect(){
         validator = new Validator();
         assertFalse(validator.isFileNameCorrect("fil;ename/"));
     }
@@ -44,5 +52,82 @@ public class ValidatorTest {
     public void validateFilenameInvalid(){
         validator = new Validator();
         assertFalse(validator.isFileNameValid("test.T*T"));
+    }
+
+    @Test
+    public void validateFileCorrect(){
+        validator = new Validator();
+        assertTrue(validator.isFileCorrect("filename"));
+    }
+
+    @Test
+    public void validateFileIncorrect(){
+        validator = new Validator();
+        assertFalse(validator.isFileCorrect("fil;ename/"));
+    }
+
+    @Test
+    public void validatePathIncorrect(){
+        validator = new Validator();
+        assertFalse(validator.validPath("fil;ename/"));
+    }
+
+    @Test
+    public void validateDateCorrect(){
+        validator = new Validator();
+        Date date = Calendar.getInstance().getTime();
+        assertTrue(validator.isValidDate(date));
+    }
+
+    @Test
+    public void validateDateFromIsEqualDateFrom(){
+        validator = new Validator();
+        Date dateFrom = Calendar.getInstance().getTime();
+        Date dateTo = Calendar.getInstance().getTime();
+        assertTrue(validator.dateFromIsLessThanTo(dateFrom, dateTo));
+    }
+
+    @Test
+    public void validateDateFromIsLessDateFromCorrect() throws ParseException {
+        validator = new Validator();
+        String dateString = "January 2, 2010";
+        DateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+        Date dateFrom = dateFormat.parse(dateString);
+        Date dateTo = Calendar.getInstance().getTime();
+        assertTrue(validator.dateFromIsLessThanTo(dateFrom, dateTo));
+    }
+
+    @Test
+    public void validateDateFromIsLessDateFromIncorrect() throws ParseException {
+        validator = new Validator();
+        String dateString = "January 2, 2040";
+        DateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+        Date dateFrom = dateFormat.parse(dateString);
+        Date dateTo = Calendar.getInstance().getTime();
+        assertFalse(validator.dateFromIsLessThanTo(dateFrom, dateTo));
+    }
+
+    @Test
+    public void validateStringIsNotEmpty() {
+        validator = new Validator();
+        assertTrue(validator.isNotEmpty("abc"));
+    }
+
+    @Test
+    public void validateStringIsEmpty() {
+        validator = new Validator();
+        assertFalse(validator.isNotEmpty(""));
+    }
+
+    @Test
+    public void validateMinIsLessToMaxCorrect() {
+        validator = new Validator();
+        assertTrue(validator.minInLessThanMax(1, 2));
+    }
+
+    @Test
+    public void validateMinIsLessToMaxIncorrect() {
+        validator = new Validator();
+        assertFalse(validator.minInLessThanMax(4, 1));
     }
 }
