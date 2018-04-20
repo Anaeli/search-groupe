@@ -40,23 +40,16 @@ public class BodyPanel extends JPanel {
     private void init() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setPreferredSize(new Dimension(1000,900));
-
         simpleFieldPanel = new SimpleFieldsPanel();
         advancedFieldPanel = new AdvancedFieldsPanel();
         criteriaPanel = new CriteriaPanel();
-
-
         fieldsPanel = new JPanel();
-        //fieldsPanel.setLayout(new GridLayout(1,2));
         fieldsPanel.setLayout(new BoxLayout(fieldsPanel, BoxLayout.X_AXIS));
         fieldsPanel.setPreferredSize(new Dimension(1000, 200));
         fieldsPanel.add(simpleFieldPanel);
         fieldsPanel.add(advancedFieldPanel);
-
         this.add(fieldsPanel);
         this.add(criteriaPanel);
-
-
     }
 
     /**

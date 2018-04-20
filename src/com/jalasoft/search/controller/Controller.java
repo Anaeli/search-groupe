@@ -39,6 +39,7 @@ public class Controller {
     private boolean advanced;
     private HashMap<String, Object > criteriaMap;
     private QueryManager queryManager;
+    private Gson gson;
 
     /**
      * Constructor method to integrate the view, controller and model
@@ -58,10 +59,29 @@ public class Controller {
      * Method that initialize search process
      */
     public void init() {
+        queryManager = new QueryManager();
+        gson = new Gson();
         searchWindow.displayMainWindow();
+        displayCriteriasFromDataBase();
         searchWindow.getSearchButton().addActionListener(e -> searchBasedOnSearchCriteria());
         searchWindow.getCriteriaSaveButton().addActionListener(e -> saveCriteriaOnDataBase());
-        queryManager = new QueryManager();
+        searchWindow.getCriteriaTable().getSelectionModel().addListSelectionListener(e -> loadCriteria());
+        searchWindow.getMenuPanel().getSimpleButton().addActionListener(e -> {
+            advanced = false;
+            searchWindow.getBodyPanel().getAdvancedFieldPanel().setVisible(false);
+        });
+        searchWindow.getMenuPanel().getAdvancedButton().addActionListener(e -> {
+            advanced = true;
+            searchWindow.getBodyPanel().getAdvancedFieldPanel().setVisible(true);
+        });
+    }
+
+    /**
+     * Method to fill inputs on GUI according to criteria saved on Data Base
+     */
+    private void loadCriteria() {
+        String id = (String)searchWindow.getCriteriaTable().getValueAt(searchWindow.getCriteriaTable().getSelectedRow(),0);
+        System.out.println("Selected: " + id);
     }
 
     /**
@@ -196,8 +216,7 @@ public class Controller {
     private void saveCriteriaOnDataBase() {
         SearchCriteria criteria = validateSearchCriteria();
         if (criteria != null){
-            criteria.setCriteriaDataBaseName("Criterioooo 1");
-            Gson gson = new Gson();
+            criteria.setCriteriaDataBaseName(searchWindow.getCriteriaName());
             try {
                 queryManager.addCriteria(gson.toJson(criteria));
             } catch (SQLException e) {
@@ -205,7 +224,7 @@ public class Controller {
             }
             displayCriteriasFromDataBase();
         }else{
-            searchWindow.displayFieldErrorMessage("is not able save the criteria with invalid input");
+            searchWindow.displayFieldErrorMessage("Is not able save the criteria with invalid inputs");
             getInstance().getLogger().error("Data Base: invalid criteria not able to save");
         }
     }
@@ -214,30 +233,18 @@ public class Controller {
      * Event Method that save criteria on Data Base
      */
     private void displayCriteriasFromDataBase() {
-        ResultSet allCriterias = queryManager.getAllCriterials();
-        Gson gson = new Gson();
+        criteriaMap = queryManager.getHashCriteria();
+        System.out.println(criteriaMap);
         try{
-            while(allCriterias.next()){
-                SearchCriteria criteria = gson.fromJson(allCriterias.getString("criteria"), SearchCriteria.class);
-                String criteriaName = criteria.getCriteriaDataBaseName();
-                searchWindow.addRowOnCriteriaTable(new Object[]{allCriterias.getInt("id"), criteriaName});
-            }
+            searchWindow.cleanCriteriaTable();
+            criteriaMap.forEach((k, v) ->{
+                SearchCriteria criteria = (SearchCriteria)v;
+                searchWindow.addRowOnCriteriaTable(new Object[]{k, criteria.getCriteriaDataBaseName()});
+            });
         } catch (Exception e){
-            
+            Log.getInstance().getLogger().error(e);
         }
     }
-
-    /**
-     * Method to set the Advanced Search boolean flag
-     */
-    public void setAdvancedSearch(boolean Advanced){
-        this.advanced = advanced;
-    }
-
-    /**
-     * Method to validate all files and set search criteria with valid values
-     */
-
 
     /**
      * Method to transform the String setup into Int also convert it in bites
@@ -264,7 +271,6 @@ public class Controller {
         return value;
     }
 
-    /// this method will be replaced by setSearchCriteria
     /**
      * Method that set criteria to search files or folders
      */

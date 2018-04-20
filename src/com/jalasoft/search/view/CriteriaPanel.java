@@ -62,8 +62,6 @@ public class CriteriaPanel extends JPanel {
         saveCriteriaFormPanel.setPreferredSize(new Dimension(300,200));
         this.add(tablePanel);
         this.add(saveCriteriaFormPanel);
-
-        criteriaTable.getSelectionModel().addListSelectionListener(e -> loadCriteria());
         criteriaSaveLabel = new JLabel("Criteria Name");
         criteriaSaveLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         criteriaSaveTextField = new JTextField(15);
@@ -74,10 +72,6 @@ public class CriteriaPanel extends JPanel {
         saveCriteriaFormPanel.add(criteriaSaveLabel);
         saveCriteriaFormPanel.add(criteriaSaveTextField);
         saveCriteriaFormPanel.add(criteriaSaveButton);
-    }
-
-    private void loadCriteria() {
-        System.out.println("Selected: " + criteriaTable.getValueAt(criteriaTable.getSelectedRow(),1));
     }
 
     /**
@@ -92,5 +86,26 @@ public class CriteriaPanel extends JPanel {
      * */
     public JButton getCriteriaSaveButton(){
         return criteriaSaveButton;
+    }
+
+    /**
+     * This method returns JTable of criteria
+     * */
+    public JTable getCriteriaTable(){
+        return criteriaTable;
+    }
+
+    /**
+     * This method returns Default table model of JTable of criteria
+     * */
+    public DefaultTableModel getCriteriaDefaultModel(){
+        return defaultTableModel;
+    }
+
+    /**
+     * This method returns Criteria text field string
+     * */
+    public String getCriteriaName(){
+        return criteriaSaveTextField.getText();
     }
 }

@@ -52,9 +52,6 @@ public class MainWindow extends JFrame {
         this.setSize(800, 600);
         this.setResizable(false);
         this.setVisible(true);
-
-        menuPanel.getSimpleButton().addActionListener(e -> bodyPanel.getAdvancedFieldPanel().setVisible(false));
-        menuPanel.getAdvancedButton().addActionListener(e -> bodyPanel.getAdvancedFieldPanel().setVisible(true));
     }
 
     /**
@@ -253,5 +250,40 @@ public class MainWindow extends JFrame {
      * */
     public void addRowOnCriteriaTable(Object[] newRow){
         bodyPanel.getCriteriaPanel().addRowOnTable(newRow);
+    }
+
+    /**
+     * This method returns JTable of criteria
+     * */
+    public JTable getCriteriaTable(){
+        return bodyPanel.getCriteriaPanel().getCriteriaTable();
+    }
+
+    /**
+     * This method is to clean results table
+     * */
+    public void cleanCriteriaTable(){
+        bodyPanel.getCriteriaPanel().getCriteriaDefaultModel().setRowCount(0);
+    }
+
+    /**
+     * This method returns Criteria text field string
+     * */
+    public String getCriteriaName(){
+        return bodyPanel.getCriteriaPanel().getCriteriaName();
+    }
+
+    /**
+     * This method returns Menu Panel
+     * */
+    public SearchMenu getMenuPanel(){
+        return menuPanel;
+    }
+
+    /**
+     * This method returns Body Panel
+     * */
+    public BodyPanel getBodyPanel(){
+        return bodyPanel;
     }
 }

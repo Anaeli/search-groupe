@@ -11,13 +11,16 @@
  */
 package com.jalasoft.search.model;
 
+import com.google.gson.Gson;
 import com.jalasoft.search.common.Log;
+import com.jalasoft.search.controller.SearchCriteria;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.HashMap;
 
 
 /**
@@ -30,12 +33,14 @@ import java.sql.ResultSet;
 public class QueryManager {
     private static Connection connection;
     private Statement statement;
+    private Gson gson;
 
     /**
      * Constructor initializes database connection using DBConnection Singleton Class
      * */
     public QueryManager() {
         connection = DBConnection.getInstance().getConnection();
+        gson = new Gson();
     }
 
     /**
@@ -66,5 +71,22 @@ public class QueryManager {
             Log.getInstance().getLogger().error("DB Exception: " + e);
             return null;
         }
+    }
+
+    /**
+     * This method returns all Criterias from data base
+     * */
+    public HashMap<String, Object > getHashCriteria(){
+        HashMap<String, Object> allCriteria = new HashMap<String,Object>();
+        ResultSet allCriterias = getAllCriterials();
+        try{
+            while(allCriterias.next()){
+                SearchCriteria criteria = gson.fromJson(allCriterias.getString("criteria"), SearchCriteria.class);
+                allCriteria.put(allCriterias.getString("id"), criteria);
+            }
+        } catch (Exception e){
+
+        }
+        return allCriteria;
     }
 }
