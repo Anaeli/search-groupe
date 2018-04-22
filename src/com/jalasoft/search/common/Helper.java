@@ -44,6 +44,15 @@ public class Helper {
     }
 
     /**
+     * Method to convert int numbers kiloBites
+     * @param numToConvert
+     * @return
+     */
+    public int convertToKb(int numToConvert){
+        return numToConvert/1024;
+    }
+
+    /**
      * Method to convert a string to int
      * @param number on string to convert on int
      * @return int number converted

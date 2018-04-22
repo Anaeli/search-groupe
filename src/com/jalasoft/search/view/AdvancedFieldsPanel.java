@@ -313,19 +313,43 @@ public class AdvancedFieldsPanel extends BasePanel {
         this.toSizeTextField.setText(toSizeTextField);
     }
 
-    public void setSizeComboBox(JComboBox sizeComboBox) {
-        this.sizeComboBox = sizeComboBox;
+    public void setSizeComboBox(int index) {
+        this.sizeComboBox.setSelectedIndex(index);
     }
 
-    public void setHiddenComboBox(JComboBox hiddenComboBox) {
-        this.hiddenComboBox = hiddenComboBox;
+    public void setHiddenComboBox(int index) {
+        this.hiddenComboBox.setSelectedIndex(index);
     }
 
-    public void setTypeComboBox(JComboBox typeComboBox) {
-        this.typeComboBox = typeComboBox;
+    public void setTypeComboBox(int index) {
+        this.typeComboBox.setSelectedIndex(index);
     }
 
-    public void setReadOnlyComboBox(JComboBox readOnlyComboBox) {
-        this.readOnlyComboBox = readOnlyComboBox;
+    public void setReadOnlyComboBox(int index) {
+        this.readOnlyComboBox.setSelectedIndex(index);
+    }
+
+    public void setFromCreatedDP(Date date) {
+        this.fromCreatedDP.setDate(date);
+    }
+
+    public void setToCreatedDP(Date date) {
+        this.toCreatedDP.setDate(date);
+    }
+
+    public void setFromModifiedDP(Date date) {
+        this.fromModifiedDP.setDate(date);
+    }
+
+    public void setToModifiedDP(Date date) {
+        this.toModifiedDP.setDate(date);
+    }
+
+    public void setFromAccessedDP(Date date) {
+        this.fromAccessedDP.setDate(date);
+    }
+
+    public void setToAccessedDP(Date date) {
+        this.toAccessedDP.setDate(date);
     }
 }

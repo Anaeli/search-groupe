@@ -96,7 +96,23 @@ public class Controller {
         searchWindow.setFilenameTextField(criteria.getFileName());
         searchWindow.setPathTextField(criteria.getPath());
         if(advanced){
-            
+            int sizeF =  helper.convertToKb(criteria.getSizeMin());
+            int sizeT = helper.convertToKb(criteria.getSizeMax());
+            searchWindow.setExtensionTextField(criteria.getExtension());
+            searchWindow.setOwnerTextField(criteria.getOwner());
+            searchWindow.setHidden(criteria.getHidden());
+            searchWindow.setType(criteria.getType());
+            searchWindow.setReadOnly(criteria.getReadOnly());
+            searchWindow.setCreatedFrom(criteria.getCreatedDateFrom());
+            searchWindow.setCreatedTo(criteria.getCreatedDateTo());
+            searchWindow.setModifiedFrom(criteria.getModifiedDateFrom());
+            searchWindow.setModifiedTo(criteria.getModifiedDateTo());
+            searchWindow.setAccessFrom(criteria.getAccessedDateFrom());
+            searchWindow.setAccessTo(criteria.getAccessedDateTo());
+            if (sizeF != -1 && sizeT != -1){
+                searchWindow.setSizeFrom(helper.convertToKb(sizeF));
+                searchWindow.setSizeTo(helper.convertToKb(sizeT));
+            }
         }
     }
 

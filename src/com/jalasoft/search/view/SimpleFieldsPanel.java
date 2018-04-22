@@ -125,4 +125,5 @@ public class SimpleFieldsPanel extends BasePanel{
     public void setPathTextField(String pathTextField) {
         this.pathTextField.setText(pathTextField);
     }
+
 }

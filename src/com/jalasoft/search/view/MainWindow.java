@@ -304,6 +304,97 @@ public class MainWindow extends JFrame {
     /**
      * This method sets path Text field
      * */
+    public void setOwnerTextField(String ownerTextstField) {
+        bodyPanel.getAdvancedFieldPanel().setOwnerTextField(ownerTextstField);
+    }
+
+    /**
+     * This method sets extension Text field
+     * */
+    public void setExtensionTextField(String extensionTextField) {
+        bodyPanel.getAdvancedFieldPanel().setExtensionTextField(extensionTextField);
+    }
+
+    /**
+     * This method sets size Text field from
+     * */
+    public void setSizeFrom(int size) {
+        bodyPanel.getAdvancedFieldPanel().setFromSizeTextField(Integer.toString(size));
+    }
+
+    /**
+     * This method sets size Text field To
+     * */
+    public void setSizeTo(int size) {
+        bodyPanel.getAdvancedFieldPanel().setToSizeTextField(Integer.toString(size));
+    }
+
+    /**
+     * This method sets type Combo Box
+     * */
+    public void setType(int setType) {
+        bodyPanel.getAdvancedFieldPanel().setTypeComboBox(setType);
+    }
+
+    /**
+     * This method sets Hidden Combo Box
+     * */
+    public void setHidden(int setHidden) {
+        bodyPanel.getAdvancedFieldPanel().setHiddenComboBox(setHidden);
+    }
+
+    /**
+     * This method sets Read Only Combo Box
+     * */
+    public void setReadOnly(int readOnly) {
+        bodyPanel.getAdvancedFieldPanel().setReadOnlyComboBox(readOnly);
+    }
+
+    /**
+     * This method sets CreatedDate from
+     * */
+    public void setCreatedFrom(Date date) {
+        bodyPanel.getAdvancedFieldPanel().setFromCreatedDP(date);
+    }
+
+    /**
+     * This method sets CreatedDate to
+     * */
+    public void setCreatedTo(Date date) {
+        bodyPanel.getAdvancedFieldPanel().setToCreatedDP(date);
+    }
+
+    /**
+     * This method sets ModifiedDate from
+     * */
+    public void setModifiedFrom(Date date) {
+        bodyPanel.getAdvancedFieldPanel().setFromModifiedDP(date);
+    }
+
+    /**
+     * This method sets ModifiedDate to
+     * */
+    public void setModifiedTo(Date date) {
+        bodyPanel.getAdvancedFieldPanel().setToModifiedDP(date);
+    }
+
+    /**
+     * This method sets Accessdate from
+     * */
+    public void setAccessFrom(Date date) {
+        bodyPanel.getAdvancedFieldPanel().setFromAccessedDP(date);
+    }
+
+    /**
+     * This method sets Accessdate to
+     * */
+    public void setAccessTo(Date date) {
+        bodyPanel.getAdvancedFieldPanel().setToAccessedDP(date);
+    }
+
+    /**
+     * This method sets path Text field
+     * */
     public CriteriaPanel getCriteriaPanel() {
         return bodyPanel.getCriteriaPanel();
     }
